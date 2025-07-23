@@ -23,9 +23,9 @@ const Header = () => {
   ];
 
   const resourcesItems = [
-    { name: "Documentation", href: "/docs" },
-    { name: "Blog", href: "/blog" },
-    { name: "Video Tutorials", href: "/tutorials" },
+    { name: "Documentation", href: "/resources/documentation" },
+    { name: "Blog", href: "/resources/blog" },
+    { name: "Video Tutorials", href: "/resources/videos" },
   ];
 
   return (
