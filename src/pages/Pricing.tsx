@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import PricingSection from "@/components/PricingSection";
+import Header from "@/components/Header";
 import { Check, X } from "lucide-react";
 import {
   Table,
@@ -64,6 +65,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-to-br from-background via-primary/5 to-secondary/10">
         <div className="container mx-auto px-4 text-center">
