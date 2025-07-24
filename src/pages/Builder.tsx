@@ -27,7 +27,6 @@ import {
   Zap,
   Users,
   ShoppingCart,
-  FileText,
   Headphones
 } from "lucide-react";
 
