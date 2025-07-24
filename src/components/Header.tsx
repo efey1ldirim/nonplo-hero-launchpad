@@ -29,9 +29,10 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full pt-4 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-background/80 backdrop-blur-xl border border-border/20 rounded-2xl shadow-lg shadow-black/5">
+          <div className="flex h-16 items-center justify-between px-6">
           {/* Logo */}
           <div className="flex items-center">
             <a href="/" className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity">
@@ -124,6 +125,7 @@ const Header = () => {
                 </div>
               </SheetContent>
             </Sheet>
+            </div>
           </div>
         </div>
       </div>
