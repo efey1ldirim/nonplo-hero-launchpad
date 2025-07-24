@@ -98,31 +98,6 @@ const FeaturesSection = () => {
           ))}
         </div>
 
-        {/* Bottom section */}
-        <div className="text-center mt-16">
-          <div className="bg-background/80 backdrop-blur-sm rounded-2xl p-8 shadow-card border border-border/50 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-semibold text-foreground mb-3">
-              Ready to Transform Your Business?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Join hundreds of businesses already saving time and money with AI automation
-            </p>
-            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>14-day free trial</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>Setup in 5 minutes</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>Cancel anytime</span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
