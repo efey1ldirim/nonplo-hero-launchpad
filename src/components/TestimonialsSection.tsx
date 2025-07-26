@@ -2,7 +2,7 @@ import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 const testimonials = [
@@ -38,6 +38,7 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: 'center',
@@ -69,35 +70,44 @@ const TestimonialsSection = () => {
     };
   }, [emblaApi]);
 
-  // Auto-advance every 3 seconds
+  // Auto-advance every 3 seconds with proper cleanup
+  const startAutoplay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      if (emblaApi) emblaApi.scrollNext();
+    }, 3000);
+  }, [emblaApi]);
+
+  const stopAutoplay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
   useEffect(() => {
     if (!emblaApi) return;
 
-    const autoplay = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 3000);
+    // Start autoplay
+    startAutoplay();
 
     // Pause on hover
     const carouselNode = emblaApi.rootNode();
     
-    const handleMouseEnter = () => clearInterval(autoplay);
-    const handleMouseLeave = () => {
-      clearInterval(autoplay);
-      const newAutoplay = setInterval(() => {
-        emblaApi.scrollNext();
-      }, 3000);
-      return newAutoplay;
-    };
+    const handleMouseEnter = () => stopAutoplay();
+    const handleMouseLeave = () => startAutoplay();
 
     carouselNode.addEventListener('mouseenter', handleMouseEnter);
     carouselNode.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      clearInterval(autoplay);
+      stopAutoplay();
       carouselNode.removeEventListener('mouseenter', handleMouseEnter);
       carouselNode.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [emblaApi]);
+  }, [emblaApi, startAutoplay, stopAutoplay]);
 
   return (
     <section className="py-24 bg-muted/30">
