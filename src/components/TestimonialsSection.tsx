@@ -1,5 +1,9 @@
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
+import { useEffect, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 
 const testimonials = [
   {
@@ -33,6 +37,51 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true,
+    align: 'center',
+    skipSnaps: false,
+    dragFree: false
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  // Auto-advance every 4 seconds
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const autoplay = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 4000);
+
+    // Pause on hover
+    const carouselNode = emblaApi.rootNode();
+    
+    const handleMouseEnter = () => clearInterval(autoplay);
+    const handleMouseLeave = () => {
+      clearInterval(autoplay);
+      const newAutoplay = setInterval(() => {
+        emblaApi.scrollNext();
+      }, 4000);
+      return newAutoplay;
+    };
+
+    carouselNode.addEventListener('mouseenter', handleMouseEnter);
+    carouselNode.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      clearInterval(autoplay);
+      carouselNode.removeEventListener('mouseenter', handleMouseEnter);
+      carouselNode.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [emblaApi]);
+
   return (
     <section className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -41,44 +90,69 @@ const TestimonialsSection = () => {
             Trusted by Small Businesses
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real stories from business owners who transformed their operations with AI
+            Real stories from teams who use Nonplo every day
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} className="hover:shadow-lg transition-all duration-300 border-border/50">
-              <CardContent className="p-8">
-                <Quote className="w-8 h-8 text-primary mb-4" />
-                
-                <p className="text-foreground mb-6 text-lg leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_40%] px-4">
+                  <Card className="mx-auto max-w-md h-full hover:shadow-xl transition-all duration-500 border-border/50 group">
+                    <CardContent className="p-8 h-full flex flex-col">
+                      <Quote className="w-8 h-8 text-primary mb-4 group-hover:scale-110 transition-transform duration-300" />
+                      
+                      <p className="text-foreground mb-6 text-lg leading-relaxed flex-grow">
+                        "{testimonial.quote}"
+                      </p>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                      <img 
-                        src={`https://images.unsplash.com/${testimonial.avatar}?w=48&h=48&fit=crop&crop=face`}
-                        alt={testimonial.name}
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                      <p className="text-sm text-muted-foreground">{testimonial.business}</p>
-                    </div>
-                  </div>
+                      <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center overflow-hidden">
+                            <img 
+                              src={`https://images.unsplash.com/${testimonial.avatar}?w=48&h=48&fit=crop&crop=face`}
+                              alt={testimonial.name}
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                            <p className="text-sm text-muted-foreground">{testimonial.business}</p>
+                          </div>
+                        </div>
 
-                  <div className="flex items-center space-x-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                    ))}
-                  </div>
+                        <div className="flex items-center space-x-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Custom Navigation Buttons */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={scrollPrev}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background/90 hover:scale-110 transition-all duration-300 shadow-lg"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={scrollNext}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background/90 hover:scale-110 transition-all duration-300 shadow-lg"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
 
         <div className="text-center mt-12">
