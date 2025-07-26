@@ -194,12 +194,6 @@ const TestimonialsSection = () => {
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
-
-        <div className="text-center mt-12">
-          <p className="text-sm text-muted-foreground">
-            Join 500+ businesses already using Nonplo to automate their workflows
-          </p>
-        </div>
       </div>
     </section>
   );
