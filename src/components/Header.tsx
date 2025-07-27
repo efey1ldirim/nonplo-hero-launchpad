@@ -59,8 +59,8 @@ const Header = () => {
                   <NavigationMenuTrigger className="text-sm font-medium">
                     Resources
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-48 p-2">
+                  <NavigationMenuContent className="left-0 top-full mt-2">
+                    <div className="w-48 p-2 bg-background border border-border/20 rounded-lg shadow-lg shadow-black/10">
                       {resourcesItems.map((item) => (
                         <NavigationMenuLink
                           key={item.name}
