@@ -17,10 +17,10 @@ const ContactSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Let's Talk
+            Konuşalım
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have questions about AI automation? We're here to help you get started.
+            AI otomasyonu hakkında sorularınız mı var? Başlamanızda size yardımcı olmak için buradayız.
           </p>
         </div>
 
@@ -30,19 +30,19 @@ const ContactSection = () => {
             <Card className="shadow-lg border-border/50">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-semibold text-foreground mb-6">
-                  Send us a message
+                  Bize mesaj gönderin
                 </h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-sm font-medium">
-                        Name *
+                        İsim *
                       </Label>
                       <Input
                         id="name"
                         type="text"
-                        placeholder="Your full name"
+                        placeholder="Adınız soyadınız"
                         required
                         className="bg-background border-border/50"
                       />
@@ -50,12 +50,12 @@ const ContactSection = () => {
                     
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-sm font-medium">
-                        Email *
+                        E-posta *
                       </Label>
                       <Input
                         id="email"
                         type="email"
-                        placeholder="your@email.com"
+                        placeholder="email@adresiniz.com"
                         required
                         className="bg-background border-border/50"
                       />
@@ -64,23 +64,23 @@ const ContactSection = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="company" className="text-sm font-medium">
-                      Company (optional)
+                      Şirket (opsiyonel)
                     </Label>
                     <Input
                       id="company"
                       type="text"
-                      placeholder="Your company name"
+                      placeholder="Şirket adınız"
                       className="bg-background border-border/50"
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-sm font-medium">
-                      Message *
+                      Mesaj *
                     </Label>
                     <Textarea
                       id="message"
-                      placeholder="Tell us about your business and how we can help..."
+                      placeholder="İşletmeniz hakkında bilgi verin ve size nasıl yardımcı olabileceğimizi söyleyin..."
                       required
                       rows={5}
                       className="bg-background border-border/50 resize-none"
@@ -93,7 +93,7 @@ const ContactSection = () => {
                     className="w-full hover:scale-105 transition-all duration-300"
                   >
                     <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                    Mesaj Gönder
                   </Button>
                 </form>
               </CardContent>
@@ -103,10 +103,10 @@ const ContactSection = () => {
             <div className="space-y-8">
               <div>
                 <h3 className="text-2xl font-semibold text-foreground mb-6">
-                  Get in touch
+                  İletişime geçin
                 </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                  Ready to transform your business with AI? Whether you're just getting started or need help scaling up, our team is here to guide you every step of the way.
+                  İşletmenizi AI ile dönüştürmeye hazır mısınız? İster yeni başlıyor olun ister ölçeklenmede yardıma ihtiyacınız olsun, ekibimiz her adımda size rehberlik etmek için burada.
                 </p>
               </div>
 
@@ -116,10 +116,10 @@ const ContactSection = () => {
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Email us</h4>
+                    <h4 className="font-semibold text-foreground mb-1">E-posta gönder</h4>
                     <p className="text-muted-foreground">hello@nonplo.com</p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      For general inquiries and support
+                      Genel sorular ve destek için
                     </p>
                   </div>
                 </div>
@@ -129,10 +129,10 @@ const ContactSection = () => {
                     <MessageCircle className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Live Chat</h4>
-                    <p className="text-muted-foreground">Available on our website</p>
+                    <h4 className="font-semibold text-foreground mb-1">Canlı Sohbet</h4>
+                    <p className="text-muted-foreground">Web sitemizde mevcut</p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Monday - Friday, 9 AM - 6 PM EST
+                      Pazartesi - Cuma, 09:00 - 18:00 TSİ
                     </p>
                   </div>
                 </div>
@@ -142,10 +142,10 @@ const ContactSection = () => {
                     <Clock className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Response Time</h4>
-                    <p className="text-muted-foreground">Usually within 24 hours</p>
+                    <h4 className="font-semibold text-foreground mb-1">Yanıt Süresi</h4>
+                    <p className="text-muted-foreground">Genellikle 24 saat içinde</p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      We're committed to quick, helpful responses
+                      Hızlı ve yardımcı yanıtlar vermeyi taahhüt ediyoruz
                     </p>
                   </div>
                 </div>
@@ -153,13 +153,13 @@ const ContactSection = () => {
 
               <div className="p-6 bg-primary/5 rounded-lg border border-primary/10">
                 <h4 className="font-semibold text-foreground mb-2">
-                  Book a Demo
+                  Demo Rezervasyonu
                 </h4>
                 <p className="text-muted-foreground text-sm mb-4">
-                  Want to see Nonplo in action? Schedule a personalized demo with our team.
+                  Nonplo'yu işini görürken mi görmek istiyorsunuz? Ekibimizle kişiselleştirilmiş demo planlayın.
                 </p>
                 <Button variant="outline" size="sm">
-                  Schedule Demo
+                  Demo Planla
                 </Button>
               </div>
             </div>

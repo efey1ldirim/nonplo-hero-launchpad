@@ -18,16 +18,16 @@ const Header = () => {
   const navigate = useNavigate();
 
   const navigationItems = [
-    { name: "Home", href: "/" },
-    { name: "Builder", href: "/builder" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "Account", href: "/account" },
+    { name: "Ana Sayfa", href: "/" },
+    { name: "Oluşturucu", href: "/builder" },
+    { name: "Fiyatlandırma", href: "/pricing" },
+    { name: "Hesap", href: "/account" },
   ];
 
   const resourcesItems = [
-    { name: "Documentation", href: "/resources/documentation" },
+    { name: "Dokümantasyon", href: "/resources/documentation" },
     { name: "Blog", href: "/resources/blog" },
-    { name: "Video Tutorials", href: "/resources/videos" },
+    { name: "Video Eğitimler", href: "/resources/videos" },
   ];
 
   return (
@@ -59,7 +59,7 @@ const Header = () => {
                 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm font-medium">
-                    Resources
+                    Kaynaklar
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="left-0 top-0 w-auto data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto">
                     <div className="grid w-[200px] gap-1 p-2 bg-background border border-border/20 rounded-lg shadow-lg">
@@ -79,7 +79,7 @@ const Header = () => {
             </NavigationMenu>
 
             <Button variant="hero" size="default" className="ml-4" onClick={() => navigate('/builder')}>
-              Start Building
+              Oluşturmaya Başla
             </Button>
           </div>
 
@@ -106,7 +106,7 @@ const Header = () => {
                   ))}
                   
                   <div className="border-t pt-4">
-                    <p className="text-sm font-medium text-muted-foreground mb-2">Resources</p>
+                    <p className="text-sm font-medium text-muted-foreground mb-2">Kaynaklar</p>
                     {resourcesItems.map((item) => (
                       <a
                         key={item.name}
@@ -121,7 +121,7 @@ const Header = () => {
                   
                   <div className="pt-4">
                     <Button variant="hero" size="lg" className="w-full" onClick={() => { navigate('/builder'); setIsOpen(false); }}>
-                      Start Building
+                      Oluşturmaya Başla
                     </Button>
                   </div>
                 </div>

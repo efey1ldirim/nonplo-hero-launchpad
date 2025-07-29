@@ -18,18 +18,18 @@ const NewsletterSection = () => {
               <Mail className="w-6 h-6 text-primary" />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              Stay in the Loop
+              Haberdar Olun
             </h2>
           </div>
           
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-            Get product updates, business automation tips, and exclusive offers — straight to your inbox.
+            Ürün güncellemeleri, iş otomasyonu ipuçları ve özel teklifler — doğrudan gelen kutunuza.
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto mb-4">
             <Input
               type="email"
-              placeholder="Enter your email"
+              placeholder="E-posta adresinizi girin"
               required
               className="flex-1 bg-background border-border/50 text-center sm:text-left"
             />
@@ -38,12 +38,12 @@ const NewsletterSection = () => {
               size="lg"
               className="whitespace-nowrap hover:scale-105 transition-all duration-300"
             >
-              Subscribe
+              Abone Ol
             </Button>
           </form>
 
           <p className="text-sm text-muted-foreground">
-            We respect your inbox. No spam, ever.
+            Gelen kutunuza saygı duyuyoruz. Asla spam göndermeyiz.
           </p>
         </div>
       </div>

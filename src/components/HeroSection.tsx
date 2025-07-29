@@ -16,51 +16,51 @@ const HeroSection = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-6 shadow-card">
               <Zap className="w-4 h-4 text-primary" />
-              No Code Required
+              Kod Bilgisi Gerekmez
             </div>
 
             {/* Main headline */}
             <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Your AI teammate.{" "}
+              AI takım arkadaşınız.{" "}
               <span className="bg-gradient-hero bg-clip-text text-transparent">
-                No coding needed.
+                Kodlama bilgisi gerekmez.
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-              Build personalized AI agents that handle customer support, lead qualification, and routine tasks. 
-              Save time and money without hiring developers.
+              Müşteri desteği, potansiyel müşteri değerlendirme ve rutin görevleri yöneten kişiselleştirilmiş AI ajanları oluşturun. 
+              Geliştirici tutmadan zaman ve para tasarrufu yapın.
             </p>
 
             {/* Stats */}
             <div className="flex gap-6 mb-12 justify-center">
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-primary" />
-                <span className="text-sm text-muted-foreground">Setup in minutes</span>
+                <span className="text-sm text-muted-foreground">Dakikalar içinde kurulum</span>
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
-                <span className="text-sm text-muted-foreground">500+ businesses</span>
+                <span className="text-sm text-muted-foreground">500+ işletme</span>
               </div>
             </div>
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Button variant="hero" size="lg" className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300">
-                Start Building Your Agent
+                Ajanınızı Oluşturmaya Başlayın
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               
               <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto rounded-full">
                 <Play className="w-5 h-5 mr-2" />
-                Watch Demo
+                Demo İzle
               </Button>
             </div>
 
             {/* Trust indicators */}
             <div className="text-sm text-muted-foreground">
-              ✨ Free 14-day trial • 💳 No credit card required
+              ✨ 14 günlük ücretsiz deneme • 💳 Kredi kartı gerekmez
             </div>
           </div>
         </div>

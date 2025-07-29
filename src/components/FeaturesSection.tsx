@@ -11,33 +11,33 @@ const FeaturesSection = () => {
   const features = [
     {
       icon: Puzzle,
-      title: "Build Without Code",
-      description: "Create custom AI agents using our visual builder. No programming skills required - just drag, drop, and configure."
+      title: "Kod Olmadan Oluşturun",
+      description: "Görsel oluşturucumuzla özel AI ajanları yaratın. Programlama becerisi gerekmez - sadece sürükle, bırak ve yapılandır."
     },
     {
       icon: Sparkles,
-      title: "Ready-Made Templates",
-      description: "Start instantly with pre-built agents for customer support, lead qualification, and common business tasks."
+      title: "Hazır Şablonlar",
+      description: "Müşteri desteği, potansiyel müşteri değerlendirme ve yaygın iş görevleri için önceden oluşturulmuş ajanlarla anında başlayın."
     },
     {
       icon: MessageSquare,
-      title: "Smart Automation",
-      description: "Automate email replies, chat support, appointment booking, and follow-ups. Your AI works 24/7."
+      title: "Akıllı Otomasyon",
+      description: "E-posta yanıtları, sohbet desteği, randevu alma ve takip işlemlerini otomatikleştirin. AI'nız 7/24 çalışır."
     },
     {
       icon: LayoutDashboard,
-      title: "Unified Dashboard",
-      description: "Monitor, manage, and optimize all your AI agents from one central control panel. Track performance and results."
+      title: "Birleşik Kontrol Paneli",
+      description: "Tüm AI ajanlarınızı tek bir merkezi kontrol panelinden izleyin, yönetin ve optimize edin. Performans ve sonuçları takip edin."
     },
     {
       icon: Palette,
-      title: "Custom Personalities",
-      description: "Train your agents to match your brand voice and business processes. Set rules, responses, and workflows."
+      title: "Özel Kişilikler",
+      description: "Ajanlarınızı marka sesinize ve iş süreçlerinize uyacak şekilde eğitin. Kurallar, yanıtlar ve iş akışları belirleyin."
     },
     {
       icon: Shield,
-      title: "Enterprise Security",
-      description: "GDPR and KVKK compliant data handling. Your business information stays secure and private."
+      title: "Kurumsal Güvenlik",
+      description: "GDPR ve KVKK uyumlu veri işleme. İş bilgileriniz güvenli ve özel kalır."
     }
   ];
 
@@ -58,10 +58,10 @@ const FeaturesSection = () => {
         {/* Section header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            What Can Nonplo Do?
+            Nonplo Neler Yapabilir?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Everything you need to build, deploy, and manage AI agents that actually help your business grow
+            İşletmenizin büyümesine gerçekten yardımcı olan AI ajanları oluşturmak, dağıtmak ve yönetmek için ihtiyacınız olan her şey
           </p>
         </div>
 

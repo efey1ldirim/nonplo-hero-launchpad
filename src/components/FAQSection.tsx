@@ -9,28 +9,28 @@ import { MessageCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "Do I need coding skills to use Nonplo?",
-    answer: "Not at all! Nonplo is designed for business owners, not developers. You can build and customize AI agents using our simple drag-and-drop interface. If you can use email or social media, you can use Nonplo."
+    question: "Nonplo'yu kullanmak için kodlama becerisine ihtiyacım var mı?",
+    answer: "Hiç de değil! Nonplo geliştiriciler için değil, işletme sahipleri için tasarlanmıştır. Basit sürükle-bırak arayüzümüzü kullanarak AI ajanları oluşturabilir ve özelleştirebilirsiniz. E-posta veya sosyal medya kullanabiliyorsanız, Nonplo'yu da kullanabilirsiniz."
   },
   {
-    question: "What kind of tasks can an AI agent handle?",
-    answer: "Our AI agents excel at customer support, lead qualification, email automation, appointment scheduling, and data entry. Basically, any repetitive task that follows a pattern can be automated. Each agent learns your business style and responds accordingly."
+    question: "Bir AI ajanı ne tür görevleri yerine getirebilir?",
+    answer: "AI ajanlarımız müşteri desteği, potansiyel müşteri değerlendirme, e-posta otomasyonu, randevu planlama ve veri girişinde mükemmeldir. Temel olarak, bir kalıbı takip eden herhangi bir tekrarlayan görev otomatikleştirilebilir. Her ajan işletme tarzınızı öğrenir ve buna göre yanıt verir."
   },
   {
-    question: "Can I use Nonplo with my existing tools?",
-    answer: "Yes! Nonplo integrates with popular tools like Gmail, Slack, Shopify, WordPress, and many CRM systems. We also provide webhooks and APIs for custom integrations. Your agents work alongside your current workflow."
+    question: "Nonplo'yu mevcut araçlarımla birlikte kullanabilir miyim?",
+    answer: "Evet! Nonplo Gmail, Slack, Shopify, WordPress ve birçok CRM sistemi gibi popüler araçlarla entegre olur. Özel entegrasyonlar için webhook'lar ve API'ler de sağlıyoruz. Ajanlarınız mevcut iş akışınızla birlikte çalışır."
   },
   {
-    question: "Is my data safe with Nonplo?",
-    answer: "Absolutely. We use enterprise-grade encryption and comply with GDPR and KVKK regulations. Your data is stored securely and never shared with third parties. You maintain full control and can export or delete your data anytime."
+    question: "Verilerim Nonplo ile güvende mi?",
+    answer: "Kesinlikle. Kurumsal düzeyde şifreleme kullanıyoruz ve GDPR ile KVKK düzenlemelerine uygun çalışıyoruz. Verileriniz güvenli bir şekilde saklanır ve hiçbir zaman üçüncü taraflarla paylaşılmaz. Tam kontrole sahipsiniz ve istediğiniz zaman verilerinizi dışa aktarabilir veya silebilirsiniz."
   },
   {
-    question: "What happens if I cancel my subscription?",
-    answer: "No hassle, no hidden fees. You can cancel anytime from your dashboard. Your agents will continue working until the end of your billing period, and you can export all your data. We also offer a 30-day grace period to reactivate if you change your mind."
+    question: "Aboneliğimi iptal edersem ne olur?",
+    answer: "Hiçbir sorun yok, gizli ücret yok. Kontrol panelinizden istediğiniz zaman iptal edebilirsiniz. Ajanlarınız fatura döneminizin sonuna kadar çalışmaya devam edecek ve tüm verilerinizi dışa aktarabilirsiniz. Ayrıca fikrinizi değiştirirseniz 30 günlük yeniden aktifleştirme süresi sunuyoruz."
   },
   {
-    question: "Can I try Nonplo for free?",
-    answer: "Yes! We offer a 14-day free trial with full access to all features. No credit card required to start. You can build up to 2 AI agents and test them with real scenarios. Only upgrade when you're confident Nonplo works for your business."
+    question: "Nonplo'yu ücretsiz deneyebilir miyim?",
+    answer: "Evet! Tüm özelliklere tam erişimli 14 günlük ücretsiz deneme sunuyoruz. Başlamak için kredi kartı gerekmez. 2 AI ajanına kadar oluşturabilir ve gerçek senaryolarla test edebilirsiniz. Sadece Nonplo'nun işletmeniz için çalıştığından emin olduğunuzda yükseltin."
   }
 ];
 
@@ -40,10 +40,10 @@ const FAQSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Frequently Asked Questions
+            Sık Sorulan Sorular
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about getting started with AI automation
+            AI otomasyonuna başlamak için bilmeniz gereken her şey
           </p>
         </div>
 
@@ -68,13 +68,13 @@ const FAQSection = () => {
           <div className="text-center mt-12 p-8 bg-muted/30 rounded-lg">
             <MessageCircle className="w-8 h-8 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-foreground mb-2">
-              Still have questions?
+              Hala sorularınız mı var?
             </h3>
             <p className="text-muted-foreground mb-6">
-              Our team is here to help you get started with AI automation
+              Ekibimiz AI otomasyonuna başlamanızda size yardımcı olmak için burada
             </p>
             <Button variant="outline" size="lg" className="hover:scale-105">
-              Contact Support
+              Destek İle İletişime Geç
             </Button>
           </div>
         </div>

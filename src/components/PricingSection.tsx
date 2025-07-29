@@ -7,51 +7,51 @@ const PricingSection = () => {
 
   const plans = [
     {
-      name: "Basic",
-      description: "Perfect for entrepreneurs testing AI automation",
+      name: "Temel",
+      description: "AI otomasyonunu test eden girişimciler için mükemmel",
       monthlyPrice: 29,
       yearlyPrice: 290,
       features: [
-        "1 AI agent",
-        "500 conversations/month",
-        "Basic templates",
-        "Email support",
-        "Dashboard access"
+        "1 AI ajanı",
+        "Aylık 500 sohbet",
+        "Temel şablonlar",
+        "E-posta desteği",
+        "Kontrol paneli erişimi"
       ],
       popular: false,
-      cta: "Start Free Trial"
+      cta: "Ücretsiz Denemeyi Başlat"
     },
     {
       name: "Pro",
-      description: "Ideal for growing businesses ready to scale",
+      description: "Ölçeklenmeye hazır büyüyen işletmeler için ideal",
       monthlyPrice: 79,
       yearlyPrice: 790,
       features: [
-        "5 AI agents",
-        "2,500 conversations/month",
-        "All templates & workflows",
-        "Priority support",
-        "Advanced analytics",
-        "Custom integrations"
+        "5 AI ajanı",
+        "Aylık 2.500 sohbet",
+        "Tüm şablonlar ve iş akışları",
+        "Öncelikli destek",
+        "Gelişmiş analitik",
+        "Özel entegrasyonlar"
       ],
       popular: true,
-      cta: "Start Free Trial"
+      cta: "Ücretsiz Denemeyi Başlat"
     },
     {
-      name: "Business",
-      description: "For teams managing multiple workflows",
+      name: "İşletme",
+      description: "Birden fazla iş akışını yöneten ekipler için",
       monthlyPrice: 199,
       yearlyPrice: 1990,
       features: [
-        "Unlimited AI agents",
-        "Unlimited conversations",
-        "White-label options",
-        "Dedicated account manager",
-        "Custom training",
-        "Advanced security"
+        "Sınırsız AI ajanı",
+        "Sınırsız sohbet",
+        "Beyaz etiket seçenekleri",
+        "Özel hesap yöneticisi",
+        "Özel eğitim",
+        "Gelişmiş güvenlik"
       ],
       popular: false,
-      cta: "Contact Sales"
+      cta: "Satış Ekibiyle İletişime Geç"
     }
   ];
 
@@ -71,10 +71,10 @@ const PricingSection = () => {
         {/* Section header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Choose Your Plan
+            Planınızı Seçin
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Transparent pricing that grows with your business. Start free, upgrade when ready.
+            İşletmenizle birlikte büyüyen şeffaf fiyatlandırma. Ücretsiz başlayın, hazır olduğunuzda yükseltin.
           </p>
 
           {/* Billing toggle */}
@@ -87,7 +87,7 @@ const PricingSection = () => {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Monthly
+              Aylık
             </button>
             <button
               onClick={() => setIsYearly(true)}
@@ -97,10 +97,10 @@ const PricingSection = () => {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Yearly
+              Yıllık
               {isYearly && (
                 <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
-                  Save 25%
+                  %25 Tasarruf
                 </span>
               )}
             </button>
@@ -123,7 +123,7 @@ const PricingSection = () => {
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
                     <Star className="w-4 h-4" />
-                    Most Popular
+                    En Popüler
                   </div>
                 </div>
               )}
@@ -144,12 +144,12 @@ const PricingSection = () => {
                       ${getPrice(plan)}
                     </span>
                     <span className="text-muted-foreground">
-                      /{isYearly ? "year" : "month"}
+                      /{isYearly ? "yıl" : "ay"}
                     </span>
                   </div>
                   {isYearly && (
                     <div className="text-sm text-primary font-medium mt-1">
-                      Save {getSavings(plan)}% vs monthly
+                      Aylığa göre %{getSavings(plan)} tasarruf
                     </div>
                   )}
                 </div>
@@ -184,24 +184,24 @@ const PricingSection = () => {
         <div className="text-center mt-16">
           <div className="bg-muted/50 rounded-2xl p-8 max-w-3xl mx-auto">
             <h3 className="text-xl font-semibold text-foreground mb-4">
-              Risk-Free Trial
+              Risksiz Deneme
             </h3>
             <div className="grid md:grid-cols-3 gap-6 text-sm text-muted-foreground">
               <div className="flex items-center justify-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>14-day free trial</span>
+                <span>14 günlük ücretsiz deneme</span>
               </div>
               <div className="flex items-center justify-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>No credit card required</span>
+                <span>Kredi kartı gerekmez</span>
               </div>
               <div className="flex items-center justify-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>Cancel anytime</span>
+                <span>İstediğiniz zaman iptal</span>
               </div>
             </div>
             <p className="text-muted-foreground mt-4">
-              Questions about pricing? <span className="text-primary font-medium cursor-pointer hover:underline">Contact our sales team</span>
+              Fiyatlandırma hakkında sorularınız mı var? <span className="text-primary font-medium cursor-pointer hover:underline">Satış ekibimizle iletişime geçin</span>
             </p>
           </div>
         </div>

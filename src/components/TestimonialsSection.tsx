@@ -7,30 +7,30 @@ import useEmblaCarousel from "embla-carousel-react";
 
 const testimonials = [
   {
-    name: "Sarah Chen",
-    business: "Local Café Owner",
-    quote: "Nonplo's AI agent handles our customer questions 24/7. I can finally focus on making great coffee instead of answering the same questions all day.",
+    name: "Ayşe Demir",
+    business: "Yerel Kafe Sahibi",
+    quote: "Nonplo'nun AI ajanı müşteri sorularımızı 7/24 yanıtlıyor. Artık gün boyu aynı soruları yanıtlamak yerine harika kahve yapmaya odaklanabiliyorum.",
     avatar: "photo-1581091226825-a6a2a5aee158",
     rating: 5
   },
   {
-    name: "Marcus Rodriguez",
-    business: "Marketing Consultant",
-    quote: "Setting up lead qualification took me 10 minutes. Our response time improved by 80% and we're closing more deals than ever.",
+    name: "Mehmet Özkan",
+    business: "Pazarlama Danışmanı",
+    quote: "Potansiyel müşteri değerlendirme kurulumunu 10 dakikada tamamladım. Yanıt süremiz %80 iyileşti ve her zamankinden daha fazla anlaşma kapatıyoruz.",
     avatar: "photo-1581092795360-fd1ca04f0952",
     rating: 5
   },
   {
-    name: "Emma Thompson",
-    business: "Online Boutique",
-    quote: "The email automation agent saved me 3 hours daily. Now I can spend time designing new products instead of writing repetitive emails.",
+    name: "Zeynep Yılmaz",
+    business: "Online Butik",
+    quote: "E-posta otomasyon ajanı günde 3 saat tasarruf sağladı. Artık tekrarlayan e-postalar yazmak yerine yeni ürünler tasarlamaya zaman ayırabiliyorum.",
     avatar: "photo-1581090464777-f3220bbe1b8b",
     rating: 5
   },
   {
-    name: "David Kim",
-    business: "Consulting Firm",
-    quote: "No coding knowledge needed - I had my first AI agent running in under an hour. It's like having a digital assistant that never sleeps.",
+    name: "Can Kaya",
+    business: "Danışmanlık Firması",
+    quote: "Kodlama bilgisi gerekmedi - ilk AI ajanımı bir saatten kısa sürede çalıştırdım. Hiç uyumayan dijital bir asistana sahip olmak gibi.",
     avatar: "photo-1519389950473-47ba0277781c",
     rating: 5
   }
@@ -114,10 +114,10 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Trusted by Small Businesses
+            Küçük İşletmelerin Güvendiği
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real stories from teams who use Nonplo every day
+            Nonplo'yu her gün kullanan ekiplerden gerçek hikayeler
           </p>
         </div>
 

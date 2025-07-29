@@ -4,23 +4,23 @@ const WhyNonploSection = () => {
   const benefits = [
     {
       icon: Code2,
-      title: "No Coding Required",
-      description: "Build powerful AI agents with our drag-and-drop interface. No technical expertise needed."
+      title: "Kodlama Gerekmez",
+      description: "Sürükle-bırak arayüzümüzle güçlü AI ajanları oluşturun. Teknik uzmanlık gerekmez."
     },
     {
       icon: Clock,
-      title: "Save Time & Cut Costs",
-      description: "Automate routine tasks and reduce staff workload. Save thousands on developer fees."
+      title: "Zaman Tasarrufu & Maliyet Azaltma",
+      description: "Rutin görevleri otomatikleştirin ve personel iş yükünü azaltın. Geliştirici ücretlerinden binlerce lira tasarruf edin."
     },
     {
       icon: Building2,
-      title: "Built for Small Business",
-      description: "Simple pricing, easy setup, and features designed specifically for growing businesses."
+      title: "Küçük İşletmeler İçin Tasarlandı",
+      description: "Basit fiyatlandırma, kolay kurulum ve büyüyen işletmeler için özel olarak tasarlanmış özellikler."
     },
     {
       icon: Zap,
-      title: "Fast Setup, Real Results",
-      description: "Deploy your AI agent in minutes and start seeing results immediately. No long implementation."
+      title: "Hızlı Kurulum, Gerçek Sonuçlar",
+      description: "AI ajanınızı dakikalar içinde devreye alın ve hemen sonuç görmeye başlayın. Uzun uygulama süreci yok."
     }
   ];
 
@@ -37,10 +37,10 @@ const WhyNonploSection = () => {
         {/* Section header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Why Nonplo?
+            Neden Nonplo?
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            The smart choice for business owners who want AI results without the complexity
+            Karmaşıklık olmadan AI sonuçları isteyen işletme sahipleri için akıllı seçim
           </p>
         </div>
 
@@ -73,7 +73,7 @@ const WhyNonploSection = () => {
         <div className="text-center mt-16">
           <div className="inline-flex items-center gap-2 bg-accent/50 text-accent-foreground px-6 py-3 rounded-full text-sm">
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Join 500+ businesses already using Nonplo
+            Nonplo'yu kullanan 500+ işletmeye katılın
           </div>
         </div>
       </div>
