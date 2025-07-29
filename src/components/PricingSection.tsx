@@ -3,70 +3,72 @@ import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
 
 const PricingSection = () => {
-  const [isYearly, setIsYearly] = useState(false);
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const plans = [
     {
-      name: "Temel",
-      description: "AI otomasyonunu test eden girişimciler için mükemmel",
-      monthlyPrice: 29,
-      yearlyPrice: 290,
+      name: "Ücretsiz",
+      description: "AI otomasyonunu test eden girişimciler için ideal başlangıç",
+      price: 0,
       features: [
         "1 AI ajanı",
-        "Aylık 500 sohbet",
+        "Aylık 100 konuşma",
         "Temel şablonlar",
         "E-posta desteği",
-        "Kontrol paneli erişimi"
+        "Kontrol paneli erişimi",
+        "7 gün ücretsiz deneme"
       ],
       popular: false,
-      cta: "Ücretsiz Denemeyi Başlat"
+      cta: "Ücretsiz Başla",
+      plan: "free"
     },
     {
-      name: "Pro",
-      description: "Ölçeklenmeye hazır büyüyen işletmeler için ideal",
-      monthlyPrice: 79,
-      yearlyPrice: 790,
+      name: "Orta Plan",
+      description: "Büyüyen işletmeler için en çok tercih edilen çözüm",
+      price: 125,
       features: [
         "5 AI ajanı",
-        "Aylık 2.500 sohbet",
+        "Aylık 2.500 konuşma",
         "Tüm şablonlar ve iş akışları",
         "Öncelikli destek",
         "Gelişmiş analitik",
-        "Özel entegrasyonlar"
+        "Özel entegrasyonlar",
+        "WhatsApp & SMS entegrasyonu",
+        "Multi-platform desteği"
       ],
       popular: true,
-      cta: "Ücretsiz Denemeyi Başlat"
+      cta: "Şimdi Başla",
+      plan: "medium"
     },
     {
-      name: "İşletme",
-      description: "Birden fazla iş akışını yöneten ekipler için",
-      monthlyPrice: 199,
-      yearlyPrice: 1990,
+      name: "Plus Plan",
+      description: "Gelişmiş analizler ve tam özelleştirme sunan premium çözüm",
+      price: 250,
       features: [
         "Sınırsız AI ajanı",
-        "Sınırsız sohbet",
-        "Beyaz etiket seçenekleri",
+        "Sınırsız konuşma",
+        "Genişletilmiş analizler",
         "Özel hesap yöneticisi",
-        "Özel eğitim",
-        "Gelişmiş güvenlik"
+        "Beyaz etiket çözümler",
+        "API erişimi",
+        "Özel eğitim programı",
+        "Gelişmiş güvenlik",
+        "24/7 premium destek",
+        "Özel entegrasyon geliştirme"
       ],
       popular: false,
-      cta: "Satış Ekibiyle İletişime Geç"
+      cta: "Satış Ekibiyle Görüş",
+      plan: "plus"
     }
   ];
 
-  const getPrice = (plan: typeof plans[0]) => {
-    return isYearly ? plan.yearlyPrice : plan.monthlyPrice;
-  };
-
-  const getSavings = (plan: typeof plans[0]) => {
-    const monthlyCost = plan.monthlyPrice * 12;
-    const savings = monthlyCost - plan.yearlyPrice;
-    return Math.round((savings / monthlyCost) * 100);
-  };
-
   return (
-    <section className="py-20 bg-background relative">
+    <section className="py-20 bg-background relative" id="pricing">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-16">
@@ -76,35 +78,6 @@ const PricingSection = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             İşletmenizle birlikte büyüyen şeffaf fiyatlandırma. Ücretsiz başlayın, hazır olduğunuzda yükseltin.
           </p>
-
-          {/* Billing toggle */}
-          <div className="inline-flex items-center bg-muted rounded-lg p-1">
-            <button
-              onClick={() => setIsYearly(false)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                !isYearly 
-                  ? "bg-background text-foreground shadow-sm" 
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Aylık
-            </button>
-            <button
-              onClick={() => setIsYearly(true)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 relative ${
-                isYearly 
-                  ? "bg-background text-foreground shadow-sm" 
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Yıllık
-              {isYearly && (
-                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
-                  %25 Tasarruf
-                </span>
-              )}
-            </button>
-          </div>
         </div>
 
         {/* Pricing cards */}
@@ -123,7 +96,7 @@ const PricingSection = () => {
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
                     <Star className="w-4 h-4" />
-                    En Popüler
+                    En Çok Tercih Edilen
                   </div>
                 </div>
               )}
@@ -140,18 +113,21 @@ const PricingSection = () => {
                 {/* Price */}
                 <div className="mb-4">
                   <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-4xl font-bold text-foreground">
-                      ${getPrice(plan)}
-                    </span>
-                    <span className="text-muted-foreground">
-                      /{isYearly ? "yıl" : "ay"}
-                    </span>
+                    {plan.price === 0 ? (
+                      <span className="text-4xl font-bold text-foreground">
+                        Ücretsiz
+                      </span>
+                    ) : (
+                      <>
+                        <span className="text-4xl font-bold text-foreground">
+                          ${plan.price}
+                        </span>
+                        <span className="text-muted-foreground">
+                          /ay
+                        </span>
+                      </>
+                    )}
                   </div>
-                  {isYearly && (
-                    <div className="text-sm text-primary font-medium mt-1">
-                      Aylığa göre %{getSavings(plan)} tasarruf
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -180,12 +156,23 @@ const PricingSection = () => {
           ))}
         </div>
 
-        {/* Bottom reassurance */}
+        {/* Custom plan section */}
         <div className="text-center mt-16">
           <div className="bg-muted/50 rounded-2xl p-8 max-w-3xl mx-auto">
             <h3 className="text-xl font-semibold text-foreground mb-4">
-              Risksiz Deneme
+              Size uygun bir plan yok mu?
             </h3>
+            <p className="text-muted-foreground mb-6">
+              <button 
+                onClick={scrollToContact}
+                className="text-primary font-medium hover:underline cursor-pointer"
+              >
+                Bizimle iletişime geçin
+              </button>
+              {" "}ve ihtiyaçlarınıza uygun gelişmiş bir plan oluşturalım.
+            </p>
+            
+            {/* Risk-free trial info */}
             <div className="grid md:grid-cols-3 gap-6 text-sm text-muted-foreground">
               <div className="flex items-center justify-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full" />
@@ -200,9 +187,6 @@ const PricingSection = () => {
                 <span>İstediğiniz zaman iptal</span>
               </div>
             </div>
-            <p className="text-muted-foreground mt-4">
-              Fiyatlandırma hakkında sorularınız mı var? <span className="text-primary font-medium cursor-pointer hover:underline">Satış ekibimizle iletişime geçin</span>
-            </p>
           </div>
         </div>
       </div>
