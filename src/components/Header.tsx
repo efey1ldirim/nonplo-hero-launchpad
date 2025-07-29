@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navigationItems = [
     { name: "Home", href: "/" },
@@ -76,7 +78,7 @@ const Header = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Button variant="hero" size="default" className="ml-4">
+            <Button variant="hero" size="default" className="ml-4" onClick={() => navigate('/builder')}>
               Start Building
             </Button>
           </div>
@@ -118,7 +120,7 @@ const Header = () => {
                   </div>
                   
                   <div className="pt-4">
-                    <Button variant="hero" size="lg" className="w-full">
+                    <Button variant="hero" size="lg" className="w-full" onClick={() => { navigate('/builder'); setIsOpen(false); }}>
                       Start Building
                     </Button>
                   </div>

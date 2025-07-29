@@ -1,139 +1,195 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   Bot, 
   Calendar, 
   MessageSquare, 
-  Mail, 
-  Phone, 
-  Play, 
-  Pause, 
-  Edit, 
-  Trash2, 
-  Copy, 
-  Eye,
-  Plus,
+  ShoppingCart, 
+  CreditCard,
+  HeadphonesIcon,
+  FileText,
+  Users,
   ArrowRight,
   ArrowLeft,
-  CheckCircle,
+  Eye,
   Zap,
-  Users,
-  ShoppingCart,
-  Headphones
+  Clock,
+  X,
+  Upload,
+  Instagram,
+  Globe,
+  UserCheck,
+  Settings,
+  CheckCircle,
+  Play
 } from "lucide-react";
 
 interface Agent {
   id: string;
   name: string;
-  type: string;
-  status: "Active" | "Paused" | "Draft";
-  interactions: number;
-  createdAt: string;
+  lastUsed: string;
+  status: "Active" | "Paused";
+}
+
+interface Template {
+  id: string;
+  name: string;
+  description: string;
+  features: string[];
+}
+
+interface StepData {
+  industry: string;
+  businessName: string;
+  website: string;
+  instagram: string;
+  twitter: string;
+  tasks: string[];
+  customTask: string;
+  communicationStyle: string;
+  customCharacter?: {
+    name: string;
+    age: string;
+    gender: string;
+    style: string;
+  };
+  knowledgeBase: {
+    faq: string;
+    productInfo: string;
+    websiteLinks: string;
+  };
+  integrations: {
+    googleCalendar: boolean;
+    whatsappBusiness: boolean;
+    instagramDM: boolean;
+    websiteEmbed: boolean;
+    shopify: boolean;
+    crm: boolean;
+  };
 }
 
 const Builder = () => {
+  const navigate = useNavigate();
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedAgentType, setSelectedAgentType] = useState("");
-  const [businessInfo, setBusinessInfo] = useState({
-    name: "",
+  const [stepData, setStepData] = useState<StepData>({
     industry: "",
-    hours: "",
-    services: ""
-  });
-  const [personality, setPersonality] = useState({
-    style: "",
-    tone: ""
-  });
-  const [integrations, setIntegrations] = useState({
-    whatsapp: false,
-    email: false,
-    calendar: false,
-    phone: false
-  });
-
-  // Mock data for existing agents
-  const [agents] = useState<Agent[]>([
-    {
-      id: "1",
-      name: "Restaurant Booking Bot",
-      type: "Reservation Assistant",
-      status: "Active",
-      interactions: 1247,
-      createdAt: "2024-01-15"
+    businessName: "",
+    website: "",
+    instagram: "",
+    twitter: "",
+    tasks: [],
+    customTask: "",
+    communicationStyle: "",
+    knowledgeBase: {
+      faq: "",
+      productInfo: "",
+      websiteLinks: ""
     },
-    {
-      id: "2",
-      name: "Lead Qualifier",
-      type: "Sales Assistant",
-      status: "Paused",
-      interactions: 89,
-      createdAt: "2024-01-10"
+    integrations: {
+      googleCalendar: false,
+      whatsappBusiness: false,
+      instagramDM: false,
+      websiteEmbed: false,
+      shopify: false,
+      crm: false
     }
-  ]);
+  });
 
-  const totalSteps = 5;
-  const progressPercentage = (currentStep / totalSteps) * 100;
-
-  const agentTypes = [
-    { id: "reservation", name: "Reservation Bot", description: "Handle bookings and appointments", icon: Calendar },
-    { id: "support", name: "Customer Support", description: "Answer questions and resolve issues", icon: Headphones },
-    { id: "sales", name: "Lead Qualifier", description: "Qualify and nurture sales leads", icon: Users },
-    { id: "ecommerce", name: "Shopping Assistant", description: "Help customers with purchases", icon: ShoppingCart },
-    { id: "custom", name: "Custom Agent", description: "Start from scratch", icon: Bot }
+  // Mock data
+  const agents: Agent[] = [
+    { id: "1", name: "Agent 1", lastUsed: "son used on Today", status: "Active" },
+    { id: "2", name: "Agent 2", lastUsed: "last used on This Week", status: "Active" },
+    { id: "3", name: "Agent 3", lastUsed: "last used on This Month", status: "Active" }
   ];
 
-  const templates = [
+  const templates: Template[] = [
+    {
+      id: "customer-service",
+      name: "Müşteri Hizmetleri",
+      description: "7/24 müşteri sorularına yanıt veren AI asistan",
+      features: ["Sık sorulan sorular", "Ürün bilgileri", "Destek talepleri"]
+    },
+    {
+      id: "sales-assistant",
+      name: "Satış Asistanı", 
+      description: "Potansiyel müşterileri niteleyip satış sürecini destekler",
+      features: ["Lead niteleme", "Ürün önerileri", "Fiyat bilgileri"]
+    },
+    {
+      id: "appointment-booking",
+      name: "Randevu Sistemi",
+      description: "Otomatik randevu alma ve yönetimi",
+      features: ["Takvim entegrasyonu", "Randevu hatırlatma", "Yeniden planlama"]
+    },
+    {
+      id: "e-commerce",
+      name: "E-ticaret Asistanı",
+      description: "Online mağaza için sipariş ve destek",
+      features: ["Sipariş takibi", "Ürün önerileri", "İade süreçleri"]
+    },
     {
       id: "restaurant",
-      name: "Restaurant Booking Assistant",
-      description: "Perfect for restaurants, cafes, and dining establishments",
-      features: ["Table reservations", "Menu inquiries", "Hours & location"],
-      icon: Calendar
+      name: "Restoran Asistanı",
+      description: "Masa rezervasyonu ve menü bilgileri",
+      features: ["Masa rezervasyonu", "Menü sorguları", "Çalışma saatleri"]
     },
     {
-      id: "ecommerce",
-      name: "E-commerce Support Bot",
-      description: "Handle order tracking, returns, and product questions",
-      features: ["Order status", "Product info", "Return policy"],
-      icon: ShoppingCart
-    },
-    {
-      id: "appointment",
-      name: "Appointment Scheduler",
-      description: "Ideal for healthcare, beauty, and professional services",
-      features: ["Booking management", "Reminders", "Rescheduling"],
-      icon: Calendar
-    },
-    {
-      id: "lead",
-      name: "Lead Generation Bot",
-      description: "Qualify prospects and collect contact information",
-      features: ["Lead scoring", "Contact forms", "Follow-up"],
-      icon: Users
+      id: "healthcare",
+      name: "Sağlık Asistanı",
+      description: "Hasta bilgilendirme ve randevu sistemi",
+      features: ["Randevu alma", "Genel bilgiler", "Hatırlatmalar"]
     }
+  ];
+
+  const industries = [
+    "Restoran / Kafe",
+    "E-ticaret",
+    "Sağlık",
+    "Güzellik / Kuaför",
+    "Eğitim",
+    "Gayrimenkul",
+    "Finans",
+    "Teknoloji",
+    "Turizm",
+    "Diğer"
+  ];
+
+  const taskOptions = [
+    "Müşteri sorularını cevaplasın",
+    "Randevu alsın", 
+    "Sipariş alsın",
+    "Ödeme yardımcı olsun",
+    "Ürün önerisi sunsun",
+    "Teknik destek",
+    "Başvuru/kayıt alsın",
+    "Takvimle entegre olsun"
   ];
 
   const communicationStyles = [
-    { id: "friendly", name: "Friendly", description: "Warm and approachable" },
-    { id: "professional", name: "Professional", description: "Business-focused and formal" },
-    { id: "casual", name: "Casual", description: "Relaxed and conversational" },
-    { id: "sales", name: "Sales-focused", description: "Persuasive and results-driven" }
+    "Resmî",
+    "Samimi", 
+    "Mizahi",
+    "Sessiz",
+    "Özgün Karakter"
   ];
 
-  const tones = [
-    { id: "cheerful", name: "Cheerful", description: "Upbeat and positive" },
-    { id: "calm", name: "Calm", description: "Steady and reassuring" },
-    { id: "confident", name: "Confident", description: "Authoritative and sure" },
-    { id: "helpful", name: "Helpful", description: "Supportive and solution-oriented" }
-  ];
+  const totalSteps = 6;
+  const progressPercentage = (currentStep / totalSteps) * 100;
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -147,14 +203,42 @@ const Builder = () => {
     }
   };
 
+  const handleTaskToggle = (task: string) => {
+    setStepData(prev => ({
+      ...prev,
+      tasks: prev.tasks.includes(task) 
+        ? prev.tasks.filter(t => t !== task)
+        : [...prev.tasks, task]
+    }));
+  };
+
+  const handleIntegrationToggle = (integration: keyof StepData['integrations']) => {
+    setStepData(prev => ({
+      ...prev,
+      integrations: {
+        ...prev.integrations,
+        [integration]: !prev.integrations[integration]
+      }
+    }));
+  };
+
   const handleDeploy = () => {
-    // Handle agent deployment
-    console.log("Deploying agent...");
+    // Handle deployment logic
+    console.log("Agent deployed!", stepData);
+    setIsWizardOpen(false);
     setCurrentStep(1);
-    setSelectedAgentType("");
-    setBusinessInfo({ name: "", industry: "", hours: "", services: "" });
-    setPersonality({ style: "", tone: "" });
-    setIntegrations({ whatsapp: false, email: false, calendar: false, phone: false });
+    // Reset form data if needed
+  };
+
+  const openTemplateModal = (template: Template) => {
+    setSelectedTemplate(template);
+    setIsTemplateModalOpen(true);
+  };
+
+  const useTemplate = () => {
+    // Apply template to wizard
+    setIsTemplateModalOpen(false);
+    setIsWizardOpen(true);
   };
 
   const renderWizardStep = () => {
@@ -163,32 +247,55 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Choose Your Agent Type</h3>
-              <p className="text-muted-foreground">What will your AI agent help you with?</p>
+              <h3 className="text-xl font-semibold mb-2">İşletmeni Tanıyalım</h3>
+              <p className="text-muted-foreground">İşletmen hakkında temel bilgileri öğrenelim</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {agentTypes.map((type) => {
-                const IconComponent = type.icon;
-                return (
-                  <Card 
-                    key={type.id} 
-                    className={`cursor-pointer transition-all hover:shadow-md ${
-                      selectedAgentType === type.id ? 'ring-2 ring-primary' : ''
-                    }`}
-                    onClick={() => setSelectedAgentType(type.id)}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-start space-x-3">
-                        <IconComponent className="h-6 w-6 text-primary mt-1" />
-                        <div>
-                          <h4 className="font-medium">{type.name}</h4>
-                          <p className="text-sm text-muted-foreground">{type.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+            
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="industry">İşletmen hangi sektörde faaliyet gösteriyor?</Label>
+                <Select value={stepData.industry} onValueChange={(value) => setStepData(prev => ({ ...prev, industry: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sektör seçin" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {industries.map((industry) => (
+                      <SelectItem key={industry} value={industry}>{industry}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="businessName">İşletmenin adı nedir?</Label>
+                <Input
+                  id="businessName"
+                  value={stepData.businessName}
+                  onChange={(e) => setStepData(prev => ({ ...prev, businessName: e.target.value }))}
+                  placeholder="İşletme adını girin"
+                />
+              </div>
+
+              <div>
+                <Label className="text-sm font-medium">Web siten ya da sosyal medya adresin var mı? (Opsiyonel)</Label>
+                <div className="space-y-3 mt-2">
+                  <Input
+                    value={stepData.website}
+                    onChange={(e) => setStepData(prev => ({ ...prev, website: e.target.value }))}
+                    placeholder="Web sitesi"
+                  />
+                  <Input
+                    value={stepData.instagram}
+                    onChange={(e) => setStepData(prev => ({ ...prev, instagram: e.target.value }))}
+                    placeholder="Instagram"
+                  />
+                  <Input
+                    value={stepData.twitter}
+                    onChange={(e) => setStepData(prev => ({ ...prev, twitter: e.target.value }))}
+                    placeholder="Twitter"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -197,44 +304,29 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Business Information</h3>
-              <p className="text-muted-foreground">Tell us about your business to personalize your agent.</p>
+              <h3 className="text-xl font-semibold mb-2">Bu Agent Ne İş Yapacak?</h3>
+              <p className="text-muted-foreground">Hangi görevleri yerine getirmesini istiyorsun?</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="business-name">Business Name</Label>
-                <Input 
-                  id="business-name"
-                  value={businessInfo.name}
-                  onChange={(e) => setBusinessInfo({...businessInfo, name: e.target.value})}
-                  placeholder="Enter your business name"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="industry">Industry</Label>
-                <Input 
-                  id="industry"
-                  value={businessInfo.industry}
-                  onChange={(e) => setBusinessInfo({...businessInfo, industry: e.target.value})}
-                  placeholder="e.g., Restaurant, Healthcare, Retail"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="hours">Working Hours</Label>
-                <Input 
-                  id="hours"
-                  value={businessInfo.hours}
-                  onChange={(e) => setBusinessInfo({...businessInfo, hours: e.target.value})}
-                  placeholder="e.g., Mon-Fri 9AM-6PM"
-                />
-              </div>
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="services">Services/Products</Label>
-                <Textarea 
-                  id="services"
-                  value={businessInfo.services}
-                  onChange={(e) => setBusinessInfo({...businessInfo, services: e.target.value})}
-                  placeholder="Briefly describe what you offer..."
+            
+            <div className="space-y-4">
+              {taskOptions.map((task) => (
+                <div key={task} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={task}
+                    checked={stepData.tasks.includes(task)}
+                    onCheckedChange={() => handleTaskToggle(task)}
+                  />
+                  <Label htmlFor={task}>{task}</Label>
+                </div>
+              ))}
+              
+              <div className="pt-4">
+                <Label htmlFor="customTask">Diğer (özel görev)</Label>
+                <Textarea
+                  id="customTask"
+                  value={stepData.customTask}
+                  onChange={(e) => setStepData(prev => ({ ...prev, customTask: e.target.value }))}
+                  placeholder="Özel bir görev varsa açıklayın..."
                   rows={3}
                 />
               </div>
@@ -246,51 +338,81 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Personality & Tone</h3>
-              <p className="text-muted-foreground">How should your agent communicate with customers?</p>
+              <h3 className="text-xl font-semibold mb-2">Nasıl Davransın?</h3>
+              <p className="text-muted-foreground">İletişim tarzını seç</p>
             </div>
             
-            <div className="space-y-6">
-              <div>
-                <Label className="text-base font-medium">Communication Style</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                  {communicationStyles.map((style) => (
-                    <Card 
-                      key={style.id}
-                      className={`cursor-pointer transition-all hover:shadow-md ${
-                        personality.style === style.id ? 'ring-2 ring-primary' : ''
-                      }`}
-                      onClick={() => setPersonality({...personality, style: style.id})}
-                    >
-                      <CardContent className="p-4">
-                        <h4 className="font-medium">{style.name}</h4>
-                        <p className="text-sm text-muted-foreground">{style.description}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <Label className="text-base font-medium">Tone</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                  {tones.map((tone) => (
-                    <Card 
-                      key={tone.id}
-                      className={`cursor-pointer transition-all hover:shadow-md ${
-                        personality.tone === tone.id ? 'ring-2 ring-primary' : ''
-                      }`}
-                      onClick={() => setPersonality({...personality, tone: tone.id})}
-                    >
-                      <CardContent className="p-4">
-                        <h4 className="font-medium">{tone.name}</h4>
-                        <p className="text-sm text-muted-foreground">{tone.description}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {communicationStyles.map((style) => (
+                <Card 
+                  key={style}
+                  className={`cursor-pointer transition-all hover:shadow-md ${
+                    stepData.communicationStyle === style ? 'ring-2 ring-primary' : ''
+                  }`}
+                  onClick={() => setStepData(prev => ({ ...prev, communicationStyle: style }))}
+                >
+                  <CardContent className="p-4">
+                    <h4 className="font-medium">{style}</h4>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
+
+            {stepData.communicationStyle === "Özgün Karakter" && (
+              <div className="space-y-4 p-4 border rounded-lg">
+                <h4 className="font-medium">Karakter Detayları</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="charName">İsim</Label>
+                    <Input
+                      id="charName"
+                      value={stepData.customCharacter?.name || ""}
+                      onChange={(e) => setStepData(prev => ({
+                        ...prev,
+                        customCharacter: { ...prev.customCharacter, name: e.target.value } as any
+                      }))}
+                      placeholder="Karakter ismi"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="charAge">Yaş</Label>
+                    <Input
+                      id="charAge"
+                      value={stepData.customCharacter?.age || ""}
+                      onChange={(e) => setStepData(prev => ({
+                        ...prev,
+                        customCharacter: { ...prev.customCharacter, age: e.target.value } as any
+                      }))}
+                      placeholder="Yaş"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="charGender">Cinsiyet</Label>
+                    <Input
+                      id="charGender"
+                      value={stepData.customCharacter?.gender || ""}
+                      onChange={(e) => setStepData(prev => ({
+                        ...prev,
+                        customCharacter: { ...prev.customCharacter, gender: e.target.value } as any
+                      }))}
+                      placeholder="Cinsiyet"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="charStyle">Konuşma Tarzı</Label>
+                    <Input
+                      id="charStyle"
+                      value={stepData.customCharacter?.style || ""}
+                      onChange={(e) => setStepData(prev => ({
+                        ...prev,
+                        customCharacter: { ...prev.customCharacter, style: e.target.value } as any
+                      }))}
+                      placeholder="Konuşma tarzı"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
 
@@ -298,42 +420,66 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Integrations</h3>
-              <p className="text-muted-foreground">Connect your agent with external platforms (optional).</p>
+              <h3 className="text-xl font-semibold mb-2">Hangi Bilgilerle Çalışsın?</h3>
+              <p className="text-muted-foreground">Agent'ın kullanacağı bilgi kaynaklarını ekle</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { key: 'whatsapp', name: 'WhatsApp', icon: MessageSquare, description: 'Connect with WhatsApp Business' },
-                { key: 'email', name: 'Email', icon: Mail, description: 'Send and receive emails' },
-                { key: 'calendar', name: 'Google Calendar', icon: Calendar, description: 'Schedule appointments' },
-                { key: 'phone', name: 'Phone Support', icon: Phone, description: 'Voice call integration' }
-              ].map((integration) => {
-                const IconComponent = integration.icon;
-                return (
-                  <Card key={integration.key} className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <IconComponent className="h-5 w-5 text-primary" />
-                        <div>
-                          <h4 className="font-medium">{integration.name}</h4>
-                          <p className="text-sm text-muted-foreground">{integration.description}</p>
-                        </div>
-                      </div>
-                      <Button
-                        variant={integrations[integration.key as keyof typeof integrations] ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setIntegrations({
-                          ...integrations,
-                          [integration.key]: !integrations[integration.key as keyof typeof integrations]
-                        })}
-                      >
-                        {integrations[integration.key as keyof typeof integrations] ? "Connected" : "Connect"}
-                      </Button>
-                    </div>
-                  </Card>
-                );
-              })}
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="faq">FAQ (Sık Sorulan Sorular)</Label>
+                <Textarea
+                  id="faq"
+                  value={stepData.knowledgeBase.faq}
+                  onChange={(e) => setStepData(prev => ({
+                    ...prev,
+                    knowledgeBase: { ...prev.knowledgeBase, faq: e.target.value }
+                  }))}
+                  placeholder="Sık sorulan sorular ve cevapları..."
+                  rows={4}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="productInfo">Ürün-Hizmet Bilgisi</Label>
+                <div className="space-y-2">
+                  <Textarea
+                    id="productInfo"
+                    value={stepData.knowledgeBase.productInfo}
+                    onChange={(e) => setStepData(prev => ({
+                      ...prev,
+                      knowledgeBase: { ...prev.knowledgeBase, productInfo: e.target.value }
+                    }))}
+                    placeholder="Ürün ve hizmet detayları..."
+                    rows={4}
+                  />
+                  <div className="flex items-center gap-2 p-3 border border-dashed rounded-lg">
+                    <Upload className="h-4 w-4" />
+                    <span className="text-sm text-muted-foreground">Google Sheet yükle (opsiyonel)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="websiteLinks">Web Sayfaları Linkleri</Label>
+                <Textarea
+                  id="websiteLinks"
+                  value={stepData.knowledgeBase.websiteLinks}
+                  onChange={(e) => setStepData(prev => ({
+                    ...prev,
+                    knowledgeBase: { ...prev.knowledgeBase, websiteLinks: e.target.value }
+                  }))}
+                  placeholder="İlgili web sayfası linklerini ekle..."
+                  rows={3}
+                />
+              </div>
+
+              <div className="p-4 border border-dashed rounded-lg">
+                <h4 className="font-medium mb-2">Opsiyonel</h4>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>• Instagram mesaj geçmişi</p>
+                  <p>• WhatsApp mesaj geçmişi</p>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -342,52 +488,102 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Review & Deploy</h3>
-              <p className="text-muted-foreground">Review your agent configuration before deployment.</p>
+              <h3 className="text-xl font-semibold mb-2">Entegrasyonlar</h3>
+              <p className="text-muted-foreground">Kullanmak istediğin platformları seç</p>
             </div>
             
-            <Card>
-              <CardContent className="p-6 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Agent Type</h4>
-                    <p className="mt-1">{agentTypes.find(t => t.id === selectedAgentType)?.name || "Not selected"}</p>
+            <div className="space-y-4">
+              {[
+                { key: 'googleCalendar', name: 'Google Takvim', icon: Calendar },
+                { key: 'whatsappBusiness', name: 'WhatsApp Business API', icon: MessageSquare },
+                { key: 'instagramDM', name: 'Instagram DM', icon: Instagram },
+                { key: 'websiteEmbed', name: 'Website Embed', icon: Globe },
+                { key: 'shopify', name: 'Shopify/WooCommerce', icon: ShoppingCart },
+                { key: 'crm', name: 'CRM/ERP', icon: Users }
+              ].map((integration) => {
+                const IconComponent = integration.icon;
+                return (
+                  <div key={integration.key} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <IconComponent className="h-5 w-5 text-primary" />
+                      <span className="font-medium">{integration.name}</span>
+                    </div>
+                    <Switch
+                      checked={stepData.integrations[integration.key as keyof typeof stepData.integrations]}
+                      onCheckedChange={() => handleIntegrationToggle(integration.key as keyof typeof stepData.integrations)}
+                    />
                   </div>
-                  <div>
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Business</h4>
-                    <p className="mt-1">{businessInfo.name || "Not specified"}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Communication Style</h4>
-                    <p className="mt-1">{communicationStyles.find(s => s.id === personality.style)?.name || "Not selected"}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Tone</h4>
-                    <p className="mt-1">{tones.find(t => t.id === personality.tone)?.name || "Not selected"}</p>
+                );
+              })}
+              
+              <div className="text-center pt-4">
+                <Button variant="ghost" className="text-muted-foreground">
+                  Şimdilik geç
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Önizleme ve Yayınla</h3>
+              <p className="text-muted-foreground">Agent'ın son halini kontrol et</p>
+            </div>
+            
+            <Card className="p-6">
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Agent Adı</h4>
+                  <p className="mt-1">{stepData.businessName || "Belirtilmedi"} Agent'ı</p>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Görev Özeti</h4>
+                  <div className="mt-1 space-y-1">
+                    {stepData.tasks.map((task, index) => (
+                      <Badge key={index} variant="secondary" className="mr-1 mb-1">{task}</Badge>
+                    ))}
+                    {stepData.customTask && (
+                      <Badge variant="secondary" className="mr-1 mb-1">{stepData.customTask}</Badge>
+                    )}
                   </div>
                 </div>
                 
                 <div>
-                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Integrations</h4>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {Object.entries(integrations).filter(([_, enabled]) => enabled).map(([key, _]) => (
-                      <Badge key={key} variant="secondary">
-                        {key.charAt(0).toUpperCase() + key.slice(1)}
-                      </Badge>
-                    ))}
-                    {Object.values(integrations).every(v => !v) && (
-                      <span className="text-muted-foreground">None selected</span>
-                    )}
+                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Persona Özeti</h4>
+                  <p className="mt-1">{stepData.communicationStyle || "Belirtilmedi"}</p>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Entegrasyon Özeti</h4>
+                  <div className="mt-1 space-y-1">
+                    {Object.entries(stepData.integrations)
+                      .filter(([_, enabled]) => enabled)
+                      .map(([key, _]) => (
+                        <Badge key={key} variant="outline" className="mr-1 mb-1">
+                          {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                        </Badge>
+                      ))}
                   </div>
                 </div>
-              </CardContent>
+              </div>
             </Card>
             
-            <div className="bg-muted/50 p-4 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium">Your agent is private and secure by default</span>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Button variant="outline" className="w-full">
+                <Eye className="w-4 h-4 mr-2" />
+                Önizlemeyi Gör
+              </Button>
+              <Button onClick={handleDeploy} className="w-full">
+                <Play className="w-4 h-4 mr-2" />
+                Yayına Al
+              </Button>
+              <Button variant="ghost" className="w-full">
+                Daha sonra düzenle
+              </Button>
             </div>
           </div>
         );
@@ -402,206 +598,186 @@ const Builder = () => {
       <Header />
       
       <div className="container mx-auto px-4 py-8">
-        {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">AI Agent Builder</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Create and manage AI agents customized for your business — no coding required.
-          </p>
-        </div>
-
-        <Tabs defaultValue="create" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="create">Create Agent</TabsTrigger>
-            <TabsTrigger value="templates">Templates</TabsTrigger>
-            <TabsTrigger value="manage">My Agents</TabsTrigger>
-          </TabsList>
-
-          {/* Agent Creation Wizard */}
-          <TabsContent value="create" className="space-y-8">
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <CardTitle>Step {currentStep} of {totalSteps}</CardTitle>
-                    <CardDescription>Build your AI agent step by step</CardDescription>
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {Math.round(progressPercentage)}% complete
-                  </div>
-                </div>
-                <Progress value={progressPercentage} className="mt-4" />
-              </CardHeader>
-              
-              <CardContent className="min-h-[400px]">
-                {renderWizardStep()}
-              </CardContent>
-              
-              <CardFooter className="flex justify-between">
-                <Button 
-                  variant="outline" 
-                  onClick={handlePrev}
-                  disabled={currentStep === 1}
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Previous
-                </Button>
-                
-                {currentStep === totalSteps ? (
-                  <Button onClick={handleDeploy} variant="hero">
-                    <Zap className="w-4 h-4 mr-2" />
-                    Deploy Agent
-                  </Button>
-                ) : (
-                  <Button onClick={handleNext}>
-                    Next
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-          </TabsContent>
-
-          {/* Prebuilt Templates */}
-          <TabsContent value="templates" className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-semibold mb-2">Prebuilt Agent Templates</h2>
-              <p className="text-muted-foreground">Get started quickly with these ready-to-use templates.</p>
-            </div>
+        {/* Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* LEFT PANEL */}
+          <div className="space-y-8">
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              {templates.map((template) => {
-                const IconComponent = template.icon;
-                return (
-                  <Card key={template.id} className="hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-center space-x-3">
-                        <IconComponent className="h-8 w-8 text-primary" />
-                        <div>
-                          <CardTitle className="text-lg">{template.name}</CardTitle>
-                          <CardDescription>{template.description}</CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    
-                    <CardContent>
-                      <div className="space-y-2">
-                        <h4 className="font-medium text-sm">Features included:</h4>
-                        <ul className="text-sm text-muted-foreground space-y-1">
-                          {template.features.map((feature, index) => (
-                            <li key={index} className="flex items-center space-x-2">
-                              <CheckCircle className="h-3 w-3 text-green-600" />
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </CardContent>
-                    
-                    <CardFooter>
-                      <Button className="w-full">
-                        Use this template
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                );
-              })}
-            </div>
-          </TabsContent>
-
-          {/* Agent Management */}
-          <TabsContent value="manage" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-2xl font-semibold mb-2">Your AI Agents</h2>
-                <p className="text-muted-foreground">Manage and monitor your deployed agents.</p>
-              </div>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" />
-                Create New Agent
-              </Button>
-            </div>
-
-            {agents.length === 0 ? (
-              <Card className="text-center py-12">
-                <CardContent>
-                  <Bot className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">You haven't created any agents yet.</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Get started by creating your first AI agent using our step-by-step builder.
-                  </p>
-                  <Button>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Start Building
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* My Agents Card */}
+            <Card className="bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm border-primary/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5" />
+                  My Agents
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 {agents.map((agent) => (
-                  <Card key={agent.id} className="hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <Bot className="h-8 w-8 text-primary" />
-                          <div>
-                            <CardTitle className="text-lg">{agent.name}</CardTitle>
-                            <CardDescription>{agent.type}</CardDescription>
+                  <div key={agent.id} className="flex items-center justify-between p-3 border rounded-lg bg-background/50">
+                    <div>
+                      <p className="font-medium">{agent.name}</p>
+                      <p className="text-sm text-muted-foreground">{agent.lastUsed}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={agent.status === "Active" ? "default" : "secondary"}>
+                        {agent.status}
+                      </Badge>
+                      <Button size="sm" variant="outline">
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                <Button 
+                  variant="ghost" 
+                  className="w-full mt-4"
+                  onClick={() => navigate('/dashboard')}
+                >
+                  View All
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Templates Section */}
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Templates</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {templates.map((template) => (
+                  <Card key={template.id} className="hover:shadow-lg transition-all cursor-pointer group">
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold mb-2">{template.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                      <div className="space-y-1 mb-4">
+                        {template.features.map((feature, index) => (
+                          <div key={index} className="text-xs text-muted-foreground flex items-center gap-1">
+                            <CheckCircle className="h-3 w-3 text-green-500" />
+                            {feature}
                           </div>
-                        </div>
-                        <Badge variant={agent.status === "Active" ? "default" : agent.status === "Paused" ? "secondary" : "outline"}>
-                          {agent.status}
-                        </Badge>
+                        ))}
                       </div>
-                    </CardHeader>
-                    
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Interactions:</span>
-                          <span className="font-medium">{agent.interactions.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Created:</span>
-                          <span className="font-medium">{new Date(agent.createdAt).toLocaleDateString()}</span>
-                        </div>
-                      </div>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground"
+                        onClick={() => openTemplateModal(template)}
+                      >
+                        View Details
+                      </Button>
                     </CardContent>
-                    
-                    <CardFooter>
-                      <div className="flex space-x-2 w-full">
-                        <Button variant="outline" size="sm" className="flex-1">
-                          <Edit className="w-4 h-4 mr-1" />
-                          Edit
-                        </Button>
-                        <Button variant="outline" size="sm" className="flex-1">
-                          <Eye className="w-4 h-4 mr-1" />
-                          Preview
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          {agent.status === "Active" ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <Copy className="w-4 h-4" />
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </CardFooter>
                   </Card>
                 ))}
               </div>
-            )}
-          </TabsContent>
-        </Tabs>
+            </div>
+          </div>
 
-        {/* Trust & Privacy Footer */}
-        <div className="mt-12 text-center text-sm text-muted-foreground">
-          <p>Your agent is private and secure by default. We comply with GDPR and KVKK regulations.</p>
+          {/* RIGHT PANEL */}
+          <div className="flex items-start justify-center lg:pt-20">
+            <Card className="w-full max-w-md bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Zap className="h-8 w-8 text-primary" />
+                  </div>
+                  <h2 className="text-2xl font-bold mb-2">Builder</h2>
+                  <p className="text-muted-foreground">Create your AI worker in 2 mins!</p>
+                </div>
+                
+                <Button 
+                  size="lg" 
+                  className="w-full h-12 text-lg"
+                  onClick={() => setIsWizardOpen(true)}
+                >
+                  <Bot className="h-5 w-5 mr-2" />
+                  Start Building
+                  <ArrowRight className="h-5 w-5 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
+
+      {/* Wizard Modal */}
+      <Dialog open={isWizardOpen} onOpenChange={setIsWizardOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto backdrop-blur-xl bg-background/95">
+          <DialogHeader>
+            <div className="flex justify-between items-center">
+              <DialogTitle>Adım {currentStep}/6</DialogTitle>
+              <Button variant="ghost" size="sm" onClick={() => setIsWizardOpen(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <Progress value={progressPercentage} className="mt-4" />
+          </DialogHeader>
+          
+          <div className="py-6 min-h-[400px]">
+            {renderWizardStep()}
+          </div>
+          
+          <div className="flex justify-between pt-6 border-t">
+            <Button 
+              variant="outline" 
+              onClick={handlePrev}
+              disabled={currentStep === 1}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Geri
+            </Button>
+            
+            <Button 
+              onClick={currentStep === totalSteps ? handleDeploy : handleNext}
+            >
+              {currentStep === totalSteps ? (
+                <>
+                  <Play className="w-4 h-4 mr-2" />
+                  Yayına Al
+                </>
+              ) : (
+                <>
+                  İleri
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Template Modal */}
+      <Dialog open={isTemplateModalOpen} onOpenChange={setIsTemplateModalOpen}>
+        <DialogContent className="max-w-2xl backdrop-blur-xl bg-background/95">
+          <DialogHeader>
+            <DialogTitle>{selectedTemplate?.name}</DialogTitle>
+          </DialogHeader>
+          
+          {selectedTemplate && (
+            <div className="space-y-6 py-4">
+              <p className="text-muted-foreground">{selectedTemplate.description}</p>
+              
+              <div>
+                <h4 className="font-medium mb-3">Özellikler:</h4>
+                <div className="space-y-2">
+                  {selectedTemplate.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <span className="text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="pt-4 border-t">
+                <Button onClick={useTemplate} className="w-full">
+                  <Zap className="h-4 w-4 mr-2" />
+                  Use This Template
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

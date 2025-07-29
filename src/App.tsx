@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Pricing from "./pages/Pricing";
 import Account from "./pages/Account";
 import Builder from "./pages/Builder";
+import Dashboard from "./pages/Dashboard";
 import Documentation from "./pages/resources/Documentation";
 import Blog from "./pages/resources/Blog";
 import VideoTutorials from "./pages/resources/VideoTutorials";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/account" element={<Account />} />
           <Route path="/builder" element={<Builder />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/resources/documentation" element={<Documentation />} />
           <Route path="/resources/blog" element={<Blog />} />
           <Route path="/resources/videos" element={<VideoTutorials />} />
