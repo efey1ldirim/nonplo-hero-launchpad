@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Zap, Clock, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import aiAgentHero from "@/assets/ai-agent-hero.png";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="min-h-screen bg-gradient-subtle relative overflow-hidden">
       {/* Background glow effect */}
@@ -47,7 +49,12 @@ const HeroSection = () => {
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button variant="hero" size="lg" className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300">
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300"
+                onClick={() => navigate('/builder')}
+              >
                 Ajanınızı Oluşturmaya Başlayın
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
