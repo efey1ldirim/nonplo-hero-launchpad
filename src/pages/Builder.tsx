@@ -594,107 +594,74 @@ const Builder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
       
-      <div className="container mx-auto px-4 py-8">
-        {/* Split Layout */}
+      <div className="container mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* LEFT PANEL */}
-          <div className="space-y-8">
-            
-            {/* My Agents Card */}
-            <Card className="bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bot className="h-5 w-5" />
-                  My Agents
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+          {/* Left Panel */}
+          <div className="space-y-6">
+            {/* My Agents */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200/50">
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">My Agents</h2>
+              <div className="space-y-3">
                 {agents.map((agent) => (
-                  <div key={agent.id} className="flex items-center justify-between p-3 border rounded-lg bg-background/50">
+                  <div key={agent.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50/50">
                     <div>
-                      <p className="font-medium">{agent.name}</p>
-                      <p className="text-sm text-muted-foreground">{agent.lastUsed}</p>
+                      <h4 className="font-medium text-gray-800">{agent.name}</h4>
+                      <p className="text-sm text-gray-500">{agent.lastUsed}</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant={agent.status === "Active" ? "default" : "secondary"}>
+                    <div className="flex items-center gap-3">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
                         {agent.status}
-                      </Badge>
-                      <Button size="sm" variant="outline">
-                        <Eye className="h-4 w-4" />
+                      </span>
+                      <Button size="sm" variant="outline" className="text-gray-600 hover:text-gray-800">
+                        View
                       </Button>
                     </div>
                   </div>
                 ))}
                 <Button 
-                  variant="ghost" 
-                  className="w-full mt-4"
+                  variant="outline" 
+                  className="w-full mt-4 text-gray-600 hover:text-gray-800"
                   onClick={() => navigate('/dashboard')}
                 >
                   View All
-                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            {/* Templates Section */}
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Templates</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Templates */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200/50">
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">Templates</h2>
+              <div className="grid grid-cols-3 gap-4">
                 {templates.map((template) => (
-                  <Card key={template.id} className="hover:shadow-lg transition-all cursor-pointer group">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold mb-2">{template.name}</h3>
-                      <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
-                      <div className="space-y-1 mb-4">
-                        {template.features.map((feature, index) => (
-                          <div key={index} className="text-xs text-muted-foreground flex items-center gap-1">
-                            <CheckCircle className="h-3 w-3 text-green-500" />
-                            {feature}
-                          </div>
-                        ))}
-                      </div>
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground"
-                        onClick={() => openTemplateModal(template)}
-                      >
-                        View Details
-                      </Button>
-                    </CardContent>
-                  </Card>
+                  <div 
+                    key={template.id}
+                    className="aspect-square bg-gray-200 rounded-xl cursor-pointer transition-all hover:shadow-md hover:bg-gray-250 flex items-center justify-center"
+                    onClick={() => openTemplateModal(template)}
+                  >
+                    <div className="text-center p-2">
+                      <div className="text-xs text-gray-600 font-medium">{template.name}</div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* RIGHT PANEL */}
-          <div className="flex items-start justify-center lg:pt-20">
-            <Card className="w-full max-w-md bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 backdrop-blur-sm">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Zap className="h-8 w-8 text-primary" />
-                  </div>
-                  <h2 className="text-2xl font-bold mb-2">Builder</h2>
-                  <p className="text-muted-foreground">Create your AI worker in 2 mins!</p>
-                </div>
-                
-                <Button 
-                  size="lg" 
-                  className="w-full h-12 text-lg"
-                  onClick={() => setIsWizardOpen(true)}
-                >
-                  <Bot className="h-5 w-5 mr-2" />
-                  Start Building
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Right Panel */}
+          <div className="flex items-center justify-center">
+            <div 
+              className="bg-gradient-to-br from-blue-600 to-blue-700 text-white cursor-pointer transition-all hover:shadow-2xl hover:scale-105 rounded-2xl p-8 text-center max-w-md w-full"
+              onClick={() => setIsWizardOpen(true)}
+            >
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold mr-3">Builder</span>
+                <ArrowRight className="h-6 w-6" />
+              </div>
+              <p className="text-blue-100">create your AI worker in 2 mins!</p>
+            </div>
           </div>
         </div>
       </div>
