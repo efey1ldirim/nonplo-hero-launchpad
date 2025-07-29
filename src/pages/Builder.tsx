@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
@@ -17,148 +15,108 @@ import {
   Calendar, 
   MessageSquare, 
   ShoppingCart, 
-  CreditCard,
   HeadphonesIcon,
-  FileText,
   Users,
   ArrowRight,
   ArrowLeft,
-  Eye,
   Zap,
-  Clock,
-  X,
-  Upload,
-  Instagram,
-  Globe,
-  UserCheck,
-  Settings,
   CheckCircle,
-  Play
+  Play,
+  User,
+  Package,
+  UserCheck
 } from "lucide-react";
-
-interface Agent {
-  id: string;
-  name: string;
-  lastUsed: string;
-  status: "Active" | "Paused";
-}
 
 interface Template {
   id: string;
   name: string;
   description: string;
-  features: string[];
+  icon: any;
+  category: string;
 }
 
 interface StepData {
-  industry: string;
   businessName: string;
-  website: string;
-  instagram: string;
-  twitter: string;
-  tasks: string[];
-  customTask: string;
+  industry: string;
+  description: string;
+  goals: string[];
   communicationStyle: string;
-  customCharacter?: {
-    name: string;
-    age: string;
-    gender: string;
-    style: string;
-  };
-  knowledgeBase: {
-    faq: string;
-    productInfo: string;
-    websiteLinks: string;
-  };
-  integrations: {
-    googleCalendar: boolean;
-    whatsappBusiness: boolean;
-    instagramDM: boolean;
-    websiteEmbed: boolean;
-    shopify: boolean;
-    crm: boolean;
-  };
+  knowledgeBase: string;
+  integrations: string[];
 }
 
-const Builder = () => {
-  const navigate = useNavigate();
+const Sihirbaz = () => {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
-  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [stepData, setStepData] = useState<StepData>({
-    industry: "",
     businessName: "",
-    website: "",
-    instagram: "",
-    twitter: "",
-    tasks: [],
-    customTask: "",
+    industry: "",
+    description: "",
+    goals: [],
     communicationStyle: "",
-    knowledgeBase: {
-      faq: "",
-      productInfo: "",
-      websiteLinks: ""
-    },
-    integrations: {
-      googleCalendar: false,
-      whatsappBusiness: false,
-      instagramDM: false,
-      websiteEmbed: false,
-      shopify: false,
-      crm: false
-    }
+    knowledgeBase: "",
+    integrations: []
   });
 
-  // Mock data
-  const agents: Agent[] = [
-    { id: "1", name: "Agent 1", lastUsed: "son used on Today", status: "Active" },
-    { id: "2", name: "Agent 2", lastUsed: "last used on This Week", status: "Active" },
-    { id: "3", name: "Agent 3", lastUsed: "last used on This Month", status: "Active" }
-  ];
+  // Mock account data
+  const accountData = {
+    name: "Ahmet Yılmaz",
+    plan: "Premium Plan",
+    monthlyUsage: {
+      used: 7500,
+      total: 10000,
+      percentage: 75
+    }
+  };
 
   const templates: Template[] = [
     {
       id: "customer-service",
       name: "Müşteri Hizmetleri",
       description: "7/24 müşteri sorularına yanıt veren AI asistan",
-      features: ["Sık sorulan sorular", "Ürün bilgileri", "Destek talepleri"]
+      icon: HeadphonesIcon,
+      category: "Destek"
     },
     {
       id: "sales-assistant",
       name: "Satış Asistanı", 
       description: "Potansiyel müşterileri niteleyip satış sürecini destekler",
-      features: ["Lead niteleme", "Ürün önerileri", "Fiyat bilgileri"]
+      icon: ShoppingCart,
+      category: "Satış"
     },
     {
       id: "appointment-booking",
       name: "Randevu Sistemi",
       description: "Otomatik randevu alma ve yönetimi",
-      features: ["Takvim entegrasyonu", "Randevu hatırlatma", "Yeniden planlama"]
+      icon: Calendar,
+      category: "Randevu"
     },
     {
       id: "e-commerce",
       name: "E-ticaret Asistanı",
       description: "Online mağaza için sipariş ve destek",
-      features: ["Sipariş takibi", "Ürün önerileri", "İade süreçleri"]
+      icon: Package,
+      category: "E-ticaret"
     },
     {
       id: "restaurant",
       name: "Restoran Asistanı",
       description: "Masa rezervasyonu ve menü bilgileri",
-      features: ["Masa rezervasyonu", "Menü sorguları", "Çalışma saatleri"]
+      icon: Users,
+      category: "Restoran"
     },
     {
       id: "healthcare",
       name: "Sağlık Asistanı",
       description: "Hasta bilgilendirme ve randevu sistemi",
-      features: ["Randevu alma", "Genel bilgiler", "Hatırlatmalar"]
+      icon: UserCheck,
+      category: "Sağlık"
     }
   ];
 
   const industries = [
     "Restoran / Kafe",
-    "E-ticaret",
+    "E-ticaret", 
     "Sağlık",
     "Güzellik / Kuaför",
     "Eğitim",
@@ -169,26 +127,34 @@ const Builder = () => {
     "Diğer"
   ];
 
-  const taskOptions = [
-    "Müşteri sorularını cevaplasın",
-    "Randevu alsın", 
-    "Sipariş alsın",
-    "Ödeme yardımcı olsun",
-    "Ürün önerisi sunsun",
+  const goals = [
+    "Müşteri sorularını yanıtlama",
+    "Randevu alma", 
+    "Sipariş alma",
+    "Ödeme desteği",
+    "Ürün önerisi",
     "Teknik destek",
-    "Başvuru/kayıt alsın",
-    "Takvimle entegre olsun"
+    "Kayıt alma",
+    "Takvim entegrasyonu"
   ];
 
   const communicationStyles = [
-    "Resmî",
-    "Samimi", 
-    "Mizahi",
-    "Sessiz",
-    "Özgün Karakter"
+    "Resmî ve Profesyonel",
+    "Samimi ve Dostane", 
+    "Mizahi ve Esprili",
+    "Kısa ve Öz"
   ];
 
-  const totalSteps = 6;
+  const integrationOptions = [
+    "WhatsApp Business",
+    "Instagram DM",
+    "Website Chat",
+    "Google Takvim",
+    "E-ticaret Platformu",
+    "CRM Sistemi"
+  ];
+
+  const totalSteps = 5;
   const progressPercentage = (currentStep / totalSteps) * 100;
 
   const handleNext = () => {
@@ -203,42 +169,37 @@ const Builder = () => {
     }
   };
 
-  const handleTaskToggle = (task: string) => {
+  const handleGoalToggle = (goal: string) => {
     setStepData(prev => ({
       ...prev,
-      tasks: prev.tasks.includes(task) 
-        ? prev.tasks.filter(t => t !== task)
-        : [...prev.tasks, task]
+      goals: prev.goals.includes(goal) 
+        ? prev.goals.filter(g => g !== goal)
+        : [...prev.goals, goal]
     }));
   };
 
-  const handleIntegrationToggle = (integration: keyof StepData['integrations']) => {
+  const handleIntegrationToggle = (integration: string) => {
     setStepData(prev => ({
       ...prev,
-      integrations: {
-        ...prev.integrations,
-        [integration]: !prev.integrations[integration]
-      }
+      integrations: prev.integrations.includes(integration)
+        ? prev.integrations.filter(i => i !== integration)
+        : [...prev.integrations, integration]
     }));
   };
 
-  const handleDeploy = () => {
-    // Handle deployment logic
-    console.log("Agent deployed!", stepData);
+  const handleFinish = () => {
+    console.log("Agent oluşturuldu!", stepData);
     setIsWizardOpen(false);
     setCurrentStep(1);
-    // Reset form data if needed
-  };
-
-  const openTemplateModal = (template: Template) => {
-    setSelectedTemplate(template);
-    setIsTemplateModalOpen(true);
-  };
-
-  const useTemplate = () => {
-    // Apply template to wizard
-    setIsTemplateModalOpen(false);
-    setIsWizardOpen(true);
+    setStepData({
+      businessName: "",
+      industry: "",
+      description: "",
+      goals: [],
+      communicationStyle: "",
+      knowledgeBase: "",
+      integrations: []
+    });
   };
 
   const renderWizardStep = () => {
@@ -247,13 +208,23 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">İşletmeni Tanıyalım</h3>
-              <p className="text-muted-foreground">İşletmen hakkında temel bilgileri öğrenelim</p>
+              <h3 className="text-xl font-semibold mb-2">İşletmenizi Tanıyalım</h3>
+              <p className="text-muted-foreground">İşletmeniz hakkında temel bilgileri öğrenelim</p>
             </div>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="industry">İşletmen hangi sektörde faaliyet gösteriyor?</Label>
+                <Label htmlFor="businessName">İşletmenizin adı nedir?</Label>
+                <Input
+                  id="businessName"
+                  value={stepData.businessName}
+                  onChange={(e) => setStepData(prev => ({ ...prev, businessName: e.target.value }))}
+                  placeholder="İşletme adını girin"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="industry">Hangi sektörde faaliyet gösteriyorsunuz?</Label>
                 <Select value={stepData.industry} onValueChange={(value) => setStepData(prev => ({ ...prev, industry: value }))}>
                   <SelectTrigger>
                     <SelectValue placeholder="Sektör seçin" />
@@ -267,34 +238,14 @@ const Builder = () => {
               </div>
 
               <div>
-                <Label htmlFor="businessName">İşletmenin adı nedir?</Label>
-                <Input
-                  id="businessName"
-                  value={stepData.businessName}
-                  onChange={(e) => setStepData(prev => ({ ...prev, businessName: e.target.value }))}
-                  placeholder="İşletme adını girin"
+                <Label htmlFor="description">İşletmenizi kısaca tanımlayın</Label>
+                <Textarea
+                  id="description"
+                  value={stepData.description}
+                  onChange={(e) => setStepData(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="İşletmenizin ne yaptığını kısaca açıklayın..."
+                  rows={3}
                 />
-              </div>
-
-              <div>
-                <Label className="text-sm font-medium">Web siten ya da sosyal medya adresin var mı? (Opsiyonel)</Label>
-                <div className="space-y-3 mt-2">
-                  <Input
-                    value={stepData.website}
-                    onChange={(e) => setStepData(prev => ({ ...prev, website: e.target.value }))}
-                    placeholder="Web sitesi"
-                  />
-                  <Input
-                    value={stepData.instagram}
-                    onChange={(e) => setStepData(prev => ({ ...prev, instagram: e.target.value }))}
-                    placeholder="Instagram"
-                  />
-                  <Input
-                    value={stepData.twitter}
-                    onChange={(e) => setStepData(prev => ({ ...prev, twitter: e.target.value }))}
-                    placeholder="Twitter"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -304,32 +255,21 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Bu Agent Ne İş Yapacak?</h3>
-              <p className="text-muted-foreground">Hangi görevleri yerine getirmesini istiyorsun?</p>
+              <h3 className="text-xl font-semibold mb-2">AI Asistanınızın Hedefleri</h3>
+              <p className="text-muted-foreground">Hangi görevleri yerine getirmesini istiyorsunuz?</p>
             </div>
             
             <div className="space-y-4">
-              {taskOptions.map((task) => (
-                <div key={task} className="flex items-center space-x-2">
+              {goals.map((goal) => (
+                <div key={goal} className="flex items-center space-x-2">
                   <Checkbox
-                    id={task}
-                    checked={stepData.tasks.includes(task)}
-                    onCheckedChange={() => handleTaskToggle(task)}
+                    id={goal}
+                    checked={stepData.goals.includes(goal)}
+                    onCheckedChange={() => handleGoalToggle(goal)}
                   />
-                  <Label htmlFor={task}>{task}</Label>
+                  <Label htmlFor={goal}>{goal}</Label>
                 </div>
               ))}
-              
-              <div className="pt-4">
-                <Label htmlFor="customTask">Diğer (özel görev)</Label>
-                <Textarea
-                  id="customTask"
-                  value={stepData.customTask}
-                  onChange={(e) => setStepData(prev => ({ ...prev, customTask: e.target.value }))}
-                  placeholder="Özel bir görev varsa açıklayın..."
-                  rows={3}
-                />
-              </div>
             </div>
           </div>
         );
@@ -338,8 +278,8 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Nasıl Davransın?</h3>
-              <p className="text-muted-foreground">İletişim tarzını seç</p>
+              <h3 className="text-xl font-semibold mb-2">İletişim Tarzı</h3>
+              <p className="text-muted-foreground">Asistanınızın nasıl iletişim kurmasını istiyorsunuz?</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -357,62 +297,6 @@ const Builder = () => {
                 </Card>
               ))}
             </div>
-
-            {stepData.communicationStyle === "Özgün Karakter" && (
-              <div className="space-y-4 p-4 border rounded-lg">
-                <h4 className="font-medium">Karakter Detayları</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="charName">İsim</Label>
-                    <Input
-                      id="charName"
-                      value={stepData.customCharacter?.name || ""}
-                      onChange={(e) => setStepData(prev => ({
-                        ...prev,
-                        customCharacter: { ...prev.customCharacter, name: e.target.value } as any
-                      }))}
-                      placeholder="Karakter ismi"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="charAge">Yaş</Label>
-                    <Input
-                      id="charAge"
-                      value={stepData.customCharacter?.age || ""}
-                      onChange={(e) => setStepData(prev => ({
-                        ...prev,
-                        customCharacter: { ...prev.customCharacter, age: e.target.value } as any
-                      }))}
-                      placeholder="Yaş"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="charGender">Cinsiyet</Label>
-                    <Input
-                      id="charGender"
-                      value={stepData.customCharacter?.gender || ""}
-                      onChange={(e) => setStepData(prev => ({
-                        ...prev,
-                        customCharacter: { ...prev.customCharacter, gender: e.target.value } as any
-                      }))}
-                      placeholder="Cinsiyet"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="charStyle">Konuşma Tarzı</Label>
-                    <Input
-                      id="charStyle"
-                      value={stepData.customCharacter?.style || ""}
-                      onChange={(e) => setStepData(prev => ({
-                        ...prev,
-                        customCharacter: { ...prev.customCharacter, style: e.target.value } as any
-                      }))}
-                      placeholder="Konuşma tarzı"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         );
 
@@ -420,64 +304,28 @@ const Builder = () => {
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Hangi Bilgilerle Çalışsın?</h3>
-              <p className="text-muted-foreground">Agent'ın kullanacağı bilgi kaynaklarını ekle</p>
+              <h3 className="text-xl font-semibold mb-2">Bilgi Bankası</h3>
+              <p className="text-muted-foreground">Asistanınızın kullanacağı bilgi kaynaklarını ekleyin</p>
             </div>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="faq">FAQ (Sık Sorulan Sorular)</Label>
+                <Label htmlFor="knowledgeBase">Bilgi Bankası İçeriği</Label>
                 <Textarea
-                  id="faq"
-                  value={stepData.knowledgeBase.faq}
-                  onChange={(e) => setStepData(prev => ({
-                    ...prev,
-                    knowledgeBase: { ...prev.knowledgeBase, faq: e.target.value }
-                  }))}
-                  placeholder="Sık sorulan sorular ve cevapları..."
-                  rows={4}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="productInfo">Ürün-Hizmet Bilgisi</Label>
-                <div className="space-y-2">
-                  <Textarea
-                    id="productInfo"
-                    value={stepData.knowledgeBase.productInfo}
-                    onChange={(e) => setStepData(prev => ({
-                      ...prev,
-                      knowledgeBase: { ...prev.knowledgeBase, productInfo: e.target.value }
-                    }))}
-                    placeholder="Ürün ve hizmet detayları..."
-                    rows={4}
-                  />
-                  <div className="flex items-center gap-2 p-3 border border-dashed rounded-lg">
-                    <Upload className="h-4 w-4" />
-                    <span className="text-sm text-muted-foreground">Google Sheet yükle (opsiyonel)</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="websiteLinks">Web Sayfaları Linkleri</Label>
-                <Textarea
-                  id="websiteLinks"
-                  value={stepData.knowledgeBase.websiteLinks}
-                  onChange={(e) => setStepData(prev => ({
-                    ...prev,
-                    knowledgeBase: { ...prev.knowledgeBase, websiteLinks: e.target.value }
-                  }))}
-                  placeholder="İlgili web sayfası linklerini ekle..."
-                  rows={3}
+                  id="knowledgeBase"
+                  value={stepData.knowledgeBase}
+                  onChange={(e) => setStepData(prev => ({ ...prev, knowledgeBase: e.target.value }))}
+                  placeholder="FAQ, ürün bilgileri, şirket politikaları ve diğer önemli bilgileri buraya ekleyin..."
+                  rows={8}
                 />
               </div>
 
               <div className="p-4 border border-dashed rounded-lg">
-                <h4 className="font-medium mb-2">Opsiyonel</h4>
+                <h4 className="font-medium mb-2">Gelişmiş Seçenekler (Opsiyonel)</h4>
                 <div className="text-sm text-muted-foreground space-y-1">
-                  <p>• Instagram mesaj geçmişi</p>
-                  <p>• WhatsApp mesaj geçmişi</p>
+                  <p>• Dosya yükleme (PDF, Word, Excel)</p>
+                  <p>• Web sitesi tarama</p>
+                  <p>• Mesaj geçmişi analizi</p>
                 </div>
               </div>
             </div>
@@ -489,101 +337,20 @@ const Builder = () => {
           <div className="space-y-6">
             <div>
               <h3 className="text-xl font-semibold mb-2">Entegrasyonlar</h3>
-              <p className="text-muted-foreground">Kullanmak istediğin platformları seç</p>
+              <p className="text-muted-foreground">Kullanmak istediğiniz platformları seçin</p>
             </div>
             
             <div className="space-y-4">
-              {[
-                { key: 'googleCalendar', name: 'Google Takvim', icon: Calendar },
-                { key: 'whatsappBusiness', name: 'WhatsApp Business API', icon: MessageSquare },
-                { key: 'instagramDM', name: 'Instagram DM', icon: Instagram },
-                { key: 'websiteEmbed', name: 'Website Embed', icon: Globe },
-                { key: 'shopify', name: 'Shopify/WooCommerce', icon: ShoppingCart },
-                { key: 'crm', name: 'CRM/ERP', icon: Users }
-              ].map((integration) => {
-                const IconComponent = integration.icon;
-                return (
-                  <div key={integration.key} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <IconComponent className="h-5 w-5 text-primary" />
-                      <span className="font-medium">{integration.name}</span>
-                    </div>
-                    <Switch
-                      checked={stepData.integrations[integration.key as keyof typeof stepData.integrations]}
-                      onCheckedChange={() => handleIntegrationToggle(integration.key as keyof typeof stepData.integrations)}
-                    />
-                  </div>
-                );
-              })}
-              
-              <div className="text-center pt-4">
-                <Button variant="ghost" className="text-muted-foreground">
-                  Şimdilik geç
-                </Button>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 6:
-        return (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Önizleme ve Yayınla</h3>
-              <p className="text-muted-foreground">Agent'ın son halini kontrol et</p>
-            </div>
-            
-            <Card className="p-6">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Agent Adı</h4>
-                  <p className="mt-1">{stepData.businessName || "Belirtilmedi"} Agent'ı</p>
+              {integrationOptions.map((integration) => (
+                <div key={integration} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={integration}
+                    checked={stepData.integrations.includes(integration)}
+                    onCheckedChange={() => handleIntegrationToggle(integration)}
+                  />
+                  <Label htmlFor={integration}>{integration}</Label>
                 </div>
-                
-                <div>
-                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Görev Özeti</h4>
-                  <div className="mt-1 space-y-1">
-                    {stepData.tasks.map((task, index) => (
-                      <Badge key={index} variant="secondary" className="mr-1 mb-1">{task}</Badge>
-                    ))}
-                    {stepData.customTask && (
-                      <Badge variant="secondary" className="mr-1 mb-1">{stepData.customTask}</Badge>
-                    )}
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Persona Özeti</h4>
-                  <p className="mt-1">{stepData.communicationStyle || "Belirtilmedi"}</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Entegrasyon Özeti</h4>
-                  <div className="mt-1 space-y-1">
-                    {Object.entries(stepData.integrations)
-                      .filter(([_, enabled]) => enabled)
-                      .map(([key, _]) => (
-                        <Badge key={key} variant="outline" className="mr-1 mb-1">
-                          {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                        </Badge>
-                      ))}
-                  </div>
-                </div>
-              </div>
-            </Card>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Button variant="outline" className="w-full">
-                <Eye className="w-4 h-4 mr-2" />
-                Önizlemeyi Gör
-              </Button>
-              <Button onClick={handleDeploy} className="w-full">
-                <Play className="w-4 h-4 mr-2" />
-                Yayına Al
-              </Button>
-              <Button variant="ghost" className="w-full">
-                Daha sonra düzenle
-              </Button>
+              ))}
             </div>
           </div>
         );
@@ -597,89 +364,102 @@ const Builder = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
       
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Panel */}
-          <div className="space-y-6">
-            {/* My Agents */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200/50">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">My Agents</h2>
-              <div className="space-y-3">
-                {agents.map((agent) => (
-                  <div key={agent.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50/50">
-                    <div>
-                      <h4 className="font-medium text-gray-800">{agent.name}</h4>
-                      <p className="text-sm text-gray-500">{agent.lastUsed}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
-                        {agent.status}
-                      </span>
-                      <Button size="sm" variant="outline" className="text-gray-600 hover:text-gray-800">
-                        View
-                      </Button>
-                    </div>
+      <div className="container mx-auto px-4 py-8">
+        {/* Top Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+          {/* Account Info Card */}
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <User className="h-5 w-5" />
+                Hesap Bilgileri
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Hesap Adı</p>
+                <p className="font-medium">{accountData.name}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Güncel Plan</p>
+                <Badge variant="default">{accountData.plan}</Badge>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-2">Aylık Kullanım Hakkı</p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>{accountData.monthlyUsage.used.toLocaleString()}</span>
+                    <span>{accountData.monthlyUsage.total.toLocaleString()}</span>
                   </div>
-                ))}
-                <Button 
-                  variant="outline" 
-                  className="w-full mt-4 text-gray-600 hover:text-gray-800"
-                  onClick={() => navigate('/dashboard')}
-                >
-                  View All
-                </Button>
+                  <Progress value={accountData.monthlyUsage.percentage} className="w-full" />
+                  <p className="text-xs text-muted-foreground">
+                    {accountData.monthlyUsage.percentage}% kullanıldı
+                  </p>
+                </div>
               </div>
-            </div>
+            </CardContent>
+          </Card>
 
-            {/* Templates */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200/50">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Templates</h2>
-              <div className="grid grid-cols-3 gap-4">
-                {templates.map((template) => (
-                  <div 
-                    key={template.id}
-                    className="aspect-square bg-gray-200 rounded-xl cursor-pointer transition-all hover:shadow-md hover:bg-gray-250 flex items-center justify-center"
-                    onClick={() => openTemplateModal(template)}
-                  >
-                    <div className="text-center p-2">
-                      <div className="text-xs text-gray-600 font-medium">{template.name}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* Setup Wizard Card */}
+          <Card className="bg-white cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setIsWizardOpen(true)}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Kurulum Sihirbazı
+              </CardTitle>
+              <CardDescription>
+                Yapay zeka çalışanınızı 5 dakikada hazır hale getirin
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button size="lg" className="w-full">
+                <Bot className="h-4 w-4 mr-2" />
+                Sihirbazı Başlat
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
 
-          {/* Right Panel */}
-          <div className="flex items-center justify-center">
-            <div 
-              className="bg-gradient-to-br from-blue-600 to-blue-700 text-white cursor-pointer transition-all hover:shadow-2xl hover:scale-105 rounded-2xl p-8 text-center max-w-md w-full"
-              onClick={() => setIsWizardOpen(true)}
-            >
-              <div className="flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold mr-3">Builder</span>
-                <ArrowRight className="h-6 w-6" />
-              </div>
-              <p className="text-blue-100">create your AI worker in 2 mins!</p>
-            </div>
+        {/* Templates Section */}
+        <div>
+          <h2 className="text-3xl font-bold text-center mb-8">Şablonlar</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {templates.map((template) => {
+              const IconComponent = template.icon;
+              return (
+                <Card key={template.id} className="bg-white hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <IconComponent className="h-5 w-5" />
+                      {template.name}
+                    </CardTitle>
+                    <CardDescription>{template.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Badge variant="secondary">{template.category}</Badge>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>
 
       {/* Wizard Modal */}
       <Dialog open={isWizardOpen} onOpenChange={setIsWizardOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto backdrop-blur-xl bg-background/95">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <div className="flex justify-between items-center">
-              <DialogTitle>Adım {currentStep}/6</DialogTitle>
-              <Button variant="ghost" size="sm" onClick={() => setIsWizardOpen(false)}>
-                <X className="h-4 w-4" />
-              </Button>
+            <DialogTitle>Kurulum Sihirbazı</DialogTitle>
+            <div className="mt-4">
+              <div className="flex justify-between text-sm text-muted-foreground mb-2">
+                <span>Adım {currentStep} / {totalSteps}</span>
+                <span>{Math.round(progressPercentage)}% tamamlandı</span>
+              </div>
+              <Progress value={progressPercentage} className="w-full" />
             </div>
-            <Progress value={progressPercentage} className="mt-4" />
           </DialogHeader>
           
-          <div className="py-6 min-h-[400px]">
+          <div className="py-6">
             {renderWizardStep()}
           </div>
           
@@ -689,64 +469,26 @@ const Builder = () => {
               onClick={handlePrev}
               disabled={currentStep === 1}
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="h-4 w-4 mr-2" />
               Geri
             </Button>
             
-            <Button 
-              onClick={currentStep === totalSteps ? handleDeploy : handleNext}
-            >
-              {currentStep === totalSteps ? (
-                <>
-                  <Play className="w-4 h-4 mr-2" />
-                  Yayına Al
-                </>
-              ) : (
-                <>
-                  İleri
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </>
-              )}
-            </Button>
+            {currentStep === totalSteps ? (
+              <Button onClick={handleFinish}>
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Tamamla
+              </Button>
+            ) : (
+              <Button onClick={handleNext}>
+                İleri
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            )}
           </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Template Modal */}
-      <Dialog open={isTemplateModalOpen} onOpenChange={setIsTemplateModalOpen}>
-        <DialogContent className="max-w-2xl backdrop-blur-xl bg-background/95">
-          <DialogHeader>
-            <DialogTitle>{selectedTemplate?.name}</DialogTitle>
-          </DialogHeader>
-          
-          {selectedTemplate && (
-            <div className="space-y-6 py-4">
-              <p className="text-muted-foreground">{selectedTemplate.description}</p>
-              
-              <div>
-                <h4 className="font-medium mb-3">Özellikler:</h4>
-                <div className="space-y-2">
-                  {selectedTemplate.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-500" />
-                      <span className="text-sm">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="pt-4 border-t">
-                <Button onClick={useTemplate} className="w-full">
-                  <Zap className="h-4 w-4 mr-2" />
-                  Use This Template
-                </Button>
-              </div>
-            </div>
-          )}
         </DialogContent>
       </Dialog>
     </div>
   );
 };
 
-export default Builder;
+export default Sihirbaz;
