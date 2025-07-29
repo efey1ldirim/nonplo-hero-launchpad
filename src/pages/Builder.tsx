@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Builder = () => {
   return (
@@ -16,6 +17,7 @@ const Builder = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

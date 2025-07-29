@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Calendar, User, ArrowRight, PenTool } from "lucide-react";
 
 const Blog = () => {
@@ -204,6 +205,7 @@ const Blog = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
