@@ -4,24 +4,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MessageCircle, Clock, Send } from "lucide-react";
-
 const ContactSection = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here
     console.log("Form submitted");
   };
-
-  return (
-    <section className="py-24 bg-muted/30">
+  return <section className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Konuşalım
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            AI otomasyonu hakkında sorularınız mı var? Başlamanızda size yardımcı olmak için buradayız.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Kafanıza takılan sorular mı var? Başlamanızda size yardımcı olmak için buradayız.</p>
         </div>
 
         <div className="max-w-6xl mx-auto">
@@ -39,26 +34,14 @@ const ContactSection = () => {
                       <Label htmlFor="name" className="text-sm font-medium">
                         İsim *
                       </Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="Adınız soyadınız"
-                        required
-                        className="bg-background border-border/50"
-                      />
+                      <Input id="name" type="text" placeholder="Adınız soyadınız" required className="bg-background border-border/50" />
                     </div>
                     
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-sm font-medium">
                         E-posta *
                       </Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="email@adresiniz.com"
-                        required
-                        className="bg-background border-border/50"
-                      />
+                      <Input id="email" type="email" placeholder="email@adresiniz.com" required className="bg-background border-border/50" />
                     </div>
                   </div>
 
@@ -66,32 +49,17 @@ const ContactSection = () => {
                     <Label htmlFor="company" className="text-sm font-medium">
                       Şirket (opsiyonel)
                     </Label>
-                    <Input
-                      id="company"
-                      type="text"
-                      placeholder="Şirket adınız"
-                      className="bg-background border-border/50"
-                    />
+                    <Input id="company" type="text" placeholder="Şirket adınız" className="bg-background border-border/50" />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-sm font-medium">
                       Mesaj *
                     </Label>
-                    <Textarea
-                      id="message"
-                      placeholder="İşletmeniz hakkında bilgi verin ve size nasıl yardımcı olabileceğimizi söyleyin..."
-                      required
-                      rows={5}
-                      className="bg-background border-border/50 resize-none"
-                    />
+                    <Textarea id="message" placeholder="İşletmeniz hakkında bilgi verin ve size nasıl yardımcı olabileceğimizi söyleyin..." required rows={5} className="bg-background border-border/50 resize-none" />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full hover:scale-105 transition-all duration-300"
-                  >
+                  <Button type="submit" size="lg" className="w-full hover:scale-105 transition-all duration-300">
                     <Send className="w-4 h-4 mr-2" />
                     Mesaj Gönder
                   </Button>
@@ -166,8 +134,6 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactSection;
