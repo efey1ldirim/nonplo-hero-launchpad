@@ -274,6 +274,11 @@ const ContactSection = () => {
                   variant="ghost" 
                   size="sm"
                   className="text-primary hover:text-primary/80 hover:bg-primary/10 p-0"
+                  onClick={() => {
+                    const faqSection = document.querySelector('section:has(h2:contains("Sık Sorulan Sorular"))') || 
+                                     document.querySelector('[class*="accordion"]')?.closest('section');
+                    faqSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                 >
                   FAQ'leri İncele
                   <ArrowRight className="w-4 h-4 ml-2" />
