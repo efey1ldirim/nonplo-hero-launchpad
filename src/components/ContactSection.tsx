@@ -255,26 +255,6 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Demo CTA */}
-              <div className="backdrop-blur-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-6">
-                <div className="flex items-center mb-4">
-                  <Calendar className="w-6 h-6 text-primary mr-3" />
-                  <h4 className="font-bold text-foreground">
-                    Ücretsiz Demo Rezervasyonu
-                  </h4>
-                </div>
-                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-                  Nonplo'nun işletmenizi nasıl dönüştürebileceğini canlı görmek ister misiniz? 
-                  30 dakikalık kişiselleştirilmiş demo için randevu alın.
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
-                >
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Demo Randevusu Al
-                </Button>
-              </div>
 
               {/* FAQ CTA */}
               <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-6">
