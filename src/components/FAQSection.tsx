@@ -73,7 +73,15 @@ const FAQSection = () => {
             <p className="text-muted-foreground mb-6">
               Ekibimiz AI otomasyonuna başlamanızda size yardımcı olmak için burada
             </p>
-            <Button variant="outline" size="lg" className="hover:scale-105">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="hover:scale-105"
+              onClick={() => {
+                const contactSection = document.querySelector('section:has(form)');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Destek İle İletişime Geç
             </Button>
           </div>
