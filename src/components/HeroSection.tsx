@@ -2,11 +2,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Zap, Clock, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import aiAgentHero from "@/assets/ai-agent-hero.png";
-
 const HeroSection = () => {
   const navigate = useNavigate();
-  return (
-    <section className="min-h-screen bg-gradient-subtle relative overflow-hidden">
+  return <section className="min-h-screen bg-gradient-subtle relative overflow-hidden">
       {/* Background glow effect */}
       <div className="absolute inset-0 bg-gradient-glow opacity-50" />
       
@@ -30,10 +28,7 @@ const HeroSection = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-              Müşteri desteği, potansiyel müşteri değerlendirme ve rutin görevleri yöneten kişiselleştirilmiş AI ajanları oluşturun. 
-              Geliştirici tutmadan zaman ve para tasarrufu yapın.
-            </p>
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">Müşteri desteği, potansiyel müşteri değerlendirme ve rutin görevleri yöneten kişiselleştirilmiş yapay zeka çalışanları oluşturun. Y</p>
 
             {/* Stats */}
             <div className="flex gap-6 mb-12 justify-center">
@@ -49,12 +44,7 @@ const HeroSection = () => {
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button 
-                variant="hero" 
-                size="lg" 
-                className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300"
-                onClick={() => navigate('/builder')}
-              >
+              <Button variant="hero" size="lg" className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300" onClick={() => navigate('/builder')}>
                 Ajanınızı Oluşturmaya Başlayın
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -66,17 +56,13 @@ const HeroSection = () => {
             </div>
 
             {/* Trust indicators */}
-            <div className="text-sm text-muted-foreground">
-              ✨ 14 günlük ücretsiz deneme • 💳 Kredi kartı gerekmez
-            </div>
+            <div className="text-sm text-muted-foreground">✨ 14 günlük ücretsiz deneme </div>
           </div>
         </div>
       </div>
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
