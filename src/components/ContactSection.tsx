@@ -21,15 +21,21 @@ const ContactSection = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ContactFormData>();
 
   const onSubmit = async (data: ContactFormData) => {
+    console.log('Form submission started with data:', data);
     try {
+      console.log('Calling supabase edge function...');
       const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
         body: data
       });
 
+      console.log('Edge function response:', { result, error });
+
       if (error) {
+        console.error('Edge function error:', error);
         throw error;
       }
 
+      console.log('Email sent successfully');
       toast({
         title: "Mesaj Gönderildi!",
         description: "Mesajınız başarıyla gönderildi. Size 24 saat içinde dönüş yapacağız.",
