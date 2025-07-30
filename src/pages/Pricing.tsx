@@ -15,49 +15,49 @@ import {
 const Pricing = () => {
   const features = [
     {
-      name: "AI Agents",
+      name: "AI Ajanları",
       basic: "1",
       pro: "5", 
-      business: "Unlimited"
+      business: "Sınırsız"
     },
     {
-      name: "Conversations per month",
+      name: "Aylık Konuşma Sayısı",
       basic: "500",
-      pro: "2,500",
-      business: "Unlimited"
+      pro: "2.500",
+      business: "Sınırsız"
     },
     {
-      name: "Templates & Workflows",
-      basic: "Basic",
-      pro: "All templates",
-      business: "All + Custom"
+      name: "Şablonlar ve İş Akışları",
+      basic: "Temel",
+      pro: "Tüm şablonlar",
+      business: "Tümü + Özel"
     },
     {
-      name: "Support",
-      basic: "Email",
-      pro: "Priority",
-      business: "Dedicated manager"
+      name: "Destek",
+      basic: "E-posta",
+      pro: "Öncelikli",
+      business: "Özel hesap yöneticisi"
     },
     {
-      name: "Analytics",
+      name: "Analizler",
       basic: false,
       pro: true,
       business: true
     },
     {
-      name: "Custom Integrations",
+      name: "Özel Entegrasyonlar",
       basic: false,
       pro: true,
       business: true
     },
     {
-      name: "White-label Options",
+      name: "Beyaz Etiket Seçenekleri",
       basic: false,
       pro: false,
       business: true
     },
     {
-      name: "Custom Training",
+      name: "Özel Eğitim",
       basic: false,
       pro: false,
       business: true
@@ -71,13 +71,13 @@ const Pricing = () => {
       <section className="pt-32 pb-16 bg-gradient-to-br from-background via-primary/5 to-secondary/10">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Flexible Plans for Every Business
+            Her İşletme İçin Esnek Planlar
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Start free, upgrade when you grow. No hidden fees.
+            Ücretsiz başlayın, büyüdükçe yükseltin. Gizli ücret yok.
           </p>
           <Button variant="hero" size="lg" className="text-lg px-8 py-6">
-            Start Free Trial
+            Ücretsiz Denemeyi Başlat
           </Button>
         </div>
       </section>
@@ -90,10 +90,10 @@ const Pricing = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-foreground mb-4">
-              Compare Plans
+              Planları Karşılaştır
             </h2>
             <p className="text-xl text-muted-foreground">
-              See what's included in each plan
+              Her plana dahil olan özellikleri görün
             </p>
           </div>
 
@@ -102,13 +102,13 @@ const Pricing = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-1/4">Features</TableHead>
-                    <TableHead className="text-center">Basic</TableHead>
+                    <TableHead className="w-1/4">Özellikler</TableHead>
+                    <TableHead className="text-center">Temel</TableHead>
                     <TableHead className="text-center bg-primary/5 font-semibold">
-                      Pro
-                      <div className="text-xs text-primary font-normal mt-1">Most Popular</div>
+                      Orta
+                      <div className="text-xs text-primary font-normal mt-1">En Çok Tercih Edilen</div>
                     </TableHead>
-                    <TableHead className="text-center">Business</TableHead>
+                    <TableHead className="text-center">Plus</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -161,17 +161,17 @@ const Pricing = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Not sure which plan fits?
+            Hangi planın size uygun olduğundan emin değil misiniz?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            We're here to help you choose or customize a plan that works best for your business.
+            İşletmeniz için en uygun planı seçmenize veya özelleştirmenize yardımcı olmak için buradayız.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="outline" size="lg">
-              Contact Us
+              Bizimle İletişime Geçin
             </Button>
             <Button variant="hero" size="lg">
-              Talk to Sales
+              Satış Ekibiyle Konuş
             </Button>
           </div>
         </div>
@@ -183,23 +183,23 @@ const Pricing = () => {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <h3 className="font-semibold text-foreground mb-2">No Credit Card Required</h3>
+              <h3 className="font-semibold text-foreground mb-2">Kredi Kartı Gerekli Değil</h3>
               <p className="text-sm text-muted-foreground">
-                Start your free trial immediately without any payment information
+                Herhangi bir ödeme bilgisi olmadan ücretsiz denemenizi hemen başlatın
               </p>
             </div>
             <div>
               <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <h3 className="font-semibold text-foreground mb-2">Cancel Anytime</h3>
+              <h3 className="font-semibold text-foreground mb-2">İstediğiniz Zaman İptal Edin</h3>
               <p className="text-sm text-muted-foreground">
-                No long-term contracts or cancellation fees. Change plans as you grow
+                Uzun vadeli sözleşme veya iptal ücreti yok. Büyüdükçe planınızı değiştirin
               </p>
             </div>
             <div>
               <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <h3 className="font-semibold text-foreground mb-2">Secure Billing</h3>
+              <h3 className="font-semibold text-foreground mb-2">Güvenli Faturalandırma</h3>
               <p className="text-sm text-muted-foreground">
-                Enterprise-grade security powered by Stripe for safe transactions
+                Güvenli işlemler için Stripe tarafından desteklenen kurumsal düzeyde güvenlik
               </p>
             </div>
           </div>
