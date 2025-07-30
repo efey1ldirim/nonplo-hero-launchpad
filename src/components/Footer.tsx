@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -13,21 +13,32 @@ const Footer = () => {
               İşletmenizi güçlendiren akıllı AI ajanları oluşturun. Müşteri hizmetlerinden satış otomasyonuna kadar her alanda size yardımcı oluyoruz.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="w-9 h-9 p-0">
-                <Facebook className="w-4 h-4" />
+              <Button variant="ghost" size="sm" className="w-9 h-9 p-0" asChild>
+                <a href="https://www.facebook.com/profile.php?id=61578490186349" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="w-4 h-4" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="w-9 h-9 p-0">
-                <Twitter className="w-4 h-4" />
+              <Button variant="ghost" size="sm" className="w-9 h-9 p-0" asChild>
+                <a href="https://www.instagram.com/nonplo.ai" target="_blank" rel="noopener noreferrer">
+                  <Instagram className="w-4 h-4" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="w-9 h-9 p-0">
-                <Linkedin className="w-4 h-4" />
+              <Button variant="ghost" size="sm" className="w-9 h-9 p-0" asChild>
+                <a href="https://x.com/nonploai" target="_blank" rel="noopener noreferrer">
+                  <Twitter className="w-4 h-4" />
+                </a>
+              </Button>
+              <Button variant="ghost" size="sm" className="w-9 h-9 p-0" asChild>
+                <a href="https://www.linkedin.com/company/nonplo" target="_blank" rel="noopener noreferrer">
+                  <Linkedin className="w-4 h-4" />
+                </a>
               </Button>
             </div>
           </div>
 
           {/* Products */}
           <div className="space-y-4">
-            <h4 className="text-base font-semibold text-foreground">Ürünler</h4>
+            <h4 className="text-base font-semibold text-foreground">Sayfalar</h4>
             <ul className="space-y-2">
               <li>
                 <a href="/builder" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
@@ -85,7 +96,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4" />
-                <span>info@nonplo.com</span>
+                <span>contact@nonplo.com</span>
               </div>
               <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                 <Phone className="w-4 h-4" />
@@ -102,7 +113,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-muted-foreground mb-4 md:mb-0">
-            © 2024 Nonplo. Tüm hakları saklıdır.
+            © 2025 Nonplo. Tüm hakları saklıdır.
           </div>
           <div className="flex space-x-6 text-sm">
             <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
