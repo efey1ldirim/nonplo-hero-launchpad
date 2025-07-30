@@ -1,12 +1,51 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const NewsletterSection = () => {
-  const handleSubmit = (e: React.FormEvent) => {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle newsletter subscription here
-    console.log("Newsletter subscription submitted");
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert([{ email }]);
+
+      if (error) {
+        if (error.code === '23505') { // Unique violation
+          toast({
+            title: "Zaten kayıtlısınız!",
+            description: "Bu e-posta adresi zaten bültenimize kayıtlı.",
+            variant: "destructive",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "Başarıyla abone oldunuz!",
+          description: "Bültenimize hoş geldiniz. Size en son güncellemeleri göndereceğiz.",
+        });
+        setEmail("");
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: "Hata!",
+        description: "Abonelik işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -30,15 +69,18 @@ const NewsletterSection = () => {
             <Input
               type="email"
               placeholder="E-posta adresinizi girin"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="flex-1 bg-background border-border/50 text-center sm:text-left"
             />
             <Button 
               type="submit" 
               size="lg"
-              className="whitespace-nowrap hover:scale-105 transition-all duration-300"
+              disabled={isSubmitting}
+              className="whitespace-nowrap hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Abone Ol
+              {isSubmitting ? "Kaydediliyor..." : "Abone Ol"}
             </Button>
           </form>
 
