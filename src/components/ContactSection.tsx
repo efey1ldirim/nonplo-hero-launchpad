@@ -261,29 +261,6 @@ const ContactSection = () => {
                 </div>
               </div>
 
-
-              {/* FAQ CTA */}
-              <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-6">
-                <h4 className="font-bold text-foreground mb-3">
-                  Sık Sorulan Sorular
-                </h4>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Merak ettiklerinizin yanıtları burada olabilir.
-                </p>
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  className="text-primary hover:text-primary/80 hover:bg-primary/10 p-0"
-                  onClick={() => {
-                    const faqSection = document.querySelector('section:has(h2:contains("Sık Sorulan Sorular"))') || 
-                                     document.querySelector('[class*="accordion"]')?.closest('section');
-                    faqSection?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  FAQ'leri İncele
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
             </div>
           </div>
         </div>
