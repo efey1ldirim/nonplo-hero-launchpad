@@ -2,12 +2,58 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { supabase } from "@/integrations/supabase/client";
 import { Mail, Phone, MapPin, Send, Calendar, MessageSquare, Clock, ArrowRight, Sparkles } from "lucide-react";
 
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  subject?: string;
+  message: string;
+}
+
 const ContactSection = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted");
+  const { toast } = useToast();
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ContactFormData>();
+
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
+        body: data
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Mesaj Gönderildi!",
+        description: "Mesajınız başarıyla gönderildi. Size 24 saat içinde dönüş yapacağız.",
+      });
+      
+      reset();
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Hata!",
+        description: "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFormSubmit = (data: ContactFormData) => {
+    // Check for required fields
+    if (!data.name || !data.email || !data.message) {
+      alert("Lütfen zorunlu alanları doldurun");
+      return;
+    }
+    
+    onSubmit(data);
   };
 
   return (
@@ -47,7 +93,7 @@ const ContactSection = () => {
                   </p>
                 </div>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <Label htmlFor="name" className="text-sm font-semibold text-foreground flex items-center">
@@ -57,9 +103,12 @@ const ContactSection = () => {
                         id="name" 
                         type="text" 
                         placeholder="Adınız soyadınız" 
-                        required 
+                        {...register("name", { required: "Ad soyad gereklidir" })}
                         className="h-12 bg-background/80 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all duration-300" 
                       />
+                      {errors.name && (
+                        <p className="text-destructive text-sm mt-1">{errors.name.message}</p>
+                      )}
                     </div>
                     
                     <div className="space-y-3">
@@ -70,9 +119,18 @@ const ContactSection = () => {
                         id="email" 
                         type="email" 
                         placeholder="ornek@email.com" 
-                        required 
+                        {...register("email", { 
+                          required: "E-posta gereklidir",
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Geçerli bir e-posta adresi girin"
+                          }
+                        })}
                         className="h-12 bg-background/80 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all duration-300" 
                       />
+                      {errors.email && (
+                        <p className="text-destructive text-sm mt-1">{errors.email.message}</p>
+                      )}
                     </div>
                   </div>
 
@@ -85,6 +143,7 @@ const ContactSection = () => {
                         id="phone" 
                         type="tel" 
                         placeholder="+90 5xx xxx xx xx" 
+                        {...register("phone")}
                         className="h-12 bg-background/80 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all duration-300" 
                       />
                     </div>
@@ -97,6 +156,7 @@ const ContactSection = () => {
                         id="company" 
                         type="text" 
                         placeholder="Şirket adınız" 
+                        {...register("company")}
                         className="h-12 bg-background/80 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all duration-300" 
                       />
                     </div>
@@ -110,6 +170,7 @@ const ContactSection = () => {
                       id="subject" 
                       type="text" 
                       placeholder="Mesajınızın konusu" 
+                      {...register("subject")}
                       className="h-12 bg-background/80 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all duration-300" 
                     />
                   </div>
@@ -121,19 +182,23 @@ const ContactSection = () => {
                     <Textarea 
                       id="message" 
                       placeholder="İşletmeniz hakkında bilgi verin ve size nasıl yardımcı olabileceğimizi anlatın. Ne tür AI çözümlerine ihtiyacınız var?" 
-                      required 
+                      {...register("message", { required: "Mesaj gereklidir" })}
                       rows={6} 
                       className="bg-background/80 backdrop-blur-sm border-border/50 focus:border-primary/50 resize-none transition-all duration-300" 
                     />
+                    {errors.message && (
+                      <p className="text-destructive text-sm mt-1">{errors.message.message}</p>
+                    )}
                   </div>
 
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl"
+                    disabled={isSubmitting}
+                    className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send className="w-5 h-5 mr-3" />
-                    Mesajı Gönder
+                    {isSubmitting ? "Gönderiliyor..." : "Mesajı Gönder"}
                     <ArrowRight className="w-5 h-5 ml-3" />
                   </Button>
                 </form>
