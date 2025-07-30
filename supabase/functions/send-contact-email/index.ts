@@ -28,6 +28,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { name, email, phone, company, subject, message }: ContactEmailRequest = await req.json();
 
     console.log("Sending contact email:", { name, email, subject });
+    console.log("RESEND_API_KEY exists:", !!Deno.env.get("RESEND_API_KEY"));
 
     const emailResponse = await resend.emails.send({
       from: "Nonplo Contact Form <onboarding@resend.dev>",
@@ -50,6 +51,11 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     console.log("Email sent successfully:", emailResponse);
+    
+    if (emailResponse.error) {
+      console.error("Resend API error:", emailResponse.error);
+      throw new Error(`Resend API error: ${emailResponse.error}`);
+    }
 
     return new Response(JSON.stringify({ success: true, id: emailResponse.data?.id }), {
       status: 200,
