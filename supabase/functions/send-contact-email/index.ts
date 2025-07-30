@@ -28,7 +28,20 @@ const handler = async (req: Request): Promise<Response> => {
     const { name, email, phone, company, subject, message }: ContactEmailRequest = await req.json();
 
     console.log("Sending contact email:", { name, email, subject });
-    console.log("RESEND_API_KEY exists:", !!Deno.env.get("RESEND_API_KEY"));
+    
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    console.log("RESEND_API_KEY exists:", !!resendApiKey);
+    
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY is missing");
+      return new Response(
+        JSON.stringify({ error: "RESEND_API_KEY is not configured. Please add it to Supabase secrets." }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
 
     const emailResponse = await resend.emails.send({
       from: "Nonplo Contact Form <onboarding@resend.dev>",
