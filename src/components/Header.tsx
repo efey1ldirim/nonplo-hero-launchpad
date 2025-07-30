@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,18 +10,36 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check current user
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    checkUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const navigationItems = [
     { name: "Ana Sayfa", href: "/" },
     { name: "Oluşturucu", href: "/builder" },
     { name: "Fiyatlandırma", href: "/pricing" },
-    { name: "Hesap", href: "/account" },
   ];
 
   const resourcesItems = [
@@ -29,6 +47,11 @@ const Header = () => {
     { name: "Blog", href: "/resources/blog" },
     { name: "Video Eğitimler", href: "/resources/videos" },
   ];
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full pt-4 px-4">
@@ -78,9 +101,46 @@ const Header = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <Button variant="hero" size="default" className="ml-4" onClick={() => navigate('/builder')}>
-              Oluşturmaya Başla
-            </Button>
+            {/* Auth Buttons */}
+            {user ? (
+              <div className="flex items-center space-x-3 ml-4">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => navigate('/account')}
+                  className="flex items-center gap-2"
+                >
+                  <User className="w-4 h-4" />
+                  Hesabım
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleSignOut}
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Çıkış
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-3 ml-4">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => navigate('/auth')}
+                >
+                  Giriş Yap
+                </Button>
+                <Button 
+                  variant="hero" 
+                  size="sm" 
+                  onClick={() => navigate('/auth')}
+                >
+                  Kayıt Ol
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -119,10 +179,45 @@ const Header = () => {
                     ))}
                   </div>
                   
-                  <div className="pt-4">
-                    <Button variant="hero" size="lg" className="w-full" onClick={() => { navigate('/builder'); setIsOpen(false); }}>
-                      Oluşturmaya Başla
-                    </Button>
+                  {/* Auth Section */}
+                  <div className="border-t pt-4">
+                    {user ? (
+                      <div className="space-y-3">
+                        <Button 
+                          variant="ghost" 
+                          className="w-full justify-start gap-2"
+                          onClick={() => { navigate('/account'); setIsOpen(false); }}
+                        >
+                          <User className="w-4 h-4" />
+                          Hesabım
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start gap-2"
+                          onClick={() => { handleSignOut(); setIsOpen(false); }}
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Çıkış Yap
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <Button 
+                          variant="ghost" 
+                          className="w-full"
+                          onClick={() => { navigate('/auth'); setIsOpen(false); }}
+                        >
+                          Giriş Yap
+                        </Button>
+                        <Button 
+                          variant="hero" 
+                          className="w-full"
+                          onClick={() => { navigate('/auth'); setIsOpen(false); }}
+                        >
+                          Kayıt Ol
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </SheetContent>
