@@ -10,15 +10,15 @@ import { MessageCircle } from "lucide-react";
 const faqs = [
   {
     question: "Nonplo'yu kullanmak için kodlama becerisine ihtiyacım var mı?",
-    answer: "Hiç de değil! Nonplo geliştiriciler için değil, işletme sahipleri için tasarlanmıştır. Basit sürükle-bırak arayüzümüzü kullanarak AI ajanları oluşturabilir ve özelleştirebilirsiniz. E-posta veya sosyal medya kullanabiliyorsanız, Nonplo'yu da kullanabilirsiniz."
+    answer: "Hayır! Nonplo geliştiriciler için değil, işletme sahipleri için tasarlanmıştır. Kurulum sihirbazımızı kullanarak yapay zeka çalışanları oluşturabilir ve özelleştirebilirsiniz. E-posta veya sosyal medya kullanabiliyorsanız, Nonplo'yu da kullanabilirsiniz."
   },
   {
-    question: "Bir AI ajanı ne tür görevleri yerine getirebilir?",
-    answer: "AI ajanlarımız müşteri desteği, potansiyel müşteri değerlendirme, e-posta otomasyonu, randevu planlama ve veri girişinde mükemmeldir. Temel olarak, bir kalıbı takip eden herhangi bir tekrarlayan görev otomatikleştirilebilir. Her ajan işletme tarzınızı öğrenir ve buna göre yanıt verir."
+    question: "Bir yapay zeka çalışanı ne tür görevleri yerine getirebilir?",
+    answer: "Yapay zeka çalışanları müşteri desteği, potansiyel müşteri değerlendirme, e-posta otomasyonu, randevu planlama ve veri girişinde mükemmeldir. Temel olarak, bir kalıbı takip eden herhangi bir tekrarlayan görev otomatikleştirilebilir. Her çalışan işletme tarzınızı öğrenir ve buna göre yanıt verir."
   },
   {
     question: "Nonplo'yu mevcut araçlarımla birlikte kullanabilir miyim?",
-    answer: "Evet! Nonplo Gmail, Slack, Shopify, WordPress ve birçok CRM sistemi gibi popüler araçlarla entegre olur. Özel entegrasyonlar için webhook'lar ve API'ler de sağlıyoruz. Ajanlarınız mevcut iş akışınızla birlikte çalışır."
+    answer: "Evet! Nonplo Gmail, Slack, Shopify, WordPress ve birçok CRM sistemi gibi popüler araçlarla entegre olur. Özel entegrasyonlar için webhook'lar ve API'ler de sağlıyoruz. Çalışanlarımız mevcut iş akışınızla birlikte çalışır."
   },
   {
     question: "Verilerim Nonplo ile güvende mi?",
@@ -26,11 +26,11 @@ const faqs = [
   },
   {
     question: "Aboneliğimi iptal edersem ne olur?",
-    answer: "Hiçbir sorun yok, gizli ücret yok. Kontrol panelinizden istediğiniz zaman iptal edebilirsiniz. Ajanlarınız fatura döneminizin sonuna kadar çalışmaya devam edecek ve tüm verilerinizi dışa aktarabilirsiniz. Ayrıca fikrinizi değiştirirseniz 30 günlük yeniden aktifleştirme süresi sunuyoruz."
+    answer: "Hiçbir sorun yok, gizli ücret yok. Kontrol panelinizden istediğiniz zaman iptal edebilirsiniz. Çalışanlarınız fatura döneminizin sonuna kadar çalışmaya devam edecek ve tüm verilerinizi dışa aktarabilirsiniz. Ayrıca fikrinizi değiştirirseniz 30 günlük yeniden aktifleştirme süresi sunuyoruz."
   },
   {
     question: "Nonplo'yu ücretsiz deneyebilir miyim?",
-    answer: "Evet! Tüm özelliklere tam erişimli 14 günlük ücretsiz deneme sunuyoruz. Başlamak için kredi kartı gerekmez. 2 AI ajanına kadar oluşturabilir ve gerçek senaryolarla test edebilirsiniz. Sadece Nonplo'nun işletmeniz için çalıştığından emin olduğunuzda yükseltin."
+    answer: "Evet! Tüm özelliklere tam erişimli 14 günlük ücretsiz deneme sunuyoruz. Başlamak için kredi kartı gerekmez. 2 çalışana kadar oluşturabilir ve gerçek senaryolarla test edebilirsiniz. Sadece Nonplo'nun işletmeniz için çalıştığından emin olduğunuzda yükseltin."
   }
 ];
 
@@ -43,7 +43,7 @@ const FAQSection = () => {
             Sık Sorulan Sorular
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            AI otomasyonuna başlamak için bilmeniz gereken her şey
+            Yapay zeka çalışanı oluşturmaya başlamak için bilmeniz gereken her şey
           </p>
         </div>
 
@@ -71,7 +71,7 @@ const FAQSection = () => {
               Hala sorularınız mı var?
             </h3>
             <p className="text-muted-foreground mb-6">
-              Ekibimiz AI otomasyonuna başlamanızda size yardımcı olmak için burada
+              Ekibimiz yapay zeka çalışanı oluşturmaya başlamanızda size yardımcı olmak için burada
             </p>
             <Button 
               variant="outline" 
