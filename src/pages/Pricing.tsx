@@ -172,17 +172,11 @@ const Pricing = () => {
             <Button 
               variant="outline" 
               size="lg"
-              onClick={() => {
-                console.log('Button clicked!'); // Debug için
-                navigate('/', { replace: true });
-                // Anasayfaya gittikten sonra contact'a scroll yap
-                setTimeout(() => {
-                  console.log('Trying to scroll to contact'); // Debug için
-                  window.location.hash = 'contact';
-                }, 200);
-              }}
+              asChild
             >
-              Bizimle İletişime Geçin
+              <a href="/#contact">
+                Bizimle İletişime Geçin
+              </a>
             </Button>
             <Button variant="hero" size="lg">
               Satış Ekibiyle Konuş
