@@ -13,101 +13,101 @@ const VideoTutorials = () => {
   const videos = [
     {
       id: 1,
-      title: "Getting Started with Nonplo",
-      description: "Learn the basics of creating your first AI agent in under 10 minutes.",
+      title: "Nonplo'ya Başlangıç",
+      description: "İlk yapay zeka ajanınızı 10 dakikadan az sürede oluşturmayı öğrenin.",
       duration: "9:32",
-      category: "Beginner",
-      difficulty: "Beginner",
+      category: "Başlangıç",
+      difficulty: "Başlangıç",
       views: "12.5k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 2,
-      title: "Advanced Agent Configuration",
-      description: "Deep dive into advanced settings and customization options for power users.",
+      title: "Gelişmiş Ajan Yapılandırması",
+      description: "İleri düzey kullanıcılar için gelişmiş ayarlar ve özelleştirme seçeneklerine derinlemesine bakış.",
       duration: "15:47",
-      category: "Advanced",
-      difficulty: "Advanced", 
+      category: "İleri Düzey",
+      difficulty: "İleri Düzey", 
       views: "8.2k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 3,
-      title: "Building a Customer Service Bot",
-      description: "Step-by-step tutorial on creating an intelligent customer service agent.",
+      title: "Müşteri Hizmetleri Botu Oluşturma",
+      description: "Akıllı müşteri hizmetleri ajanı oluşturmak için adım adım rehber.",
       duration: "22:18",
-      category: "Use Case",
-      difficulty: "Intermediate",
+      category: "Kullanım Örneği",
+      difficulty: "Orta Düzey",
       views: "15.3k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 4,
-      title: "Integrating with Popular Tools",
-      description: "Connect your Nonplo agents with Slack, Teams, and other business tools.",
+      title: "Popüler Araçlarla Entegrasyon",
+      description: "Nonplo ajanlarınızı Slack, Teams ve diğer iş araçlarıyla bağlayın.",
       duration: "18:42",
-      category: "Advanced",
-      difficulty: "Intermediate",
+      category: "İleri Düzey",
+      difficulty: "Orta Düzey",
       views: "9.7k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 5,
-      title: "Understanding Agent Analytics",
-      description: "How to read and interpret your agent's performance metrics and analytics.",
+      title: "Ajan Analitiğini Anlama",
+      description: "Ajanınızın performans metrikleri ve analitiğini nasıl okuyup yorumlayacağınızı öğrenin.",
       duration: "12:25",
-      category: "Beginner",
-      difficulty: "Beginner",
+      category: "Başlangıç",
+      difficulty: "Başlangıç",
       views: "6.8k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 6,
-      title: "Sales Automation Use Case",
-      description: "Build an AI agent to qualify leads and schedule meetings automatically.",
+      title: "Satış Otomasyonu Kullanım Örneği",
+      description: "Potansiyel müşterileri değerlendiren ve otomatik toplantı planlayan bir yapay zeka ajanı oluşturun.",
       duration: "28:15",
-      category: "Use Case",
-      difficulty: "Advanced",
+      category: "Kullanım Örneği",
+      difficulty: "İleri Düzey",
       views: "11.2k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 7,
-      title: "Troubleshooting Common Issues",
-      description: "Identify and fix the most common problems when building AI agents.",
+      title: "Yaygın Sorunları Giderme",
+      description: "Yapay zeka ajanları oluştururken karşılaşılan en yaygın sorunları tespit edin ve çözün.",
       duration: "14:33",
-      category: "Beginner",
-      difficulty: "Beginner",
+      category: "Başlangıç",
+      difficulty: "Başlangıç",
       views: "7.4k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 8,
-      title: "Custom Training Data Setup",
-      description: "Learn how to prepare and upload custom training data for specialized agents.",
+      title: "Özel Eğitim Verisi Kurulumu",
+      description: "Uzmanlaşmış ajanlar için özel eğitim verilerini nasıl hazırlayıp yükleyeceğinizi öğrenin.",
       duration: "19:56",
-      category: "Advanced",
-      difficulty: "Advanced",
+      category: "İleri Düzey",
+      difficulty: "İleri Düzey",
       views: "5.1k",
       thumbnail: "/api/placeholder/400/225"
     },
     {
       id: 9,
-      title: "HR Automation Workflow",
-      description: "Streamline your HR processes with intelligent automation and screening.",
+      title: "İK Otomasyon İş Akışı",
+      description: "Akıllı otomasyon ve eleme ile İK süreçlerinizi hızlandırın.",
       duration: "25:07",
-      category: "Use Case",
-      difficulty: "Intermediate",
+      category: "Kullanım Örneği",
+      difficulty: "Orta Düzey",
       views: "8.9k",
       thumbnail: "/api/placeholder/400/225"
     }
   ];
 
   const categories = [
-    { value: "all", label: "All Videos" },
-    { value: "Beginner", label: "Beginner" },
-    { value: "Advanced", label: "Advanced" },
-    { value: "Use Case", label: "Use Cases" }
+    { value: "all", label: "Tüm Videolar" },
+    { value: "Başlangıç", label: "Başlangıç" },
+    { value: "İleri Düzey", label: "İleri Düzey" },
+    { value: "Kullanım Örneği", label: "Kullanım Örnekleri" }
   ];
 
   const filteredVideos = selectedCategory === "all" 
@@ -116,11 +116,11 @@ const VideoTutorials = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Beginner":
+      case "Başlangıç":
         return "bg-green-500/10 text-green-700";
-      case "Intermediate":
+      case "Orta Düzey":
         return "bg-yellow-500/10 text-yellow-700";
-      case "Advanced":
+      case "İleri Düzey":
         return "bg-red-500/10 text-red-700";
       default:
         return "bg-muted text-muted-foreground";
@@ -139,10 +139,10 @@ const VideoTutorials = () => {
               <Video className="w-16 h-16 text-primary" />
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Video Tutorials
+              Video Eğitimleri
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Watch step-by-step guides and learn to use Nonplo like a pro.
+              Adım adım rehberler izleyerek Nonplo'yu profesyonel seviyede kullanmayı öğrenin.
             </p>
           </div>
         </div>
@@ -177,7 +177,7 @@ const VideoTutorials = () => {
                       <div className="absolute top-4 left-4">
                         <Badge className="bg-primary text-primary-foreground">
                           <Star className="w-3 h-3 mr-1" />
-                          Featured
+                          Öne Çıkan
                         </Badge>
                       </div>
                       <div className="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-sm">
@@ -186,14 +186,14 @@ const VideoTutorials = () => {
                     </div>
                   </div>
                   <div className="md:w-1/2 p-6">
-                    <Badge className={getDifficultyColor("Intermediate")} variant="secondary">
-                      Intermediate
+                    <Badge className={getDifficultyColor("Orta Düzey")} variant="secondary">
+                      Orta Düzey
                     </Badge>
                     <h3 className="text-2xl font-bold mt-2 mb-3">
-                      Building a Customer Service Bot
+                      Müşteri Hizmetleri Botu Oluşturma
                     </h3>
                     <p className="text-muted-foreground mb-4">
-                      Step-by-step tutorial on creating an intelligent customer service agent that can handle common inquiries, escalate complex issues, and provide 24/7 support to your customers.
+                      Yaygın soruları yanıtlayabilen, karmaşık konuları üst seviyeye yönlendiren ve müşterilerinize 7/24 destek sağlayan akıllı müşteri hizmetleri ajanı oluşturmak için adım adım rehber.
                     </p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
@@ -202,11 +202,11 @@ const VideoTutorials = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Play className="w-4 h-4" />
-                        15.3k views
+                        15.3k görüntüleme
                       </div>
                     </div>
                     <Button variant="hero" className="w-full md:w-auto">
-                      Watch Now
+                      Şimdi İzle
                     </Button>
                   </div>
                 </div>
@@ -248,7 +248,7 @@ const VideoTutorials = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Play className="w-4 h-4" />
-                        {video.views} views
+                        {video.views} görüntüleme
                       </div>
                     </div>
                   </CardContent>
@@ -263,12 +263,12 @@ const VideoTutorials = () => {
       <section className="py-12 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-xl font-semibold mb-2">Want to see a specific tutorial?</h3>
+            <h3 className="text-xl font-semibold mb-2">Belirli bir eğitim görmek ister misiniz?</h3>
             <p className="text-muted-foreground mb-4">
-              Let us know what you'd like to learn and we'll create it for you
+              Ne öğrenmek istediğinizi bize bildirin, sizin için oluşturalım
             </p>
             <Button variant="hero">
-              Request a Tutorial
+              Eğitim Talebi
             </Button>
           </div>
         </div>
