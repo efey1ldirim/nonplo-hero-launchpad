@@ -18,46 +18,46 @@ const Documentation = () => {
   const sections = [
     {
       id: "getting-started",
-      title: "Getting Started",
+      title: "Başlangıç",
       icon: Rocket,
       articles: [
-        { title: "Welcome to Nonplo", lastUpdated: "2024-01-15", content: "Learn the basics of AI agent building with Nonplo." },
-        { title: "Setting Up Your First Agent", lastUpdated: "2024-01-12", content: "Step-by-step guide to create your first AI agent." },
-        { title: "Understanding Agent Types", lastUpdated: "2024-01-10", content: "Different types of agents and their use cases." },
-        { title: "Account Setup & Onboarding", lastUpdated: "2024-01-08", content: "Complete guide to setting up your Nonplo account." }
+        { title: "Nonplo'ya Hoş Geldiniz", lastUpdated: "2024-01-15", content: "Nonplo ile yapay zeka ajanı oluşturmanın temellerini öğrenin." },
+        { title: "İlk Ajanınızı Kurma", lastUpdated: "2024-01-12", content: "İlk yapay zeka ajanınızı oluşturmak için adım adım rehber." },
+        { title: "Ajan Türlerini Anlama", lastUpdated: "2024-01-10", content: "Farklı ajan türleri ve kullanım alanları." },
+        { title: "Hesap Kurulumu ve Onboarding", lastUpdated: "2024-01-08", content: "Nonplo hesabınızı kurma konusunda kapsamlı rehber." }
       ]
     },
     {
       id: "building-agents",
-      title: "Building Agents",
+      title: "Ajan Geliştirme",
       icon: Puzzle,
       articles: [
-        { title: "Agent Configuration", lastUpdated: "2024-01-14", content: "How to configure your AI agents for optimal performance." },
-        { title: "Training Your Agent", lastUpdated: "2024-01-11", content: "Best practices for training AI agents with your data." },
-        { title: "Testing & Debugging", lastUpdated: "2024-01-09", content: "Tools and techniques for testing agent responses." },
-        { title: "Publishing Your Agent", lastUpdated: "2024-01-07", content: "Deploy your agent and make it available to users." }
+        { title: "Ajan Konfigürasyonu", lastUpdated: "2024-01-14", content: "Yapay zeka ajanlarınızı optimal performans için nasıl yapılandıracağınızı öğrenin." },
+        { title: "Ajanınızı Eğitme", lastUpdated: "2024-01-11", content: "Yapay zeka ajanlarını verilerinizle eğitmek için en iyi uygulamalar." },
+        { title: "Test ve Hata Ayıklama", lastUpdated: "2024-01-09", content: "Ajan yanıtlarını test etmek için araçlar ve teknikler." },
+        { title: "Ajanınızı Yayınlama", lastUpdated: "2024-01-07", content: "Ajanınızı dağıtın ve kullanıcılara sunun." }
       ]
     },
     {
       id: "integrations",
-      title: "Integrations",
+      title: "Entegrasyonlar",
       icon: Puzzle,
       articles: [
-        { title: "API Integration Guide", lastUpdated: "2024-01-13", content: "Connect Nonplo with your existing tools and workflows." },
-        { title: "Webhook Setup", lastUpdated: "2024-01-10", content: "Configure webhooks for real-time data synchronization." },
-        { title: "Third-party Connectors", lastUpdated: "2024-01-06", content: "Available integrations with popular business tools." },
-        { title: "Custom Integrations", lastUpdated: "2024-01-05", content: "Build custom integrations using our developer tools." }
+        { title: "API Entegrasyon Rehberi", lastUpdated: "2024-01-13", content: "Nonplo'yu mevcut araçlar ve iş akışlarınızla bağlayın." },
+        { title: "Webhook Kurulumu", lastUpdated: "2024-01-10", content: "Gerçek zamanlı veri senkronizasyonu için webhook'ları yapılandırın." },
+        { title: "Üçüncü Taraf Bağlayıcılar", lastUpdated: "2024-01-06", content: "Popüler iş araçlarıyla mevcut entegrasyonlar." },
+        { title: "Özel Entegrasyonlar", lastUpdated: "2024-01-05", content: "Geliştirici araçlarımızı kullanarak özel entegrasyonlar oluşturun." }
       ]
     },
     {
       id: "troubleshooting",
-      title: "Troubleshooting",
+      title: "Sorun Giderme",
       icon: Wrench,
       articles: [
-        { title: "Common Issues & Solutions", lastUpdated: "2024-01-12", content: "Quick fixes for the most common problems." },
-        { title: "Performance Optimization", lastUpdated: "2024-01-08", content: "Improve your agent's response time and accuracy." },
-        { title: "Error Code Reference", lastUpdated: "2024-01-04", content: "Complete list of error codes and their meanings." },
-        { title: "Getting Support", lastUpdated: "2024-01-03", content: "How to contact our support team for help." }
+        { title: "Yaygın Sorunlar ve Çözümler", lastUpdated: "2024-01-12", content: "En yaygın sorunlar için hızlı çözümler." },
+        { title: "Performans Optimizasyonu", lastUpdated: "2024-01-08", content: "Ajanınızın yanıt süresi ve doğruluğunu artırın." },
+        { title: "Hata Kodu Referansı", lastUpdated: "2024-01-04", content: "Hata kodlarının ve anlamlarının tam listesi." },
+        { title: "Destek Alma", lastUpdated: "2024-01-03", content: "Yardım için destek ekibimizle nasıl iletişime geçeceğinizi öğrenin." }
       ]
     }
   ];
@@ -82,17 +82,17 @@ const Documentation = () => {
               <BookOpen className="w-16 h-16 text-primary" />
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Documentation
+              Dokümantasyon
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              All you need to know to use Nonplo effectively.
+              Nonplo'yu etkili bir şekilde kullanmak için bilmeniz gereken her şey.
             </p>
             
             {/* Search Bar */}
             <div className="relative max-w-md mx-auto">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
-                placeholder="Search documentation..."
+                placeholder="Dokümantasyonda ara..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -143,12 +143,12 @@ const Documentation = () => {
               <Card>
                 <CardContent className="py-12 text-center">
                   <Search className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No results found</h3>
+                  <h3 className="text-lg font-medium mb-2">Sonuç bulunamadı</h3>
                   <p className="text-muted-foreground mb-4">
-                    Try adjusting your search terms or browse all sections above.
+                    Arama terimlerinizi ayarlamayı deneyin veya yukarıdaki tüm bölümlere göz atın.
                   </p>
                   <Button variant="outline" onClick={() => setSearchQuery("")}>
-                    Clear Search
+                    Aramayı Temizle
                   </Button>
                 </CardContent>
               </Card>
@@ -161,12 +161,12 @@ const Documentation = () => {
       <section className="py-12 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-xl font-semibold mb-2">Can't find what you're looking for?</h3>
+            <h3 className="text-xl font-semibold mb-2">Aradığınızı bulamıyor musunuz?</h3>
             <p className="text-muted-foreground mb-4">
-              Our support team is here to help you get the most out of Nonplo
+              Destek ekibimiz Nonplo'dan en iyi şekilde faydalanmanız için burada
             </p>
             <Button variant="hero">
-              Contact Support
+              Destek İle İletişime Geç
             </Button>
           </div>
         </div>
