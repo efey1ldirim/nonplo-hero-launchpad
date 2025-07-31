@@ -10,7 +10,7 @@ const WhyNonploSection = () => {
     description: "Rutin görevleri otomatikleştirin ve personel iş yükünü azaltın. Geliştirici ücretlerinden binlerce lira tasarruf edin."
   }, {
     icon: Building2,
-    title: "Küçük İşletmeler İçin Tasarlandı",
+    title: "İşletmelerin İhtiyaçları İçin Tasarlandı",
     description: "Basit fiyatlandırma, kolay kurulum ve büyüyen işletmeler için özel olarak tasarlanmış özellikler."
   }, {
     icon: Zap,
