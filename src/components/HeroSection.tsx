@@ -28,7 +28,7 @@ const HeroSection = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">Müşteri desteği, potansiyel müşteri değerlendirme ve rutin görevleri yöneten kişiselleştirilmiş yapay zeka çalışanları oluşturun. Y</p>
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">Müşteri desteği, potansiyel müşteri değerlendirme ve rutin görevleri yöneten kişiselleştirilmiş yapay zeka çalışanları oluşturun.</p>
 
             {/* Stats */}
             <div className="flex gap-6 mb-12 justify-center">
