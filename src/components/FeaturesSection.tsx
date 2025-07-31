@@ -1,57 +1,34 @@
-import { 
-  Puzzle, 
-  Sparkles, 
-  MessageSquare, 
-  LayoutDashboard, 
-  Palette, 
-  Shield 
-} from "lucide-react";
-
+import { Puzzle, Sparkles, MessageSquare, LayoutDashboard, Palette, Shield } from "lucide-react";
 const FeaturesSection = () => {
-  const features = [
-    {
-      icon: Puzzle,
-      title: "Kod Olmadan Oluşturun",
-      description: "Görsel oluşturucumuzla özel AI ajanları yaratın. Programlama becerisi gerekmez - sadece sürükle, bırak ve yapılandır."
-    },
-    {
-      icon: Sparkles,
-      title: "Hazır Şablonlar",
-      description: "Müşteri desteği, potansiyel müşteri değerlendirme ve yaygın iş görevleri için önceden oluşturulmuş ajanlarla anında başlayın."
-    },
-    {
-      icon: MessageSquare,
-      title: "Akıllı Otomasyon",
-      description: "E-posta yanıtları, sohbet desteği, randevu alma ve takip işlemlerini otomatikleştirin. AI'nız 7/24 çalışır."
-    },
-    {
-      icon: LayoutDashboard,
-      title: "Birleşik Kontrol Paneli",
-      description: "Tüm AI ajanlarınızı tek bir merkezi kontrol panelinden izleyin, yönetin ve optimize edin. Performans ve sonuçları takip edin."
-    },
-    {
-      icon: Palette,
-      title: "Özel Kişilikler",
-      description: "Ajanlarınızı marka sesinize ve iş süreçlerinize uyacak şekilde eğitin. Kurallar, yanıtlar ve iş akışları belirleyin."
-    },
-    {
-      icon: Shield,
-      title: "Kurumsal Güvenlik",
-      description: "GDPR ve KVKK uyumlu veri işleme. İş bilgileriniz güvenli ve özel kalır."
-    }
-  ];
-
-  return (
-    <section className="py-20 bg-muted/30 relative overflow-hidden">
+  const features = [{
+    icon: Puzzle,
+    title: "Kod Olmadan Oluşturun",
+    description: "Görsel oluşturucumuzla özel AI ajanları yaratın. Programlama becerisi gerekmez - sadece sürükle, bırak ve yapılandır."
+  }, {
+    icon: Sparkles,
+    title: "Hazır Şablonlar",
+    description: "Müşteri desteği, potansiyel müşteri değerlendirme ve yaygın iş görevleri için önceden oluşturulmuş ajanlarla anında başlayın."
+  }, {
+    icon: MessageSquare,
+    title: "Akıllı Otomasyon",
+    description: "E-posta yanıtları, sohbet desteği, randevu alma ve takip işlemlerini otomatikleştirin. AI'nız 7/24 çalışır."
+  }, {
+    icon: LayoutDashboard,
+    title: "Birleşik Kontrol Paneli",
+    description: "Tüm AI ajanlarınızı tek bir merkezi kontrol panelinden izleyin, yönetin ve optimize edin. Performans ve sonuçları takip edin."
+  }, {
+    icon: Palette,
+    title: "Özel Kişilikler",
+    description: "Ajanlarınızı marka sesinize ve iş süreçlerinize uyacak şekilde eğitin. Kurallar, yanıtlar ve iş akışları belirleyin."
+  }, {
+    icon: Shield,
+    title: "Kurumsal Güvenlik",
+    description: "GDPR ve KVKK uyumlu veri işleme. İş bilgileriniz güvenli ve özel kalır."
+  }];
+  return <section className="py-20 bg-muted/30 relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div 
-          className="absolute inset-0" 
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50m-25 0a25 25 0 1 1 50 0a25 25 0 1 1 -50 0' stroke='%23A855F7' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3Cpath d='M50 25m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0' fill='%23A855F7' opacity='0.2'/%3E%3Cpath d='M50 75m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0' fill='%23A855F7' opacity='0.2'/%3E%3Cpath d='M25 50m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0' fill='%23A855F7' opacity='0.2'/%3E%3Cpath d='M75 50m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0' fill='%23A855F7' opacity='0.2'/%3E%3C/svg%3E")`,
-            backgroundSize: '100px 100px'
-          }}
-        />
+        
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -67,11 +44,7 @@ const FeaturesSection = () => {
 
         {/* Features grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              className="group bg-background rounded-2xl p-8 shadow-card hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border border-border/50 relative overflow-hidden"
-            >
+          {features.map((feature, index) => <div key={index} className="group bg-background rounded-2xl p-8 shadow-card hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border border-border/50 relative overflow-hidden">
               {/* Subtle gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
@@ -94,13 +67,10 @@ const FeaturesSection = () => {
                   {feature.description}
                 </p>
               </div>
-            </div>
-          ))}
+            </div>)}
         </div>
 
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default FeaturesSection;

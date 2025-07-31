@@ -3,14 +3,14 @@ const WhyNonploSection = () => {
   const benefits = [{
     icon: Code2,
     title: "Kodlama Gerekmez",
-    description: "Kurulum sihirbazımız sayesinde güçlü AI ajanları oluşturun. Teknik uzmanlık gerekmez."
+    description: "Sürükle-bırak arayüzümüzle güçlü AI ajanları oluşturun. Teknik uzmanlık gerekmez."
   }, {
     icon: Clock,
     title: "Zaman Tasarrufu & Maliyet Azaltma",
     description: "Rutin görevleri otomatikleştirin ve personel iş yükünü azaltın. Geliştirici ücretlerinden binlerce lira tasarruf edin."
   }, {
     icon: Building2,
-    title: "İşletmelerin İhtiyaçları İçin Tasarlandı",
+    title: "Küçük İşletmeler İçin Tasarlandı",
     description: "Basit fiyatlandırma, kolay kurulum ve büyüyen işletmeler için özel olarak tasarlanmış özellikler."
   }, {
     icon: Zap,
@@ -55,12 +55,7 @@ const WhyNonploSection = () => {
         </div>
 
         {/* Bottom CTA section */}
-        <div className="text-center mt-16">
-          <div className="inline-flex items-center gap-2 bg-accent/50 text-accent-foreground px-6 py-3 rounded-full text-sm">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Nonplo'yu kullanan 500+ işletmeye katılın
-          </div>
-        </div>
+        
       </div>
     </section>;
 };
