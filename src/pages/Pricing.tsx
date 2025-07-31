@@ -173,13 +173,13 @@ const Pricing = () => {
               variant="outline" 
               size="lg"
               onClick={() => {
-                navigate('/');
+                console.log('Button clicked!'); // Debug için
+                navigate('/', { replace: true });
+                // Anasayfaya gittikten sonra contact'a scroll yap
                 setTimeout(() => {
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }, 100);
+                  console.log('Trying to scroll to contact'); // Debug için
+                  window.location.hash = 'contact';
+                }, 200);
               }}
             >
               Bizimle İletişime Geçin
