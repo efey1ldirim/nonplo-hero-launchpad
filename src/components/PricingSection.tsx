@@ -105,30 +105,7 @@ const PricingSection = () => {
 
         {/* Custom plan section */}
         <div className="text-center mt-16">
-          <div className="bg-muted/50 rounded-2xl p-8 max-w-3xl mx-auto">
-            <h3 className="text-xl font-semibold text-foreground mb-4">
-              Size uygun bir plan yok mu?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              <button onClick={scrollToContact} className="text-primary font-medium hover:underline cursor-pointer">
-                Bizimle iletişime geçin
-              </button>
-              {" "}ve ihtiyaçlarınıza uygun gelişmiş bir plan oluşturalım.
-            </p>
-            
-            {/* Risk-free trial info */}
-            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>14 günlük ücretsiz deneme</span>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span>İstediğin zaman iptal et</span>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>;
