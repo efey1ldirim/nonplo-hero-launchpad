@@ -167,7 +167,11 @@ const Pricing = () => {
             İşletmeniz için en uygun planı seçmenize veya özelleştirmenize yardımcı olmak için buradayız.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="outline" size="lg">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => window.location.href = '/#contact'}
+            >
               Bizimle İletişime Geçin
             </Button>
             <Button variant="hero" size="lg">
