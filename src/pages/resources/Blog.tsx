@@ -13,71 +13,71 @@ const Blog = () => {
   const blogPosts = [
     {
       id: 1,
-      title: "The Future of Business Automation with AI Agents",
-      excerpt: "Discover how AI agents are transforming business operations and what this means for your company's future.",
+      title: "Yapay Zeka Ajanları ile İş Otomasyonunun Geleceği",
+      excerpt: "Yapay zeka ajanlarının iş operasyonlarını nasıl dönüştürdüğünü ve bunun şirketinizin geleceği için ne anlama geldiğini keşfedin.",
       author: "Sarah Chen",
       publishDate: "2024-01-15",
-      category: "Industry Insights",
+      category: "Sektör İçgörüleri",
       thumbnail: "/api/placeholder/400/240",
-      readTime: "5 min read"
+      readTime: "5 dk okuma"
     },
     {
       id: 2,
-      title: "Nonplo 2.0: Enhanced Agent Builder and New Integrations",
-      excerpt: "We're excited to announce major updates to our platform, including a redesigned agent builder and 20+ new integrations.",
+      title: "Nonplo 2.0: Gelişmiş Ajan Oluşturucu ve Yeni Entegrasyonlar",
+      excerpt: "Yeniden tasarlanan ajan oluşturucu ve 20+ yeni entegrasyon dahil olmak üzere platformumuzdaki önemli güncellemeleri duyurmaktan heyecan duyuyoruz.",
       author: "Mike Rodriguez",
       publishDate: "2024-01-12",
-      category: "Product Updates",
+      category: "Ürün Güncellemeleri",
       thumbnail: "/api/placeholder/400/240",
-      readTime: "3 min read"
+      readTime: "3 dk okuma"
     },
     {
       id: 3,
-      title: "5 Ways to Optimize Your Customer Service with AI Agents",
-      excerpt: "Learn practical strategies to improve customer satisfaction and reduce response times using intelligent automation.",
+      title: "Yapay Zeka Ajanları ile Müşteri Hizmetlerinizi Optimize Etmenin 5 Yolu",
+      excerpt: "Akıllı otomasyon kullanarak müşteri memnuniyetini artırmak ve yanıt sürelerini azaltmak için pratik stratejiler öğrenin.",
       author: "Emma Thompson",
       publishDate: "2024-01-10",
-      category: "Tips & Tutorials",
+      category: "İpuçları ve Rehberler",
       thumbnail: "/api/placeholder/400/240",
-      readTime: "7 min read"
+      readTime: "7 dk okuma"
     },
     {
       id: 4,
-      title: "Case Study: How TechCorp Reduced Support Tickets by 60%",
-      excerpt: "A detailed look at how one of our clients transformed their customer support using Nonplo's AI agents.",
+      title: "Vaka Çalışması: TechCorp Destek Biletlerini %60 Nasıl Azalttı",
+      excerpt: "Müşterilerimizden birinin Nonplo'nun yapay zeka ajanlarını kullanarak müşteri desteğini nasıl dönüştürdüğüne detaylı bir bakış.",
       author: "David Park",
       publishDate: "2024-01-08",
-      category: "Tips & Tutorials",
+      category: "İpuçları ve Rehberler",
       thumbnail: "/api/placeholder/400/240",
-      readTime: "6 min read"
+      readTime: "6 dk okuma"
     },
     {
       id: 5,
-      title: "Security Best Practices for AI-Powered Business Applications",
-      excerpt: "Essential security considerations when implementing AI agents in your business workflows.",
+      title: "Yapay Zeka Destekli İş Uygulamaları için Güvenlik En İyi Uygulamaları",
+      excerpt: "İş akışlarınızda yapay zeka ajanları uygularken temel güvenlik hususları.",
       author: "Lisa Wang",
       publishDate: "2024-01-05",
-      category: "Industry Insights",
+      category: "Sektör İçgörüleri",
       thumbnail: "/api/placeholder/400/240",
-      readTime: "8 min read"
+      readTime: "8 dk okuma"
     },
     {
       id: 6,
-      title: "New Feature: Advanced Analytics Dashboard",
-      excerpt: "Get deeper insights into your agent performance with our new analytics dashboard and reporting tools.",
+      title: "Yeni Özellik: Gelişmiş Analitik Panosu",
+      excerpt: "Yeni analitik panomuz ve raporlama araçlarımızla ajan performansınız hakkında daha derin içgörüler elde edin.",
       author: "Alex Johnson",
       publishDate: "2024-01-03",
-      category: "Product Updates",
+      category: "Ürün Güncellemeleri",
       thumbnail: "/api/placeholder/400/240",
-      readTime: "4 min read"
+      readTime: "4 dk okuma"
     }
   ];
 
   const categories = [
-    { value: "all", label: "All Posts" },
-    { value: "Product Updates", label: "Product Updates" },
-    { value: "Tips & Tutorials", label: "Tips & Tutorials" },
-    { value: "Industry Insights", label: "Industry Insights" }
+    { value: "all", label: "Tüm Yazılar" },
+    { value: "Ürün Güncellemeleri", label: "Ürün Güncellemeleri" },
+    { value: "İpuçları ve Rehberler", label: "İpuçları ve Rehberler" },
+    { value: "Sektör İçgörüleri", label: "Sektör İçgörüleri" }
   ];
 
   const filteredPosts = selectedCategory === "all" 
@@ -86,11 +86,11 @@ const Blog = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Product Updates":
+      case "Ürün Güncellemeleri":
         return "bg-primary/10 text-primary";
-      case "Tips & Tutorials":
+      case "İpuçları ve Rehberler":
         return "bg-green-500/10 text-green-700";
-      case "Industry Insights":
+      case "Sektör İçgörüleri":
         return "bg-purple-500/10 text-purple-700";
       default:
         return "bg-muted text-muted-foreground";
@@ -109,10 +109,10 @@ const Blog = () => {
               <PenTool className="w-16 h-16 text-primary" />
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Insights & Updates
+              Görüşler ve Güncellemeler
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Read about business automation, AI trends, and Nonplo news.
+              İş otomasyonu, yapay zeka trendleri ve Nonplo haberleri hakkında okuyun.
             </p>
           </div>
         </div>
@@ -178,12 +178,12 @@ const Blog = () => {
             {/* Newsletter CTA */}
             <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
               <CardContent className="text-center py-12">
-                <h2 className="text-2xl font-bold mb-4">Stay Updated</h2>
+                <h2 className="text-2xl font-bold mb-4">Güncel Kalın</h2>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Get the latest insights on AI automation, product updates, and industry trends delivered to your inbox.
+                  Yapay zeka otomasyonu, ürün güncellemeleri ve sektör trendleri hakkında en son içgörüleri e-postanıza teslim edin.
                 </p>
                 <Button variant="hero" size="lg">
-                  Subscribe to Newsletter
+                  Bültene Abone Ol
                 </Button>
               </CardContent>
             </Card>
@@ -195,12 +195,12 @@ const Blog = () => {
       <section className="py-12 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto text-center">
-            <h3 className="text-xl font-semibold mb-2">Looking for older posts?</h3>
+            <h3 className="text-xl font-semibold mb-2">Eski yazıları mı arıyorsunuz?</h3>
             <p className="text-muted-foreground mb-4">
-              Browse our complete archive of articles and insights
+              Makale ve içgörülerin tam arşivine göz atın
             </p>
             <Button variant="outline">
-              View Archive
+              Arşivi Görüntüle
             </Button>
           </div>
         </div>
