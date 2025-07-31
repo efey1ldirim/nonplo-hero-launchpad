@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import PricingSection from "@/components/PricingSection";
+import FAQSection from "@/components/FAQSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Check, X } from "lucide-react";
@@ -223,6 +224,10 @@ const Pricing = () => {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section */}
+      <FAQSection />
+      
       <Footer />
     </div>
   );
