@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -206,9 +207,11 @@ const VideoTutorials = () => {
                         15.3k görüntüleme
                       </div>
                     </div>
-                    <Button variant="hero" className="w-full md:w-auto">
-                      Şimdi İzle
-                    </Button>
+                    <Link to={`/resources/videos/3`}>
+                      <Button variant="hero" className="w-full md:w-auto">
+                        Şimdi İzle
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </Card>
@@ -217,43 +220,45 @@ const VideoTutorials = () => {
             {/* Video Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredVideos.map((video) => (
-                <Card key={video.id} className="group hover:shadow-lg transition-shadow cursor-pointer overflow-hidden">
-                  <div className="aspect-video bg-muted relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                      <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                        <Play className="w-5 h-5 text-primary ml-0.5" />
+                <Link key={video.id} to={`/resources/videos/${video.id}`}>
+                  <Card className="group hover:shadow-lg transition-shadow cursor-pointer overflow-hidden h-full">
+                    <div className="aspect-video bg-muted relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                          <Play className="w-5 h-5 text-primary ml-0.5" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="absolute top-3 left-3">
-                      <Badge className={getDifficultyColor(video.difficulty)} variant="secondary">
-                        {video.difficulty}
-                      </Badge>
-                    </div>
-                    <div className="absolute bottom-3 right-3 bg-black/70 text-white px-2 py-1 rounded text-sm">
-                      {video.duration}
-                    </div>
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="group-hover:text-primary transition-colors line-clamp-2">
-                      {video.title}
-                    </CardTitle>
-                    <CardDescription className="line-clamp-2">
-                      {video.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                      <div className="absolute top-3 left-3">
+                        <Badge className={getDifficultyColor(video.difficulty)} variant="secondary">
+                          {video.difficulty}
+                        </Badge>
+                      </div>
+                      <div className="absolute bottom-3 right-3 bg-black/70 text-white px-2 py-1 rounded text-sm">
                         {video.duration}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Play className="w-4 h-4" />
-                        {video.views} görüntüleme
-                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                    <CardHeader>
+                      <CardTitle className="group-hover:text-primary transition-colors line-clamp-2">
+                        {video.title}
+                      </CardTitle>
+                      <CardDescription className="line-clamp-2">
+                        {video.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          {video.duration}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Play className="w-4 h-4" />
+                          {video.views} görüntüleme
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>

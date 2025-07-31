@@ -14,6 +14,7 @@ import DocumentationArticle from "./pages/resources/DocumentationArticle";
 import Blog from "./pages/resources/Blog";
 import BlogArticle from "./pages/resources/BlogArticle";
 import VideoTutorials from "./pages/resources/VideoTutorials";
+import VideoTutorialArticle from "./pages/resources/VideoTutorialArticle";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/resources/blog" element={<Blog />} />
           <Route path="/resources/blog/:articleId" element={<BlogArticle />} />
           <Route path="/resources/videos" element={<VideoTutorials />} />
+          <Route path="/resources/videos/:videoId" element={<VideoTutorialArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
