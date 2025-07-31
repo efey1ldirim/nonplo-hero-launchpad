@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -136,7 +137,8 @@ const Blog = () => {
             {/* Blog Posts Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
               {filteredPosts.map((post) => (
-                <Card key={post.id} className="group hover:shadow-lg transition-shadow cursor-pointer">
+                <Link key={post.id} to={`/resources/blog/${post.id}`}>
+                  <Card className="group hover:shadow-lg transition-shadow cursor-pointer">
                   <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
                     <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                       <PenTool className="w-12 h-12 text-primary/60" />
@@ -171,7 +173,8 @@ const Blog = () => {
                       <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
 
