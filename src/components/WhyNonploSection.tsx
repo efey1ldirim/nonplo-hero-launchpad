@@ -3,7 +3,7 @@ const WhyNonploSection = () => {
   const benefits = [{
     icon: Code2,
     title: "Kodlama Gerekmez",
-    description: "Sürükle-bırak arayüzümüzle güçlü AI ajanları oluşturun. Teknik uzmanlık gerekmez."
+    description: "Kurulum sihirbazımız sayesinde güçlü AI ajanları oluşturun. Teknik uzmanlık gerekmez."
   }, {
     icon: Clock,
     title: "Zaman Tasarrufu & Maliyet Azaltma",
