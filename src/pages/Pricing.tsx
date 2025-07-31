@@ -88,6 +88,35 @@ const Pricing = () => {
       {/* Pricing Section */}
       <PricingSection />
 
+      {/* Trust Elements */}
+      <section className="py-16 bg-muted/20">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
+              <h3 className="font-semibold text-foreground mb-2">Kredi Kartı Gerekli Değil</h3>
+              <p className="text-sm text-muted-foreground">
+                Herhangi bir ödeme bilgisi olmadan ücretsiz denemenizi hemen başlatın
+              </p>
+            </div>
+            <div>
+              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
+              <h3 className="font-semibold text-foreground mb-2">İstediğiniz Zaman İptal Edin</h3>
+              <p className="text-sm text-muted-foreground">
+                Uzun vadeli sözleşme veya iptal ücreti yok. Büyüdükçe planınızı değiştirin
+              </p>
+            </div>
+            <div>
+              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
+              <h3 className="font-semibold text-foreground mb-2">Güvenli Faturalandırma</h3>
+              <p className="text-sm text-muted-foreground">
+                Güvenli işlemler için Stripe tarafından desteklenen kurumsal düzeyde güvenlik
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Comparison Table */}
       <section className="py-20 bg-muted/20">
         <div className="container mx-auto px-4">
@@ -196,34 +225,6 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Trust Elements */}
-      <section className="py-16 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <h3 className="font-semibold text-foreground mb-2">Kredi Kartı Gerekli Değil</h3>
-              <p className="text-sm text-muted-foreground">
-                Herhangi bir ödeme bilgisi olmadan ücretsiz denemenizi hemen başlatın
-              </p>
-            </div>
-            <div>
-              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <h3 className="font-semibold text-foreground mb-2">İstediğiniz Zaman İptal Edin</h3>
-              <p className="text-sm text-muted-foreground">
-                Uzun vadeli sözleşme veya iptal ücreti yok. Büyüdükçe planınızı değiştirin
-              </p>
-            </div>
-            <div>
-              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-3" />
-              <h3 className="font-semibold text-foreground mb-2">Güvenli Faturalandırma</h3>
-              <p className="text-sm text-muted-foreground">
-                Güvenli işlemler için Stripe tarafından desteklenen kurumsal düzeyde güvenlik
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
       
       {/* FAQ Section */}
       <FAQSection />
