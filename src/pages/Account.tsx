@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -19,7 +20,9 @@ import {
   Building,
   LogOut,
   Shield,
-  Bell
+  Bell,
+  Check,
+  Star
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -33,6 +36,34 @@ const Account = () => {
     phone: "",
     company: ""
   });
+  const [currentPlan] = useState("free"); // This would come from subscription status
+
+  const plans = [
+    {
+      name: "Ücretsiz",
+      description: "AI otomasyonunu test eden girişimciler için ideal başlangıç",
+      price: 0,
+      features: ["1 AI ajanı", "Aylık 100 konuşma", "Temel şablonlar", "E-posta desteği", "Kontrol paneli erişimi", "7 gün ücretsiz deneme"],
+      popular: false,
+      plan: "free"
+    },
+    {
+      name: "Orta Plan",
+      description: "Büyüyen işletmeler için en çok tercih edilen çözüm",
+      price: 125,
+      features: ["5 AI ajanı", "Aylık 2.500 konuşma", "Tüm şablonlar ve iş akışları", "Öncelikli destek", "Gelişmiş analitik", "Özel entegrasyonlar", "WhatsApp & SMS entegrasyonu", "Multi-platform desteği"],
+      popular: true,
+      plan: "medium"
+    },
+    {
+      name: "Plus Plan",
+      description: "Gelişmiş analizler ve tam özelleştirme sunan premium çözüm",
+      price: 250,
+      features: ["Sınırsız AI ajanı", "Sınırsız konuşma", "Genişletilmiş analizler", "Özel hesap yöneticisi", "Beyaz etiket çözümler", "API erişimi", "Özel eğitim programı", "Gelişmiş güvenlik", "24/7 premium destek", "Özel entegrasyon geliştirme"],
+      popular: false,
+      plan: "plus"
+    }
+  ];
 
   useEffect(() => {
     checkUser();
@@ -299,9 +330,110 @@ const Account = () => {
                     <Button className="w-full" size="lg">
                       Plana Yükselt
                     </Button>
-                    <Button variant="outline" className="w-full">
-                      Tüm Planları Görüntüle
-                    </Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          Tüm Planları Görüntüle
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle className="text-center text-2xl font-bold">
+                            Planınızı Seçin
+                          </DialogTitle>
+                        </DialogHeader>
+                        
+                        <div className="grid md:grid-cols-3 gap-6 mt-6">
+                          {plans.map((plan, index) => (
+                            <div
+                              key={index}
+                              className={`relative bg-card rounded-2xl p-6 border transition-all duration-300 ${
+                                plan.popular
+                                  ? "border-primary shadow-primary/20 shadow-lg scale-105"
+                                  : "border-border shadow-card"
+                              } ${
+                                currentPlan === plan.plan
+                                  ? "ring-2 ring-primary"
+                                  : ""
+                              }`}
+                            >
+                              {/* Current Plan Badge */}
+                              {currentPlan === plan.plan && (
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                                  <div className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
+                                    Mevcut Planın Bu
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Popular badge */}
+                              {plan.popular && currentPlan !== plan.plan && (
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                                  <div className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                                    <Star className="w-3 h-3" />
+                                    En Çok Tercih Edilen
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Plan header */}
+                              <div className="text-center mb-6">
+                                <h3 className="text-xl font-bold text-foreground mb-2">
+                                  {plan.name}
+                                </h3>
+                                <p className="text-muted-foreground mb-4 text-sm">
+                                  {plan.description}
+                                </p>
+
+                                {/* Price */}
+                                <div className="mb-4">
+                                  <div className="flex items-baseline justify-center gap-1">
+                                    {plan.price === 0 ? (
+                                      <span className="text-3xl font-bold text-foreground">
+                                        Ücretsiz
+                                      </span>
+                                    ) : (
+                                      <>
+                                        <span className="text-3xl font-bold text-foreground">
+                                          ${plan.price}
+                                        </span>
+                                        <span className="text-muted-foreground">
+                                          /ay
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Features */}
+                              <div className="mb-6">
+                                <ul className="space-y-2">
+                                  {plan.features.map((feature, featureIndex) => (
+                                    <li key={featureIndex} className="flex items-center gap-2 text-sm">
+                                      <div className="w-4 h-4 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <Check className="w-2.5 h-2.5 text-primary" />
+                                      </div>
+                                      <span className="text-foreground">{feature}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+
+                              {/* CTA button */}
+                              <Button 
+                                variant={currentPlan === plan.plan ? "outline" : (plan.popular ? "default" : "outline")} 
+                                className="w-full text-sm py-5 h-auto"
+                                disabled={currentPlan === plan.plan}
+                              >
+                                {currentPlan === plan.plan ? "Mevcut Plan" : 
+                                 plan.price === 0 ? "Ücretsiz Başla" : "Şimdi Başla"}
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 </CardContent>
               </Card>
