@@ -172,11 +172,8 @@ const VideoTutorials = () => {
                   <div className="md:w-1/2">
                     <div className="aspect-video bg-muted relative group cursor-pointer">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-4xl font-bold text-primary/60 mb-4">Nonplo</div>
-                          <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors mx-auto">
-                            <Play className="w-8 h-8 text-primary ml-1" />
-                          </div>
+                        <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                          <Play className="w-8 h-8 text-primary ml-1" />
                         </div>
                       </div>
                       <div className="absolute top-4 left-4">
@@ -227,11 +224,8 @@ const VideoTutorials = () => {
                   <Card className="group hover:shadow-lg transition-shadow cursor-pointer overflow-hidden h-full">
                     <div className="aspect-video bg-muted relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-primary/40 mb-3">Nonplo</div>
-                          <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors mx-auto">
-                            <Play className="w-5 h-5 text-primary ml-0.5" />
-                          </div>
+                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                          <Play className="w-5 h-5 text-primary ml-0.5" />
                         </div>
                       </div>
                       <div className="absolute top-3 left-3">
