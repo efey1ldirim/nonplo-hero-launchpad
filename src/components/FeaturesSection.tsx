@@ -3,7 +3,7 @@ const FeaturesSection = () => {
   const features = [{
     icon: Puzzle,
     title: "Kod Olmadan Oluşturun",
-    description: "Görsel oluşturucumuzla özel AI ajanları yaratın. Programlama becerisi gerekmez - sadece sürükle, bırak ve yapılandır."
+    description: "Kurulum sihirbazımızla işinize özel yapay zeka çalışanları oluşturun. Teknik bilgiye ihtiyaç yok, sadece basit birkaç soruyu cevapla ve çalışanın hazır!"
   }, {
     icon: Sparkles,
     title: "Hazır Şablonlar",
