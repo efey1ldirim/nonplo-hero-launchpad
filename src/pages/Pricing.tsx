@@ -3,6 +3,7 @@ import PricingSection from "@/components/PricingSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Check, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/table";
 
 const Pricing = () => {
+  const navigate = useNavigate();
   const features = [
     {
       name: "AI Ajanları",
@@ -171,7 +173,7 @@ const Pricing = () => {
               variant="outline" 
               size="lg"
               onClick={() => {
-                window.location.href = '/';
+                navigate('/');
                 setTimeout(() => {
                   const contactSection = document.getElementById('contact');
                   if (contactSection) {
