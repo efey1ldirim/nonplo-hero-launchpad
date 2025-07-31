@@ -172,6 +172,19 @@ const Pricing = () => {
             <a 
               href="/#contact" 
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-primary/20 bg-background/50 text-primary hover:bg-primary hover:text-primary-foreground backdrop-blur-sm transition-all duration-300 hover:shadow-primary h-11 rounded-md px-8"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = '/';
+                setTimeout(() => {
+                  window.location.hash = 'contact';
+                  setTimeout(() => {
+                    const contactElement = document.getElementById('contact');
+                    if (contactElement) {
+                      contactElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 100);
+                }, 100);
+              }}
             >
               Bizimle İletişime Geçin
             </a>
