@@ -11,7 +11,7 @@ const WhyNonploSection = () => {
   }, {
     icon: Building2,
     title: "İşletmenizin ihtiyaçları için tasarlandı",
-    description: "Kurulum sihirbazımızla güçlü yapay zeka çalışanları oluşturun. Teknik bilgiye gerek yok!"
+    description: "Basit fiyatlandırma, kolay kurulum ve büyüyen işletmeler için özel olarak tasarlanmış özellikler."
   }, {
     icon: Zap,
     title: "Hızlı Kurulum, Gerçek Sonuçlar",
