@@ -327,13 +327,10 @@ const Account = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <Button className="w-full" size="lg">
-                      Plana Yükselt
-                    </Button>
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full">
-                          Tüm Planları Görüntüle
+                        <Button className="w-full" size="lg">
+                          Plana Yükselt
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
@@ -434,6 +431,13 @@ const Account = () => {
                         </div>
                       </DialogContent>
                     </Dialog>
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => window.location.href = '/pricing'}
+                    >
+                      Tüm Planları Görüntüle
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
