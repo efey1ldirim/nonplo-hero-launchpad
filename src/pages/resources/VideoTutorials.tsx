@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrainingRequestDialog } from "@/components/TrainingRequestDialog";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Play, Clock, Video, Star } from "lucide-react";
@@ -267,9 +268,11 @@ const VideoTutorials = () => {
             <p className="text-muted-foreground mb-4">
               Ne öğrenmek istediğinizi bize bildirin, sizin için oluşturalım
             </p>
-            <Button variant="hero">
-              Eğitim Talebi
-            </Button>
+            <TrainingRequestDialog>
+              <Button variant="hero">
+                Eğitim Talebi
+              </Button>
+            </TrainingRequestDialog>
           </div>
         </div>
       </section>

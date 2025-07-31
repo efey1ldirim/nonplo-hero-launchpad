@@ -35,6 +35,33 @@ export type Database = {
         }
         Relationships: []
       }
+      training_requests: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          topic: string
+          user_email: string
+          user_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          topic: string
+          user_email: string
+          user_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          topic?: string
+          user_email?: string
+          user_name?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
