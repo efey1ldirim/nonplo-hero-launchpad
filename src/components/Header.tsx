@@ -84,7 +84,7 @@ const Header = () => {
                   <NavigationMenuTrigger className="text-sm font-medium">
                     Kaynaklar
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="z-[100] left-0 top-0 w-auto data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto">
+                  <NavigationMenuContent className="z-[100] right-0 top-0 w-auto data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto">
                     <div className="grid w-[200px] gap-1 p-2 bg-background/95 backdrop-blur-sm border border-border/20 rounded-lg shadow-lg z-[100]">
                       {resourcesItems.map((item) => (
                         <NavigationMenuLink
