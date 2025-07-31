@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +15,7 @@ import { Search, BookOpen, Rocket, Puzzle, Wrench, Clock } from "lucide-react";
 
 const Documentation = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const sections = [
     {
@@ -121,7 +123,11 @@ const Documentation = () => {
                         <CardContent className="pt-0">
                           <div className="space-y-3">
                             {section.articles.map((article, index) => (
-                              <div key={index} className="border rounded-lg p-4 hover:bg-muted/50 transition-colors cursor-pointer">
+                              <div 
+                                key={index} 
+                                className="border rounded-lg p-4 hover:bg-muted/50 transition-colors cursor-pointer"
+                                onClick={() => navigate(`/resources/documentation/${section.id}/${index}`)}
+                              >
                                 <div className="flex justify-between items-start mb-2">
                                   <h3 className="font-medium text-foreground">{article.title}</h3>
                                   <div className="flex items-center gap-1 text-xs text-muted-foreground">

@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import Builder from "./pages/Builder";
 import Dashboard from "./pages/Dashboard";
 import Documentation from "./pages/resources/Documentation";
+import DocumentationArticle from "./pages/resources/DocumentationArticle";
 import Blog from "./pages/resources/Blog";
 import VideoTutorials from "./pages/resources/VideoTutorials";
 import NotFound from "./pages/NotFound";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/builder" element={<Builder />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/resources/documentation" element={<Documentation />} />
+          <Route path="/resources/documentation/:sectionId/:articleIndex" element={<DocumentationArticle />} />
           <Route path="/resources/blog" element={<Blog />} />
           <Route path="/resources/videos" element={<VideoTutorials />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
