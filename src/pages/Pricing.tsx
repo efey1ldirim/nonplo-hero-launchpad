@@ -170,7 +170,15 @@ const Pricing = () => {
             <Button 
               variant="outline" 
               size="lg"
-              onClick={() => window.location.href = '/#contact'}
+              onClick={() => {
+                window.location.href = '/';
+                setTimeout(() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }, 100);
+              }}
             >
               Bizimle İletişime Geçin
             </Button>
