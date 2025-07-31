@@ -169,15 +169,12 @@ const Pricing = () => {
             İşletmeniz için en uygun planı seçmenize veya özelleştirmenize yardımcı olmak için buradayız.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="outline" 
-              size="lg"
-              asChild
+            <a 
+              href="/#contact" 
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-primary/20 bg-background/50 text-primary hover:bg-primary hover:text-primary-foreground backdrop-blur-sm transition-all duration-300 hover:shadow-primary h-11 rounded-md px-8"
             >
-              <a href="/#contact">
-                Bizimle İletişime Geçin
-              </a>
-            </Button>
+              Bizimle İletişime Geçin
+            </a>
             <Button variant="hero" size="lg">
               Satış Ekibiyle Konuş
             </Button>
