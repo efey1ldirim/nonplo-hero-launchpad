@@ -589,12 +589,19 @@ const Builder = () => {
       </div>
 
       {/* Wizard Modal */}
-      <Dialog open={wizardOpen} onOpenChange={setWizardOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] p-0 gap-0 overflow-hidden">
-          <div className="absolute inset-0 bg-background/95 backdrop-blur-sm">
+      {wizardOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-md"
+            onClick={handleWizardClose}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative bg-background border rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] mx-4 overflow-hidden">
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b">
+              <div className="flex items-center justify-between p-8 border-b">
                 <h3 className="text-2xl font-bold text-primary">
                   Adım {stepNumber}/{totalSteps}
                 </h3>
@@ -604,30 +611,35 @@ const Builder = () => {
               </div>
 
               {/* Content */}
-              <div className="flex-1 overflow-auto p-6">
+              <div className="flex-1 overflow-auto p-8">
                 {renderWizardStep()}
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between p-6 border-t">
+              <div className="flex items-center justify-between p-8 border-t bg-muted/20">
                 <Button
                   variant="ghost"
                   onClick={handleBack}
                   disabled={currentStep === 1}
+                  className="flex items-center gap-2"
                 >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  <ArrowLeft className="h-4 w-4" />
                   Geri
                 </Button>
                 
-                <Button onClick={handleNext} disabled={currentStep === 6}>
+                <Button 
+                  onClick={handleNext} 
+                  disabled={currentStep === 6}
+                  className="flex items-center gap-2"
+                >
                   İleri
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
 
       {/* Template Details Modal */}
       <Dialog open={templateModalOpen} onOpenChange={setTemplateModalOpen}>
