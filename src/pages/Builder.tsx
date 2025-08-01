@@ -465,7 +465,7 @@ const Builder = () => {
               <div className="flex items-center gap-3">
                 <Monitor className="h-8 w-8 text-primary" />
                 <div>
-                  <CardTitle>Ajans Dashboard'una Git</CardTitle>
+                  <CardTitle>Çalışan Dashboard'una Git</CardTitle>
                   <CardDescription>Oluşturduğunuz tüm yapay zeka çalışanlarını tek yerden yönetin.</CardDescription>
                 </div>
               </div>
@@ -480,7 +480,7 @@ const Builder = () => {
               <div className="flex items-center gap-3">
                 <Zap className="h-8 w-8 text-primary" />
                 <div>
-                  <CardTitle>Ajans Oluşturucu Başlat</CardTitle>
+                  <CardTitle>Çalışan Oluşturucu Başlat</CardTitle>
                   <CardDescription>Yapay zeka çalışanınızı 5 dakikada adım adım oluşturun.</CardDescription>
                 </div>
               </div>
@@ -493,7 +493,7 @@ const Builder = () => {
 
         {/* Templates Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-2">Ajans Şablonları</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-2">Çalışan Şablonları</h2>
           <p className="text-muted-foreground mb-8">Hazır şablonlarla hızlıca başlayın</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
