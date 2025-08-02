@@ -820,35 +820,45 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={handleWizardClose}>
-        <DialogContent className="max-w-4xl w-[95vw] max-h-[95vh] p-0 sm:p-6 flex flex-col">
-          {/* Sticky Header */}
-          <div className="sticky top-0 bg-background z-10 p-4 sm:p-6 border-b">
-            <DialogHeader className="flex flex-row items-center justify-between">
-              <div>
-                <DialogTitle className="text-lg sm:text-xl font-bold">
-                  AI Çalışan Kurulum Sihirbazı
-                </DialogTitle>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                  Adım {currentStep} / {totalSteps}: {stepTitles[currentStep - 1]}
-                </p>
-              </div>
-              <Button variant="ghost" size="sm" onClick={handleWizardClose} className="min-h-[44px] min-w-[44px]">
-                <X className="h-4 w-4" />
-              </Button>
-            </DialogHeader>
+      <Dialog open={open} onOpenChange={() => {}}>
+        <DialogContent 
+          className="max-w-4xl w-[95vw] max-h-[95vh] p-0 flex flex-col gap-0"
+          onInteractOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => {
+            e.preventDefault();
+            handleWizardClose();
+          }}
+        >
+          {/* Header with single close button */}
+          <div className="flex items-center justify-between p-4 sm:p-6 border-b bg-background">
+            <div className="flex-1">
+              <h2 className="text-lg sm:text-xl font-bold text-foreground">
+                AI Çalışan Kurulum Sihirbazı
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                Adım {currentStep} / {totalSteps}: {stepTitles[currentStep - 1]}
+              </p>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleWizardClose} 
+              className="min-h-[44px] min-w-[44px] hover:bg-muted"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
 
-            {/* Progress Bar */}
-            <div className="flex items-center justify-center mt-4 overflow-x-auto">
-              <div className="flex items-center space-x-1 sm:space-x-2 min-w-max pb-2">
+          {/* Progress Bar */}
+          <div className="px-4 sm:px-6 py-4 border-b bg-background">
+            <div className="flex items-center justify-center overflow-x-auto">
+              <div className="flex items-center space-x-1 sm:space-x-2 min-w-max">
                 {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
                   <div key={step} className="flex items-center flex-shrink-0">
                     <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium ${
-                      step < currentStep 
+                      step <= currentStep 
                         ? 'bg-primary text-primary-foreground' 
-                        : step === currentStep 
-                          ? 'bg-primary text-primary-foreground' 
-                          : 'bg-muted text-muted-foreground'
+                        : 'bg-muted text-muted-foreground'
                     }`}>
                       {step}
                     </div>
@@ -863,32 +873,40 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
             </div>
           </div>
 
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-            <div className="max-w-none">
-              {renderWizardStep()}
-            </div>
+          {/* Scrollable Content Area */}
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 min-h-0">
+            {renderWizardStep()}
           </div>
 
-          {/* Sticky Navigation */}
-          <div className="sticky bottom-0 bg-background border-t p-4 sm:p-6">
-            <div className="flex justify-between gap-3">
+          {/* Bottom Navigation - Always at bottom */}
+          <div className="border-t bg-background p-4 sm:p-6 mt-auto">
+            <div className="flex justify-between items-center gap-4">
               <Button
                 variant="outline"
                 onClick={handlePrevious}
                 disabled={currentStep === 1 && currentSubStep === 1}
-                className="flex items-center space-x-2 min-h-[44px] flex-1 sm:flex-none"
+                className="min-h-[44px] min-w-[100px] flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Önceki</span>
               </Button>
 
+              <div className="text-xs text-muted-foreground hidden sm:block">
+                {currentStep} / {totalSteps}
+              </div>
+
               {currentStep === totalSteps ? (
-                <Button onClick={handleFinish} className="bg-green-600 hover:bg-green-700 min-h-[44px] flex-1 sm:flex-none">
+                <Button 
+                  onClick={handleFinish} 
+                  className="bg-green-600 hover:bg-green-700 text-white min-h-[44px] min-w-[100px]"
+                >
                   Tamamla
                 </Button>
               ) : (
-                <Button onClick={handleNext} className="flex items-center space-x-2 min-h-[44px] flex-1 sm:flex-none">
+                <Button 
+                  onClick={handleNext} 
+                  className="min-h-[44px] min-w-[100px] flex items-center gap-2"
+                >
                   <span>Sonraki</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
