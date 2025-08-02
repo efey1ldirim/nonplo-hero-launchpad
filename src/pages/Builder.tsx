@@ -277,14 +277,14 @@ const Builder = () => {
     if (currentStep === 1) {
       return (
         <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-foreground">Hangi sektörde faaliyet gösteriyorsunuz?</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground">Hangi sektörde faaliyet gösteriyorsunuz?</h2>
           <div className="space-y-4">
             <div className="relative">
               <Input
                 placeholder="Cevabını buraya yaz..."
                 value={wizardData.sector}
                 onChange={(e) => setWizardData(prev => ({ ...prev, sector: e.target.value }))}
-                className="pr-10"
+                className="pr-10 h-12 md:h-auto text-base"
               />
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             </div>
@@ -298,7 +298,7 @@ const Builder = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => setWizardData(prev => ({ ...prev, sector }))}
-                  className="text-primary border-primary/20"
+                  className="text-primary border-primary/20 h-10 px-4 text-sm"
                 >
                   {sector}
                 </Button>
@@ -319,6 +319,7 @@ const Builder = () => {
                 placeholder="Cevabını buraya yaz..."
                 value={wizardData.businessName}
                 onChange={(e) => setWizardData(prev => ({ ...prev, businessName: e.target.value }))}
+                className="h-12 md:h-auto text-base"
               />
               {validationErrors.businessName && (
                 <p className="text-sm text-destructive">{validationErrors.businessName}</p>
@@ -335,18 +336,18 @@ const Builder = () => {
                   placeholder="Adres arayın..."
                   value={wizardData.address}
                   onChange={(e) => setWizardData(prev => ({ ...prev, address: e.target.value }))}
-                  className="pr-10"
+                  className="pr-10 h-12 md:h-auto text-base"
                 />
                 <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               </div>
               {validationErrors.address && (
                 <p className="text-sm text-destructive">{validationErrors.address}</p>
               )}
-              <div className="h-64 bg-muted/20 rounded-lg flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
-                <div className="text-center">
+              <div className="h-48 md:h-64 bg-muted/20 rounded-lg flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
+                <div className="text-center px-4">
                   <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-muted-foreground">Harita burada görünecek</p>
-                  <p className="text-sm text-muted-foreground">Adres girdiğinizde pin gösterilecek</p>
+                  <p className="text-muted-foreground text-sm md:text-base">Harita burada görünecek</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Adres girdiğinizde pin gösterilecek</p>
                 </div>
               </div>
             </div>
@@ -431,21 +432,25 @@ const Builder = () => {
                 placeholder="Web sitesi"
                 value={wizardData.website}
                 onChange={(e) => setWizardData(prev => ({ ...prev, website: e.target.value }))}
+                className="h-12 md:h-auto text-base"
               />
               <Input
                 placeholder="Instagram kullanıcı adınız (örn: @kafekardesler)"
                 value={wizardData.instagramUsername}
                 onChange={(e) => setWizardData(prev => ({ ...prev, instagramUsername: e.target.value }))}
+                className="h-12 md:h-auto text-base"
               />
               <Input
                 placeholder="Twitter kullanıcı adınız"
                 value={wizardData.twitterUsername}
                 onChange={(e) => setWizardData(prev => ({ ...prev, twitterUsername: e.target.value }))}
+                className="h-12 md:h-auto text-base"
               />
               <Input
                 placeholder="TikTok kullanıcı adınız"
                 value={wizardData.tiktokUsername}
                 onChange={(e) => setWizardData(prev => ({ ...prev, tiktokUsername: e.target.value }))}
+                className="h-12 md:h-auto text-base"
               />
             </div>
           )
@@ -458,7 +463,7 @@ const Builder = () => {
                 placeholder="Müşterilerinizin sık sorduğu sorular ve cevaplar..."
                 value={wizardData.faq}
                 onChange={(e) => setWizardData(prev => ({ ...prev, faq: e.target.value }))}
-                className="min-h-[120px]"
+                className="min-h-[120px] text-base"
               />
               {validationErrors.faq && (
                 <p className="text-sm text-destructive">{validationErrors.faq}</p>
@@ -474,7 +479,7 @@ const Builder = () => {
                 placeholder="Ürün/hizmetleriniz hakkında detaylı bilgi..."
                 value={wizardData.products}
                 onChange={(e) => setWizardData(prev => ({ ...prev, products: e.target.value }))}
-                className="min-h-[120px]"
+                className="min-h-[120px] text-base"
               />
               {validationErrors.products && (
                 <p className="text-sm text-destructive">{validationErrors.products}</p>
@@ -599,7 +604,7 @@ const Builder = () => {
       
       return (
         <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-foreground">{currentContent.title}</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground">{currentContent.title}</h2>
           {currentContent.content}
         </div>
       );
@@ -840,51 +845,58 @@ const Builder = () => {
 
       {/* Wizard Modal */}
       {wizardOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 overflow-hidden">
           {/* Backdrop */}
           <div 
             className="absolute inset-0 bg-background/80 backdrop-blur-md"
             onClick={handleWizardClose}
           />
           
-          {/* Modal Content */}
-          <div className="relative bg-background border rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden mt-20">
-            <div className="flex flex-col h-[95vh]">
+          {/* Modal Content - Full screen on mobile, centered on desktop */}
+          <div className="relative bg-background border-0 md:border md:rounded-3xl shadow-2xl w-full h-full md:w-full md:max-w-4xl md:h-auto md:max-h-[90vh] overflow-hidden md:mt-8">
+            <div className="flex flex-col h-full md:h-[90vh]">
               {/* Header */}
-              <div className="flex items-center justify-between p-8 border-b">
-                <h3 className="text-2xl font-bold text-primary">
+              <div className="flex items-center justify-between p-4 md:p-8 border-b bg-background/90 backdrop-blur-sm sticky top-0 z-10">
+                <h3 className="text-lg md:text-2xl font-bold text-primary">
                   Adım {getStepDisplay()}
                 </h3>
-                <Button variant="ghost" size="icon" onClick={handleWizardClose}>
-                  <X className="h-6 w-6" />
+                <Button variant="ghost" size="icon" onClick={handleWizardClose} className="h-10 w-10 md:h-auto md:w-auto">
+                  <X className="h-5 w-5 md:h-6 md:w-6" />
                 </Button>
               </div>
 
-              {/* Content */}
-              <div className="flex-1 overflow-auto p-8">
-                {renderWizardStep()}
+              {/* Content - Scrollable area */}
+              <div className="flex-1 overflow-auto px-4 py-6 md:p-8">
+                <div className="max-w-2xl mx-auto">
+                  {renderWizardStep()}
+                </div>
               </div>
 
-              {/* Footer */}
-              <div className="flex items-center justify-between p-8 border-t bg-muted/20">
-                <Button
-                  variant="ghost"
-                  onClick={handleBack}
-                  disabled={currentStep === 1}
-                  className="flex items-center gap-2"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  Geri
-                </Button>
-                
-                <Button 
-                  onClick={handleNext} 
-                  disabled={currentStep === 6}
-                  className="flex items-center gap-2"
-                >
-                  İleri
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+              {/* Footer - Sticky at bottom */}
+              <div className="sticky bottom-0 bg-background/90 backdrop-blur-sm border-t p-4 md:p-8">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between max-w-2xl mx-auto">
+                  {/* Mobile: Stack buttons vertically */}
+                  <div className="flex gap-3 md:gap-0">
+                    <Button
+                      variant="ghost"
+                      onClick={handleBack}
+                      disabled={currentStep === 1}
+                      className="flex-1 md:flex-none flex items-center justify-center gap-2 h-12 md:h-auto"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Geri
+                    </Button>
+                    
+                    <Button 
+                      onClick={handleNext} 
+                      disabled={currentStep === 6}
+                      className="flex-1 md:flex-none flex items-center justify-center gap-2 h-12 md:h-auto"
+                    >
+                      İleri
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
