@@ -331,12 +331,12 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
             
             <div>
               <p className="text-sm text-muted-foreground mb-3">Popüler sektörler:</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {sectors.map((sector) => (
                   <Button
                     key={sector}
                     variant="outline"
-                    className="justify-start h-auto p-3"
+                    className="justify-start h-auto p-3 text-left min-h-[44px] w-full"
                     onClick={() => setWizardData(prev => ({ ...prev, sector }))}
                   >
                     {sector}
@@ -474,57 +474,57 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
       case 4:
         return (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="website" className="text-sm font-medium flex items-center gap-2">
-                  <Globe className="h-4 w-4" />
-                  Web sitesi
-                </Label>
-                <Input
-                  id="website"
-                  placeholder="https://ornek.com"
-                  className="mt-1"
-                  value={wizardData.website}
-                  onChange={(e) => setWizardData(prev => ({ ...prev, website: e.target.value }))}
-                />
-              </div>
-              <div>
-                <Label htmlFor="instagram" className="text-sm font-medium flex items-center gap-2">
-                  <Instagram className="h-4 w-4" />
-                  Instagram
-                </Label>
-                <Input
-                  id="instagram"
-                  placeholder="kullaniciadi"
-                  className="mt-1"
-                  value={wizardData.instagramUsername}
-                  onChange={(e) => setWizardData(prev => ({ ...prev, instagramUsername: e.target.value }))}
-                />
-              </div>
-              <div>
-                <Label htmlFor="twitter" className="text-sm font-medium flex items-center gap-2">
-                  <X className="h-4 w-4" />
-                  X (Twitter)
-                </Label>
-                <Input
-                  id="twitter"
-                  placeholder="@kullaniciadi"
-                  className="mt-1"
-                  value={wizardData.twitterUsername}
-                  onChange={(e) => setWizardData(prev => ({ ...prev, twitterUsername: e.target.value }))}
-                />
-              </div>
-              <div>
-                <Label htmlFor="tiktok" className="text-sm font-medium">TikTok</Label>
-                <Input
-                  id="tiktok"
-                  placeholder="@kullaniciadi"
-                  className="mt-1"
-                  value={wizardData.tiktokUsername}
-                  onChange={(e) => setWizardData(prev => ({ ...prev, tiktokUsername: e.target.value }))}
-                />
-              </div>
-            </div>
+             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+               <div>
+                 <Label htmlFor="website" className="text-sm font-medium flex items-center gap-2">
+                   <Globe className="h-4 w-4" />
+                   Web sitesi
+                 </Label>
+                 <Input
+                   id="website"
+                   placeholder="https://ornek.com"
+                   className="mt-1 w-full"
+                   value={wizardData.website}
+                   onChange={(e) => setWizardData(prev => ({ ...prev, website: e.target.value }))}
+                 />
+               </div>
+               <div>
+                 <Label htmlFor="instagram" className="text-sm font-medium flex items-center gap-2">
+                   <Instagram className="h-4 w-4" />
+                   Instagram
+                 </Label>
+                 <Input
+                   id="instagram"
+                   placeholder="kullaniciadi"
+                   className="mt-1 w-full"
+                   value={wizardData.instagramUsername}
+                   onChange={(e) => setWizardData(prev => ({ ...prev, instagramUsername: e.target.value }))}
+                 />
+               </div>
+               <div>
+                 <Label htmlFor="twitter" className="text-sm font-medium flex items-center gap-2">
+                   <X className="h-4 w-4" />
+                   X (Twitter)
+                 </Label>
+                 <Input
+                   id="twitter"
+                   placeholder="@kullaniciadi"
+                   className="mt-1 w-full"
+                   value={wizardData.twitterUsername}
+                   onChange={(e) => setWizardData(prev => ({ ...prev, twitterUsername: e.target.value }))}
+                 />
+               </div>
+               <div>
+                 <Label htmlFor="tiktok" className="text-sm font-medium">TikTok</Label>
+                 <Input
+                   id="tiktok"
+                   placeholder="@kullaniciadi"
+                   className="mt-1 w-full"
+                   value={wizardData.tiktokUsername}
+                   onChange={(e) => setWizardData(prev => ({ ...prev, tiktokUsername: e.target.value }))}
+                 />
+               </div>
+             </div>
           </div>
         );
 
@@ -636,18 +636,18 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                   AI çalışanınızın yanıtları ne kadar detaylı olsun?
                 </p>
                 
-                <div className="flex gap-3">
-                  {responseLengths.map((option) => (
-                    <Button
-                      key={option}
-                      variant={wizardData.responseLength === option ? "default" : "outline"}
-                      onClick={() => setWizardData(prev => ({ ...prev, responseLength: option }))}
-                      className="flex-1"
-                    >
-                      {option}
-                    </Button>
-                  ))}
-                </div>
+                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                   {responseLengths.map((option) => (
+                     <Button
+                       key={option}
+                       variant={wizardData.responseLength === option ? "default" : "outline"}
+                       onClick={() => setWizardData(prev => ({ ...prev, responseLength: option }))}
+                       className="w-full min-h-[44px]"
+                     >
+                       {option}
+                     </Button>
+                   ))}
+                 </div>
               </div>
             </div>
           );
@@ -662,18 +662,18 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                   AI çalışanınız müşterilerden iletişim bilgilerini ne sıklıkla isteysin?
                 </p>
                 
-                <div className="space-y-2">
-                  {verificationOptions.map((option) => (
-                    <Button
-                      key={option}
-                      variant={wizardData.userVerification === option ? "default" : "outline"}
-                      onClick={() => setWizardData(prev => ({ ...prev, userVerification: option }))}
-                      className="w-full justify-start"
-                    >
-                      {option}
-                    </Button>
-                  ))}
-                </div>
+                 <div className="space-y-2">
+                   {verificationOptions.map((option) => (
+                     <Button
+                       key={option}
+                       variant={wizardData.userVerification === option ? "default" : "outline"}
+                       onClick={() => setWizardData(prev => ({ ...prev, userVerification: option }))}
+                       className="w-full justify-start min-h-[44px]"
+                     >
+                       {option}
+                     </Button>
+                   ))}
+                 </div>
               </div>
             </div>
           );
@@ -688,18 +688,18 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                   AI çalışanınızın temel odak noktası nedir?
                 </p>
                 
-                <div className="space-y-2">
-                  {serviceTypes.map((option) => (
-                    <Button
-                      key={option}
-                      variant={wizardData.serviceType === option ? "default" : "outline"}
-                      onClick={() => setWizardData(prev => ({ ...prev, serviceType: option }))}
-                      className="w-full justify-start"
-                    >
-                      {option}
-                    </Button>
-                  ))}
-                </div>
+                 <div className="space-y-2">
+                   {serviceTypes.map((option) => (
+                     <Button
+                       key={option}
+                       variant={wizardData.serviceType === option ? "default" : "outline"}
+                       onClick={() => setWizardData(prev => ({ ...prev, serviceType: option }))}
+                       className="w-full justify-start min-h-[44px]"
+                     >
+                       {option}
+                     </Button>
+                   ))}
+                 </div>
               </div>
             </div>
           );
@@ -755,24 +755,24 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                 AI çalışanınızın hangi araçları kullanabilmesini istiyorsunuz?
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {toolsList.map(({ key, label, icon: Icon }) => (
-                  <div key={key} className="flex items-center space-x-3 p-3 border rounded-lg">
-                    <Switch
-                      id={`tool-${key}`}
-                      checked={wizardData.tools[key as keyof typeof wizardData.tools]}
-                      onCheckedChange={(checked) => setWizardData(prev => ({
-                        ...prev,
-                        tools: { ...prev.tools, [key]: checked }
-                      }))}
-                    />
-                    <Icon className="h-4 w-4 text-muted-foreground" />
-                    <Label htmlFor={`tool-${key}`} className="text-sm font-medium cursor-pointer flex-1">
-                      {label}
-                    </Label>
-                  </div>
-                ))}
-              </div>
+               <div className="grid grid-cols-1 gap-3">
+                 {toolsList.map(({ key, label, icon: Icon }) => (
+                   <div key={key} className="flex items-center space-x-3 p-3 border rounded-lg min-h-[48px]">
+                     <Switch
+                       id={`tool-${key}`}
+                       checked={wizardData.tools[key as keyof typeof wizardData.tools]}
+                       onCheckedChange={(checked) => setWizardData(prev => ({
+                         ...prev,
+                         tools: { ...prev.tools, [key]: checked }
+                       }))}
+                     />
+                     <Icon className="h-4 w-4 text-muted-foreground" />
+                     <Label htmlFor={`tool-${key}`} className="text-sm font-medium cursor-pointer flex-1">
+                       {label}
+                     </Label>
+                   </div>
+                 ))}
+               </div>
             </div>
 
             <div>
@@ -781,23 +781,23 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                 AI çalışanınızın hangi platformlarla entegre olmasını istiyorsunuz?
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {integrationsList.map(({ key, label }) => (
-                  <div key={key} className="flex items-center space-x-3 p-3 border rounded-lg">
-                    <Switch
-                      id={`integration-${key}`}
-                      checked={wizardData.integrations[key as keyof typeof wizardData.integrations]}
-                      onCheckedChange={(checked) => setWizardData(prev => ({
-                        ...prev,
-                        integrations: { ...prev.integrations, [key]: checked }
-                      }))}
-                    />
-                    <Label htmlFor={`integration-${key}`} className="text-sm font-medium cursor-pointer flex-1">
-                      {label}
-                    </Label>
-                  </div>
-                ))}
-              </div>
+               <div className="grid grid-cols-1 gap-3">
+                 {integrationsList.map(({ key, label }) => (
+                   <div key={key} className="flex items-center space-x-3 p-3 border rounded-lg min-h-[48px]">
+                     <Switch
+                       id={`integration-${key}`}
+                       checked={wizardData.integrations[key as keyof typeof wizardData.integrations]}
+                       onCheckedChange={(checked) => setWizardData(prev => ({
+                         ...prev,
+                         integrations: { ...prev.integrations, [key]: checked }
+                       }))}
+                     />
+                     <Label htmlFor={`integration-${key}`} className="text-sm font-medium cursor-pointer flex-1">
+                       {label}
+                     </Label>
+                   </div>
+                 ))}
+               </div>
             </div>
           </div>
         );
@@ -821,68 +821,76 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
   return (
     <>
       <Dialog open={open} onOpenChange={handleWizardClose}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader className="flex flex-row items-center justify-between">
-            <div>
-              <DialogTitle className="text-xl font-bold">
-                AI Çalışan Kurulum Sihirbazı
-              </DialogTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                Adım {currentStep} / {totalSteps}: {stepTitles[currentStep - 1]}
-              </p>
-            </div>
-            <Button variant="ghost" size="sm" onClick={handleWizardClose}>
-              <X className="h-4 w-4" />
-            </Button>
-          </DialogHeader>
+        <DialogContent className="max-w-4xl w-[95vw] max-h-[95vh] p-0 sm:p-6 flex flex-col">
+          {/* Sticky Header */}
+          <div className="sticky top-0 bg-background z-10 p-4 sm:p-6 border-b">
+            <DialogHeader className="flex flex-row items-center justify-between">
+              <div>
+                <DialogTitle className="text-lg sm:text-xl font-bold">
+                  AI Çalışan Kurulum Sihirbazı
+                </DialogTitle>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                  Adım {currentStep} / {totalSteps}: {stepTitles[currentStep - 1]}
+                </p>
+              </div>
+              <Button variant="ghost" size="sm" onClick={handleWizardClose} className="min-h-[44px] min-w-[44px]">
+                <X className="h-4 w-4" />
+              </Button>
+            </DialogHeader>
 
-          <div className="mt-6">
             {/* Progress Bar */}
-            <div className="flex items-center mb-8">
-              {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
-                <div key={step} className="flex items-center flex-1">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                    step < currentStep 
-                      ? 'bg-primary text-primary-foreground' 
-                      : step === currentStep 
+            <div className="flex items-center justify-center mt-4 overflow-x-auto">
+              <div className="flex items-center space-x-1 sm:space-x-2 min-w-max pb-2">
+                {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
+                  <div key={step} className="flex items-center flex-shrink-0">
+                    <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium ${
+                      step < currentStep 
                         ? 'bg-primary text-primary-foreground' 
-                        : 'bg-muted text-muted-foreground'
-                  }`}>
-                    {step}
+                        : step === currentStep 
+                          ? 'bg-primary text-primary-foreground' 
+                          : 'bg-muted text-muted-foreground'
+                    }`}>
+                      {step}
+                    </div>
+                    {step < totalSteps && (
+                      <div className={`w-6 sm:w-12 h-1 mx-1 sm:mx-2 ${
+                        step < currentStep ? 'bg-primary' : 'bg-muted'
+                      }`} />
+                    )}
                   </div>
-                  {step < totalSteps && (
-                    <div className={`flex-1 h-0.5 mx-2 ${
-                      step < currentStep ? 'bg-primary' : 'bg-muted'
-                    }`} />
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+          </div>
 
-            {/* Step Content */}
-            <div className="min-h-[300px]">
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="max-w-none">
               {renderWizardStep()}
             </div>
+          </div>
 
-            {/* Navigation */}
-            <div className="flex justify-between mt-8 pt-6 border-t">
+          {/* Sticky Navigation */}
+          <div className="sticky bottom-0 bg-background border-t p-4 sm:p-6">
+            <div className="flex justify-between gap-3">
               <Button
                 variant="outline"
                 onClick={handlePrevious}
                 disabled={currentStep === 1 && currentSubStep === 1}
+                className="flex items-center space-x-2 min-h-[44px] flex-1 sm:flex-none"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Önceki
+                <ArrowLeft className="h-4 w-4" />
+                <span>Önceki</span>
               </Button>
 
               {currentStep === totalSteps ? (
-                <Button onClick={handleFinish} className="bg-green-600 hover:bg-green-700">
+                <Button onClick={handleFinish} className="bg-green-600 hover:bg-green-700 min-h-[44px] flex-1 sm:flex-none">
                   Tamamla
                 </Button>
               ) : (
-                <Button onClick={handleNext}>
-                  Sonraki
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                <Button onClick={handleNext} className="flex items-center space-x-2 min-h-[44px] flex-1 sm:flex-none">
+                  <span>Sonraki</span>
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               )}
             </div>
