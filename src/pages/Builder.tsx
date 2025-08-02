@@ -848,7 +848,7 @@ const Builder = () => {
           />
           
           {/* Modal Content */}
-          <div className="relative bg-background border rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden mt-20">
+          <div className="relative bg-background border rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden mt-30 mb-20">
             <div className="flex flex-col h-[95vh]">
               {/* Header */}
               <div className="flex items-center justify-between p-8 border-b">
