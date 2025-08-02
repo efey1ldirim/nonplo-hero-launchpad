@@ -358,68 +358,95 @@ const Builder = () => {
           content: (
             <div className="space-y-4">
               {Object.entries(wizardData.weeklyHours).map(([day, hours]) => (
-                <div key={day} className="flex items-center gap-4 p-3 border rounded-lg">
-                  <div className="w-20 text-sm font-medium capitalize">
-                    {day === 'monday' ? 'Pazartesi' :
-                     day === 'tuesday' ? 'Salı' :
-                     day === 'wednesday' ? 'Çarşamba' :
-                     day === 'thursday' ? 'Perşembe' :
-                     day === 'friday' ? 'Cuma' :
-                     day === 'saturday' ? 'Cumartesi' : 'Pazar'}
-                  </div>
-                  <div className="flex items-center gap-2 flex-1">
-                    <Input
-                      type="time"
-                      value={hours.open}
-                      onChange={(e) => setWizardData(prev => ({
-                        ...prev,
-                        weeklyHours: {
-                          ...prev.weeklyHours,
-                          [day]: { ...hours, open: e.target.value }
-                        }
-                      }))}
-                      disabled={hours.closed}
-                      className="w-24"
-                    />
-                    <span className="text-muted-foreground">-</span>
-                    <Input
-                      type="time"
-                      value={hours.close}
-                      onChange={(e) => setWizardData(prev => ({
-                        ...prev,
-                        weeklyHours: {
-                          ...prev.weeklyHours,
-                          [day]: { ...hours, close: e.target.value }
-                        }
-                      }))}
-                      disabled={hours.closed}
-                      className="w-24"
-                    />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor={`${day}-closed`} className="text-sm">Kapalı</Label>
-                    <Switch
-                      id={`${day}-closed`}
-                      checked={hours.closed}
-                      onCheckedChange={(checked) => setWizardData(prev => ({
-                        ...prev,
-                        weeklyHours: {
-                          ...prev.weeklyHours,
-                          [day]: { ...hours, closed: checked }
-                        }
-                      }))}
-                    />
+                <div key={day} className="p-4 border rounded-lg space-y-3 md:space-y-0">
+                  {/* Mobile: Vertical layout, Desktop: Horizontal layout */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+                    {/* Day name */}
+                    <div className="font-medium text-sm md:text-base md:w-20">
+                      {day === 'monday' ? 'Pazartesi' :
+                       day === 'tuesday' ? 'Salı' :
+                       day === 'wednesday' ? 'Çarşamba' :
+                       day === 'thursday' ? 'Perşembe' :
+                       day === 'friday' ? 'Cuma' :
+                       day === 'saturday' ? 'Cumartesi' : 'Pazar'}
+                    </div>
+                    
+                    {/* Time inputs - Stack on mobile, inline on desktop */}
+                    <div className="flex-1 space-y-3 md:space-y-0">
+                      <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
+                        {/* Start time */}
+                        <div className="flex-1 md:flex-none">
+                          <Label className="text-xs text-muted-foreground md:hidden block mb-1">Başlangıç</Label>
+                          <Input
+                            type="time"
+                            value={hours.open}
+                            onChange={(e) => setWizardData(prev => ({
+                              ...prev,
+                              weeklyHours: {
+                                ...prev.weeklyHours,
+                                [day]: { ...hours, open: e.target.value }
+                              }
+                            }))}
+                            disabled={hours.closed}
+                            className="w-full md:w-24 h-12 md:h-auto text-base"
+                          />
+                        </div>
+                        
+                        {/* Separator - hidden on mobile */}
+                        <span className="text-muted-foreground hidden md:block">-</span>
+                        
+                        {/* End time */}
+                        <div className="flex-1 md:flex-none">
+                          <Label className="text-xs text-muted-foreground md:hidden block mb-1">Bitiş</Label>
+                          <Input
+                            type="time"
+                            value={hours.close}
+                            onChange={(e) => setWizardData(prev => ({
+                              ...prev,
+                              weeklyHours: {
+                                ...prev.weeklyHours,
+                                [day]: { ...hours, close: e.target.value }
+                              }
+                            }))}
+                            disabled={hours.closed}
+                            className="w-full md:w-24 h-12 md:h-auto text-base"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Closed toggle */}
+                    <div className="flex items-center justify-between md:justify-start gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-muted/30">
+                      <Label htmlFor={`${day}-closed`} className="text-sm">Kapalı</Label>
+                      <Switch
+                        id={`${day}-closed`}
+                        checked={hours.closed}
+                        onCheckedChange={(checked) => setWizardData(prev => ({
+                          ...prev,
+                          weeklyHours: {
+                            ...prev.weeklyHours,
+                            [day]: { ...hours, closed: checked }
+                          }
+                        }))}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
-              <div className="mt-4">
-                <Label htmlFor="holidays">Tatil Günleri (isteğe bağlı)</Label>
+              
+              {/* Holiday section */}
+              <div className="mt-6 space-y-3">
+                <Label htmlFor="holidays" className="text-base font-medium">Tatil Günleri (isteğe bağlı)</Label>
                 <Textarea
                   id="holidays"
                   placeholder="Örn: 1 Ocak, 23 Nisan, Ramazan Bayramı..."
                   value={wizardData.holidays}
                   onChange={(e) => setWizardData(prev => ({ ...prev, holidays: e.target.value }))}
+                  className="min-h-[100px] text-base"
                 />
+                <p className="text-xs text-muted-foreground">
+                  Virgülle ayırarak birden fazla tatil günü ekleyebilirsiniz
+                </p>
               </div>
             </div>
           )
