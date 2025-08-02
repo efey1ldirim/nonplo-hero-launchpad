@@ -1,46 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   Bot, 
   MessageSquare, 
-  Plug, 
-  Settings, 
+  Settings as SettingsIcon, 
   HelpCircle, 
   Plus, 
   User, 
   LogOut,
-  Check,
-  ChevronRight,
   BarChart3,
-  Eye,
-  EyeOff
+  Wrench
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const Dashboard = () => {
-  const [showSteps, setShowSteps] = useState(true);
-  const [showStats, setShowStats] = useState(true);
+  const navigate = useNavigate();
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [showAccountPopup, setShowAccountPopup] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+    getUser();
+  }, []);
 
   const navigationItems = [
-    { icon: LayoutDashboard, label: "Dashboard", active: true },
-    { icon: Bot, label: "Agents", active: false },
-    { icon: MessageSquare, label: "Messages", active: false },
-    { icon: Plug, label: "Integrations", active: false },
-    { icon: Settings, label: "Settings", active: false },
-    { icon: HelpCircle, label: "Support", active: false },
+    { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", active: true },
+    { icon: Bot, label: "Agents", path: "/dashboard/agents", active: false },
+    { icon: MessageSquare, label: "Messages", path: "/dashboard/messages", active: false },
+    { icon: Wrench, label: "Integrations & Tools", path: "/dashboard/integrations", active: false },
+    { icon: SettingsIcon, label: "Settings", path: "/dashboard/settings", active: false },
+    { icon: HelpCircle, label: "Support", path: "/dashboard/support", active: false },
   ];
 
-  const agentSteps = [
-    { id: 1, title: "Agent oluştur", completed: true },
-    { id: 2, title: "Görevini belirle", completed: true },
-    { id: 3, title: "Bilgi yükle (FAQ, ürün/hizmet)", completed: false },
-    { id: 4, title: "Entegrasyonları tamamla", completed: false },
-    { id: 5, title: "Yayına al", completed: false },
-  ];
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/auth');
+  };
 
-  const completedSteps = agentSteps.filter(step => step.completed).length;
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -50,17 +56,15 @@ const Dashboard = () => {
           <h2 className="text-lg font-semibold text-sidebar-foreground">Nonplo</h2>
         </div>
         
-        {/* Brand Section */}
+        {/* New Agent Button */}
         <div className="p-4 border-b">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-sidebar-foreground">luxetfortuna</span>
-            <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-          <Badge variant="outline" className="text-xs">
-            Agent API aktif değil
-          </Badge>
+          <Button 
+            onClick={() => navigate('/builder')} 
+            className="w-full justify-start bg-primary hover:bg-primary/90"
+          >
+            <Plus className="mr-3 h-4 w-4" />
+            Yeni Çalışan Oluştur
+          </Button>
         </div>
 
         {/* Navigation */}
@@ -70,6 +74,7 @@ const Dashboard = () => {
               key={item.label}
               variant={item.active ? "secondary" : "ghost"}
               className="w-full justify-start"
+              onClick={() => handleNavigation(item.path)}
             >
               <item.icon className="mr-3 h-4 w-4" />
               {item.label}
@@ -78,14 +83,50 @@ const Dashboard = () => {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t">
-          <div className="flex items-center space-x-3 mb-2">
+        <div className="p-4 border-t relative">
+          <div 
+            className="flex items-center space-x-3 mb-2 cursor-pointer hover:bg-accent rounded p-2"
+            onClick={() => setShowAccountPopup(!showAccountPopup)}
+          >
             <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
               <User className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="text-sm font-medium text-sidebar-foreground">Kullanıcı</span>
+            <span className="text-sm font-medium text-sidebar-foreground">
+              {user?.user_metadata?.full_name || user?.email || "Kullanıcı"}
+            </span>
           </div>
-          <Button variant="ghost" size="sm" className="w-full justify-start text-muted-foreground">
+
+          {/* Account Popup */}
+          {showAccountPopup && (
+            <div className="absolute bottom-full left-4 right-4 mb-2 bg-background border border-border rounded-lg shadow-lg p-4 z-50">
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    {user?.user_metadata?.full_name || "Kullanıcı"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{user?.email}</p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Aylık 4 agent hakkın kaldı
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => navigate('/dashboard/settings')}
+                >
+                  Hesabı Yönet
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="w-full justify-start text-muted-foreground"
+            onClick={handleSignOut}
+          >
             <LogOut className="mr-2 h-4 w-4" />
             Çıkış Yap
           </Button>
@@ -110,131 +151,90 @@ const Dashboard = () => {
               <h1 className="text-3xl font-bold text-foreground mb-2">
                 Agent Yönetim Paneli
               </h1>
-              <p className="text-muted-foreground text-lg mb-4">
+              <p className="text-muted-foreground text-lg">
                 AI çalışanlarınızı yönetin ve kontrol edin
               </p>
-              <div className="text-sm text-muted-foreground">
-                Adım {completedSteps + 1}/5
-              </div>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-              {/* Agent Setup Checklist */}
-              <div className="xl:col-span-2">
-                {showSteps && (
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Agent Kurulum Adımları</CardTitle>
-                      <CardDescription>
-                        AI agentinizi kurmak için bu adımları tamamlayın
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {agentSteps.map((step) => (
-                        <div
-                          key={step.id}
-                          className={`flex items-center justify-between p-4 rounded-lg border transition-all hover:shadow-md cursor-pointer ${
-                            step.completed 
-                              ? "bg-muted text-muted-foreground" 
-                              : "bg-background hover:bg-accent"
-                          }`}
-                        >
-                          <div className="flex items-center space-x-3">
-                            <div className={`h-6 w-6 rounded-full flex items-center justify-center ${
-                              step.completed 
-                                ? "bg-primary text-primary-foreground" 
-                                : "bg-muted text-muted-foreground"
-                            }`}>
-                              {step.completed ? (
-                                <Check className="h-4 w-4" />
-                              ) : (
-                                <span className="text-xs font-medium">{step.id}</span>
-                              )}
-                            </div>
-                            <span className={step.completed ? "line-through" : ""}>{step.title}</span>
-                          </div>
-                          {!step.completed && (
-                            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                          )}
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Aktif Agent Sayısı
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-foreground">2</div>
+                </CardContent>
+              </Card>
 
-              {/* Stats Panel */}
-              <div className="space-y-6">
-                {showStats && (
-                  <>
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center space-x-2">
-                          <BarChart3 className="h-5 w-5" />
-                          <span>Agent İstatistikleri</span>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="grid grid-cols-1 gap-4">
-                          <div className="text-center p-4 rounded-lg bg-accent">
-                            <div className="text-2xl font-bold text-foreground">2</div>
-                            <div className="text-sm text-muted-foreground">Aktif Agent</div>
-                          </div>
-                          <div className="text-center p-4 rounded-lg bg-accent">
-                            <div className="text-2xl font-bold text-foreground">147</div>
-                            <div className="text-sm text-muted-foreground">Günlük Mesaj</div>
-                          </div>
-                          <div className="text-center p-4 rounded-lg bg-accent">
-                            <div className="text-2xl font-bold text-foreground">1.2k</div>
-                            <div className="text-sm text-muted-foreground">Toplam Etkileşim</div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Günlük Mesaj
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-foreground">147</div>
+                </CardContent>
+              </Card>
 
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="text-sm">Son 7 Gün Etkileşim Trendi</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="h-24 bg-accent rounded flex items-end justify-center space-x-1 p-2">
-                          {[20, 35, 45, 30, 55, 40, 60].map((height, index) => (
-                            <div
-                              key={index}
-                              className="bg-primary rounded-sm w-3"
-                              style={{ height: `${height}%` }}
-                            />
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </>
-                )}
-              </div>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Toplam Etkileşim
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-foreground">1.2k</div>
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Bottom Utility */}
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button
-                variant="outline"
-                onClick={() => setShowSteps(!showSteps)}
-                className="flex items-center space-x-2"
-              >
-                {showSteps ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                <span>{showSteps ? "Adımları Gizle" : "Adımları Göster"}</span>
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setShowStats(!showStats)}
-                className="flex items-center space-x-2"
-              >
-                {showStats ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                <span>{showStats ? "Grafiği Gizle" : "Grafiği Göster"}</span>
-              </Button>
-            </div>
+            {/* Chart */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <BarChart3 className="h-5 w-5" />
+                  <span>Son 7 Gün Etkileşim Trendi</span>
+                </CardTitle>
+                <CardDescription>
+                  Günlük mesaj ve etkileşim istatistikleri
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-64 bg-gradient-to-br from-primary/5 to-purple-500/5 rounded-lg flex items-end justify-center space-x-2 p-4">
+                  {[20, 35, 45, 30, 55, 40, 60].map((height, index) => (
+                    <div
+                      key={index}
+                      className="bg-gradient-to-t from-primary to-purple-500 rounded-t-sm w-8 transition-all hover:opacity-80"
+                      style={{ height: `${height}%` }}
+                    />
+                  ))}
+                </div>
+                <div className="flex justify-between mt-4 text-xs text-muted-foreground">
+                  <span>Pzt</span>
+                  <span>Sal</span>
+                  <span>Çar</span>
+                  <span>Per</span>
+                  <span>Cum</span>
+                  <span>Cmt</span>
+                  <span>Paz</span>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
+
+      {/* Overlay to close popup */}
+      {showAccountPopup && (
+        <div 
+          className="fixed inset-0 z-40"
+          onClick={() => setShowAccountPopup(false)}
+        />
+      )}
     </div>
   );
 };

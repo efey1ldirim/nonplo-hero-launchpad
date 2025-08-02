@@ -9,6 +9,11 @@ import Account from "./pages/Account";
 import Auth from "./pages/Auth";
 import Builder from "./pages/Builder";
 import Dashboard from "./pages/Dashboard";
+import DashboardAgents from "./pages/dashboard/DashboardAgents";
+import DashboardMessages from "./pages/dashboard/DashboardMessages";
+import DashboardIntegrations from "./pages/dashboard/DashboardIntegrations";
+import DashboardSettings from "./pages/dashboard/DashboardSettings";
+import DashboardSupport from "./pages/dashboard/DashboardSupport";
 import Documentation from "./pages/resources/Documentation";
 import DocumentationArticle from "./pages/resources/DocumentationArticle";
 import Blog from "./pages/resources/Blog";
@@ -16,6 +21,7 @@ import BlogArticle from "./pages/resources/BlogArticle";
 import VideoTutorials from "./pages/resources/VideoTutorials";
 import VideoTutorialArticle from "./pages/resources/VideoTutorialArticle";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +37,12 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/account" element={<Account />} />
           <Route path="/builder" element={<Builder />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/dashboard/agents" element={<ProtectedRoute><DashboardAgents /></ProtectedRoute>} />
+          <Route path="/dashboard/messages" element={<ProtectedRoute><DashboardMessages /></ProtectedRoute>} />
+          <Route path="/dashboard/integrations" element={<ProtectedRoute><DashboardIntegrations /></ProtectedRoute>} />
+          <Route path="/dashboard/settings" element={<ProtectedRoute><DashboardSettings /></ProtectedRoute>} />
+          <Route path="/dashboard/support" element={<ProtectedRoute><DashboardSupport /></ProtectedRoute>} />
           <Route path="/resources/documentation" element={<Documentation />} />
           <Route path="/resources/documentation/:sectionId/:articleIndex" element={<DocumentationArticle />} />
           <Route path="/resources/blog" element={<Blog />} />
