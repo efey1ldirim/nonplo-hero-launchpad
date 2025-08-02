@@ -11,6 +11,7 @@ import {
   BarChart3,
   Wrench
 } from "lucide-react";
+import AgentCreationWizard from "@/components/AgentCreationWizard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [showAccountPopup, setShowAccountPopup] = useState(false);
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -59,7 +61,7 @@ const Dashboard = () => {
         {/* New Agent Button */}
         <div className="p-4 border-b">
           <Button 
-            onClick={() => navigate('/builder')} 
+            onClick={() => setWizardOpen(true)} 
             className="w-full justify-start bg-primary hover:bg-primary/90"
           >
             <Plus className="mr-3 h-4 w-4" />
@@ -113,7 +115,7 @@ const Dashboard = () => {
                   variant="outline" 
                   size="sm" 
                   className="w-full"
-                  onClick={() => navigate('/dashboard/settings')}
+                  onClick={() => navigate('/account')}
                 >
                   Hesabı Yönet
                 </Button>
@@ -235,6 +237,12 @@ const Dashboard = () => {
           onClick={() => setShowAccountPopup(false)}
         />
       )}
+
+      {/* Agent Creation Wizard */}
+      <AgentCreationWizard 
+        open={wizardOpen} 
+        onClose={() => setWizardOpen(false)} 
+      />
     </div>
   );
 };
