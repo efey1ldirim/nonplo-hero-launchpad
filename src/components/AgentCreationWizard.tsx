@@ -19,6 +19,8 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentSubStep, setCurrentSubStep] = useState(1);
   const [showExitConfirmation, setShowExitConfirmation] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
   
   // Form states
   const [wizardData, setWizardData] = useState({
@@ -307,6 +309,68 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
     setCurrentSubStep(1);
   };
 
+  const validateFileType = (file: File): boolean => {
+    const allowedTypes = ['.txt', '.pdf', '.docx'];
+    const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+    return allowedTypes.includes(fileExtension);
+  };
+
+  const handleFileSelect = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    
+    const file = files[0];
+    
+    if (!validateFileType(file)) {
+      toast({
+        title: "Desteklenmeyen Dosya Türü",
+        description: "Sadece .txt, .pdf, ve .docx dosyaları desteklenmektedir.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Set loading state
+    setUploadingFile(true);
+    
+    // Simulate file processing/upload
+    setTimeout(() => {
+      setWizardData(prev => ({ 
+        ...prev, 
+        messageHistory: { name: file.name, size: file.size, type: file.type } 
+      }));
+      setUploadingFile(false);
+      toast({
+        title: "Dosya Yüklendi",
+        description: `${file.name} başarıyla yüklendi.`,
+      });
+    }, 1500);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+    
+    const files = e.dataTransfer.files;
+    handleFileSelect(files);
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileSelect(e.target.files);
+  };
+
   const renderWizardStep = () => {
     const sectors = [
       "E-ticaret", "Restoran", "Kuaför/Berber", "Emlak", "Sağlık", 
@@ -568,18 +632,74 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                   Daha önceki müşteri konuşmalarınızı yükleyerek AI'nızın daha iyi öğrenmesini sağlayabilirsiniz.
                 </p>
                 
-                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
-                  <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Dosyaları buraya sürükleyin veya seçin
-                  </p>
-                  <Button variant="outline" size="sm">
-                    Dosya Seç
-                  </Button>
-                  {wizardData.messageHistory && (
-                    <p className="text-sm text-green-600 mt-2">
-                      ✓ {wizardData.messageHistory.name} yüklendi
-                    </p>
+                <div 
+                  className={`border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors ${
+                    isDragOver 
+                      ? 'border-primary bg-primary/5' 
+                      : 'border-muted-foreground/25 hover:border-muted-foreground/40'
+                  }`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  <input
+                    type="file"
+                    id="file-upload"
+                    className="hidden"
+                    accept=".txt,.pdf,.docx"
+                    onChange={handleFileInputChange}
+                  />
+                  
+                  {uploadingFile ? (
+                    <div className="space-y-3">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                      <p className="text-sm text-muted-foreground">Dosya yükleniyor...</p>
+                    </div>
+                  ) : wizardData.messageHistory ? (
+                    <div className="space-y-3">
+                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="flex items-center justify-center gap-2 text-green-700">
+                          <Upload className="h-4 w-4" />
+                          <span className="text-sm font-medium">{wizardData.messageHistory.name}</span>
+                        </div>
+                        <p className="text-xs text-green-600 mt-1">
+                          {(wizardData.messageHistory.size / 1024).toFixed(1)} KB
+                        </p>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => {
+                          setWizardData(prev => ({ ...prev, messageHistory: null }));
+                          // Reset file input
+                          const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+                          if (fileInput) fileInput.value = '';
+                        }}
+                        className="min-h-[40px]"
+                      >
+                        Farklı Dosya Seç
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
+                      <div className="space-y-2">
+                        <p className="text-sm text-muted-foreground">
+                          Dosyaları buraya sürükleyin veya seçin
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Desteklenen formatlar: .txt, .pdf, .docx
+                        </p>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => document.getElementById('file-upload')?.click()}
+                        className="min-h-[40px] mt-3"
+                      >
+                        Dosya Seç
+                      </Button>
+                    </div>
                   )}
                 </div>
               </div>
