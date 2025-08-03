@@ -405,10 +405,10 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                   };
 
                   return (
-                    <div key={day} className="flex items-center gap-4 p-3 border rounded-lg">
-                      <div className="w-24 text-sm font-medium">{dayNames[day]}</div>
+                    <div key={day} className="grid grid-cols-1 sm:grid-cols-[100px_1fr_auto] gap-3 p-3 border rounded-lg items-center">
+                      <div className="text-sm font-medium">{dayNames[day]}</div>
                       
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 justify-start">
                         <Input
                           type="time"
                           value={hours.open}
@@ -420,9 +420,9 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                             }
                           }))}
                           disabled={hours.closed}
-                          className="w-24"
+                          className="w-20 sm:w-24"
                         />
-                        <span className="text-xs text-muted-foreground">-</span>
+                        <span className="text-xs text-muted-foreground px-1">-</span>
                         <Input
                           type="time"
                           value={hours.close}
@@ -434,12 +434,12 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
                             }
                           }))}
                           disabled={hours.closed}
-                          className="w-24"
+                          className="w-20 sm:w-24"
                         />
                       </div>
                       
-                      <div className="flex items-center gap-2 ml-auto">
-                        <Label htmlFor={`${day}-closed`} className="text-xs">Kapalı</Label>
+                      <div className="flex items-center gap-2 justify-end sm:justify-start">
+                        <Label htmlFor={`${day}-closed`} className="text-xs whitespace-nowrap">Kapalı</Label>
                         <Switch
                           id={`${day}-closed`}
                           checked={hours.closed}
