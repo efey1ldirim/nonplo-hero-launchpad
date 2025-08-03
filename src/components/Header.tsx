@@ -65,15 +65,15 @@ const Header = () => {
             </a>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          {/* Desktop Navigation - Hidden on tablet/mobile */}
+          <div className="hidden lg:flex items-center space-x-6">
             <NavigationMenu>
               <NavigationMenuList className="space-x-4">
                 {navigationItems.map((item) => (
                   <NavigationMenuItem key={item.name}>
                     <NavigationMenuLink
                       href={item.href}
-                      className="text-sm font-medium text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
+                      className="text-sm font-medium text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-muted/50 whitespace-nowrap"
                     >
                       {item.name}
                     </NavigationMenuLink>
@@ -81,7 +81,7 @@ const Header = () => {
                 ))}
                 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium">
+                  <NavigationMenuTrigger className="text-sm font-medium whitespace-nowrap">
                     Kaynaklar
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="z-[100] left-0 top-0 w-auto data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto">
@@ -108,7 +108,7 @@ const Header = () => {
                   variant="ghost" 
                   size="sm" 
                   onClick={() => navigate('/account')}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 whitespace-nowrap"
                 >
                   <User className="w-4 h-4" />
                   Hesabım
@@ -117,7 +117,7 @@ const Header = () => {
                   variant="outline" 
                   size="sm" 
                   onClick={handleSignOut}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 whitespace-nowrap"
                 >
                   <LogOut className="w-4 h-4" />
                   Çıkış
@@ -129,6 +129,7 @@ const Header = () => {
                   variant="ghost" 
                   size="sm" 
                   onClick={() => navigate('/auth')}
+                  className="whitespace-nowrap"
                 >
                   Giriş Yap
                 </Button>
@@ -136,6 +137,7 @@ const Header = () => {
                   variant="hero" 
                   size="sm" 
                   onClick={() => navigate('/auth')}
+                  className="whitespace-nowrap"
                 >
                   Kayıt Ol
                 </Button>
@@ -143,8 +145,53 @@ const Header = () => {
             )}
           </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden">
+          {/* Tablet/Mobile Auth Buttons - Only visible on tablet when navigation is hidden */}
+          <div className="hidden md:flex lg:hidden items-center space-x-2">
+            {user ? (
+              <>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => navigate('/account')}
+                  className="flex items-center gap-1 text-xs px-2"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="hidden sm:inline">Hesabım</span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleSignOut}
+                  className="flex items-center gap-1 text-xs px-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">Çıkış</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => navigate('/auth')}
+                  className="text-xs px-2"
+                >
+                  Giriş
+                </Button>
+                <Button 
+                  variant="hero" 
+                  size="sm" 
+                  onClick={() => navigate('/auth')}
+                  className="text-xs px-2"
+                >
+                  Kayıt
+                </Button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile/Tablet Menu */}
+          <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
