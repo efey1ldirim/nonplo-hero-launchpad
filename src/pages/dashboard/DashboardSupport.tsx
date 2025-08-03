@@ -340,7 +340,7 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
             onClick={() => toast({ title: "Geri bildirim", description: "Geri bildirim özelliği yakında geliyor!" })}
           >
             <Lightbulb className="w-4 h-4 mr-2" />
-            💡 Geri Bildirim Gönder
+             Geri Bildirim Gönder
           </Button>
         </div>
       </div>
