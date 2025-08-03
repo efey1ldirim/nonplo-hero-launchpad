@@ -44,7 +44,7 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
       title: "Video Eğitimler",
       icon: PlayCircle,
       onClick: () => {
-        navigate("/resources/video-tutorials");
+        navigate("/resources/videos");
         onClose();
       }
     },
