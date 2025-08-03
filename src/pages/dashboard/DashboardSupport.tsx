@@ -137,10 +137,10 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
         <div className="sticky top-0 bg-background border-b border-border p-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-              Support Center
+              Destek Merkezi
             </h1>
             <p className="text-muted-foreground mt-1">
-              Your AI assistant is here to help. Check our guides or contact our team directly.
+              AI asistanınız size yardımcı olmak için burada. Rehberlerimizi inceleyin veya ekibimizle doğrudan iletişime geçin.
             </p>
           </div>
           <Button
@@ -159,31 +159,31 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-xl">
                 <FileText className="w-5 h-5" />
-                Create a Support Ticket
+                Destek Talebi Oluştur
               </CardTitle>
               <CardDescription>
-                Describe your issue and our team will get back to you as soon as possible.
+                Sorununuzu açıklayın, ekibimiz en kısa sürede size dönüş yapacaktır.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleTicketSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
+                    <Label htmlFor="subject">Konu</Label>
                     <Input
                       id="subject"
-                      placeholder="Brief description of your issue"
+                      placeholder="Sorununuzun kısa açıklaması"
                       value={ticketForm.subject}
                       onChange={(e) => setTicketForm({...ticketForm, subject: e.target.value})}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">E-posta</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="your.email@example.com"
+                      placeholder="sizin.email@ornek.com"
                       value={ticketForm.email}
                       onChange={(e) => setTicketForm({...ticketForm, email: e.target.value})}
                       required
@@ -192,10 +192,10 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">Açıklama</Label>
                   <Textarea
                     id="description"
-                    placeholder="Please provide a detailed description of your issue..."
+                    placeholder="Lütfen sorununuzun detaylı açıklamasını yapın..."
                     rows={4}
                     value={ticketForm.description}
                     onChange={(e) => setTicketForm({...ticketForm, description: e.target.value})}
@@ -204,7 +204,7 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="file-upload">File Upload (Optional)</Label>
+                  <Label htmlFor="file-upload">Dosya Yükleme (İsteğe Bağlı)</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-4 text-center hover:border-muted-foreground/50 transition-colors">
                     <input
                       id="file-upload"
@@ -215,10 +215,10 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
                     />
                     <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
                     <p className="text-sm text-muted-foreground mb-2">
-                      Click to upload or drag and drop
+                      Yüklemek için tıklayın veya sürükleyip bırakın
                     </p>
                     <p className="text-xs text-muted-foreground mb-3">
-                      Only .txt, .pdf, or .docx files (Max 10MB)
+                      Sadece .txt, .pdf veya .docx dosyaları (Maks 10MB)
                     </p>
                     <Button
                       type="button"
@@ -226,7 +226,7 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
                       size="sm"
                       onClick={() => document.getElementById('file-upload')?.click()}
                     >
-                      Choose File
+                      Dosya Seç
                     </Button>
                     {selectedFile && (
                       <div className="mt-3 flex items-center justify-center gap-2 text-sm text-foreground">
@@ -253,12 +253,12 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
                   {isSubmitting ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                      Sending...
+                      Gönderiliyor...
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
                       <Send className="w-4 h-4" />
-                      Submit Ticket
+                      Talep Gönder
                     </div>
                   )}
                 </Button>
@@ -316,7 +316,7 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
           <div className="relative">
             {showChatTooltip && (
               <div className="absolute bottom-full right-0 mb-2 bg-background border border-border rounded-lg shadow-lg p-3 min-w-[200px]">
-                <p className="text-sm text-foreground">Need help? Chat with us.</p>
+                <p className="text-sm text-foreground">Yardıma mı ihtiyacınız var? Bizimle sohbet edin.</p>
                 <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-background border-r border-b border-border"></div>
               </div>
             )}
@@ -324,7 +324,7 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
               className="w-12 h-12 rounded-full shadow-lg hover:scale-105 transition-all"
               onMouseEnter={() => setShowChatTooltip(true)}
               onMouseLeave={() => setShowChatTooltip(false)}
-              onClick={() => toast({ title: "Chat widget", description: "Live chat feature coming soon!" })}
+              onClick={() => toast({ title: "Sohbet widget'ı", description: "Canlı sohbet özelliği yakında geliyor!" })}
             >
               <MessageCircle className="w-5 h-5" />
             </Button>
@@ -337,10 +337,10 @@ const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
             variant="outline"
             size="sm"
             className="shadow-lg hover:scale-105 transition-all"
-            onClick={() => toast({ title: "Feedback", description: "Feedback feature coming soon!" })}
+            onClick={() => toast({ title: "Geri bildirim", description: "Geri bildirim özelliği yakında geliyor!" })}
           >
             <Lightbulb className="w-4 h-4 mr-2" />
-            💡 Send Feedback
+            💡 Geri Bildirim Gönder
           </Button>
         </div>
       </div>
