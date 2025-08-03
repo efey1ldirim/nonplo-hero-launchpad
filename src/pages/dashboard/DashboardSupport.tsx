@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { 
-  HelpCircle, 
   MessageCircle, 
   FileText, 
   PlayCircle, 
@@ -15,10 +14,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
-const DashboardSupport = () => {
+interface DashboardSupportProps {
+  onClose: () => void;
+}
+
+const DashboardSupport = ({ onClose }: DashboardSupportProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showChatTooltip, setShowChatTooltip] = useState(false);
@@ -30,27 +39,49 @@ const DashboardSupport = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const helpOptions = [
-    {
-      title: "Sık Sorulan Sorular",
-      description: "En yaygın sorular ve yanıtları bulun",
-      icon: HelpCircle,
-      action: "View FAQs",
-      onClick: () => navigate("/#faq")
-    },
+  const quickActions = [
     {
       title: "Video Eğitimler",
-      description: "Adım adım video kılavuzları izleyin",
       icon: PlayCircle,
-      action: "Watch Videos",
-      onClick: () => navigate("/resources/video-tutorials")
+      onClick: () => {
+        navigate("/resources/video-tutorials");
+        onClose();
+      }
     },
     {
-      title: "Dokümantasyon",
-      description: "Detaylı kullanım kılavuzları ve örnekler",
+      title: "Dokümantasyon", 
       icon: BookOpen,
-      action: "Go to Docs", 
-      onClick: () => navigate("/resources/documentation")
+      onClick: () => {
+        navigate("/resources/documentation");
+        onClose();
+      }
+    }
+  ];
+
+  const faqs = [
+    {
+      question: "Nonplo'yu kullanmak için kodlama becerisine ihtiyacım var mı?",
+      answer: "Hayır! Nonplo geliştiriciler için değil, işletme sahipleri için tasarlanmıştır. Kurulum sihirbazımızı kullanarak yapay zeka çalışanları oluşturabilir ve özelleştirebilirsiniz. E-posta veya sosyal medya kullanabiliyorsanız, Nonplo'yu da kullanabilirsiniz."
+    },
+    {
+      question: "Bir yapay zeka çalışanı ne tür görevleri yerine getirebilir?",
+      answer: "Yapay zeka çalışanları müşteri desteği, potansiyel müşteri değerlendirme, e-posta otomasyonu, randevu planlama ve veri girişinde mükemmeldir. Temel olarak, bir kalıbı takip eden herhangi bir tekrarlayan görev otomatikleştirilebilir. Her çalışan işletme tarzınızı öğrenir ve buna göre yanıt verir."
+    },
+    {
+      question: "Nonplo'yu mevcut araçlarımla birlikte kullanabilir miyim?",
+      answer: "Evet! Nonplo Gmail, Slack, Shopify, WordPress ve birçok CRM sistemi gibi popüler araçlarla entegre olur. Özel entegrasyonlar için webhook'lar ve API'ler de sağlıyoruz. Çalışanlarımız mevcut iş akışınızla birlikte çalışır."
+    },
+    {
+      question: "Verilerim Nonplo ile güvende mi?",
+      answer: "Kesinlikle. Kurumsal düzeyde şifreleme kullanıyoruz ve GDPR ile KVKK düzenlemelerine uygun çalışıyoruz. Verileriniz güvenli bir şekilde saklanır ve hiçbir zaman üçüncü taraflarla paylaşılmaz. Tam kontrole sahipsiniz ve istediğiniz zaman verilerinizi dışa aktarabilir veya silebilirsiniz."
+    },
+    {
+      question: "Aboneliğimi iptal edersem ne olur?",
+      answer: "Hiçbir sorun yok, gizli ücret yok. Kontrol panelinizden istediğiniz zaman iptal edebilirsiniz. Çalışanlarınız fatura döneminizin sonuna kadar çalışmaya devam edecek ve tüm verilerinizi dışa aktarabilirsiniz. Ayrıca fikrinizi değiştirirseniz 30 günlük yeniden aktifleştirme süresi sunuyoruz."
+    },
+    {
+      question: "Nonplo'yu ücretsiz deneyebilir miyim?",
+      answer: "Evet! Tüm özelliklere tam erişimli 14 günlük ücretsiz deneme sunuyoruz. Başlamak için kredi kartı gerekmez. 2 çalışana kadar oluşturabilir ve gerçek senaryolarla test edebilirsiniz. Sadece Nonplo'nun işletmeniz için çalıştığından emin olduğunuzda yükseltin."
     }
   ];
 
@@ -101,184 +132,217 @@ const DashboardSupport = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-          Support Center
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
-          Your AI assistant is here to help. Check our guides or contact our team directly.
-        </p>
-      </div>
-
-      {/* Help Options Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        {helpOptions.map((option, index) => (
-          <Card key={index} className="hover:shadow-lg transition-all duration-300 cursor-pointer group">
-            <CardHeader className="text-center pb-4">
-              <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                <option.icon className="w-8 h-8 text-primary" />
-              </div>
-              <CardTitle className="text-xl mb-2">{option.title}</CardTitle>
-              <CardDescription className="text-sm">
-                {option.description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-center">
-              <Button 
-                onClick={option.onClick}
-                variant="outline" 
-                className="w-full hover:bg-primary hover:text-primary-foreground"
-              >
-                {option.action}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Support Ticket Form */}
-      <Card className="max-w-2xl mx-auto mb-8">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
-            <FileText className="w-6 h-6" />
-            Create a Support Ticket
-          </CardTitle>
-          <CardDescription>
-            Describe your issue and our team will get back to you as soon as possible.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleTicketSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input
-                  id="subject"
-                  placeholder="Brief description of your issue"
-                  value={ticketForm.subject}
-                  onChange={(e) => setTicketForm({...ticketForm, subject: e.target.value})}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your.email@example.com"
-                  value={ticketForm.email}
-                  onChange={(e) => setTicketForm({...ticketForm, email: e.target.value})}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Please provide a detailed description of your issue..."
-                rows={5}
-                value={ticketForm.description}
-                onChange={(e) => setTicketForm({...ticketForm, description: e.target.value})}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="file-upload">File Upload (Optional)</Label>
-              <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center hover:border-muted-foreground/50 transition-colors">
-                <input
-                  id="file-upload"
-                  type="file"
-                  accept=".txt,.pdf,.docx"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-                <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground mb-2">
-                  Click to upload or drag and drop
-                </p>
-                <p className="text-xs text-muted-foreground mb-4">
-                  Only .txt, .pdf, or .docx files (Max 10MB)
-                </p>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => document.getElementById('file-upload')?.click()}
-                >
-                  Choose File
-                </Button>
-                {selectedFile && (
-                  <div className="mt-4 flex items-center justify-center gap-2 text-sm text-foreground">
-                    <FileText className="w-4 h-4" />
-                    <span>{selectedFile.name}</span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedFile(null)}
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                  Sending...
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <Send className="w-4 h-4" />
-                  Submit Ticket
-                </div>
-              )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-
-      {/* Live Chat Widget */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <div className="relative">
-          {showChatTooltip && (
-            <div className="absolute bottom-full right-0 mb-2 bg-background border border-border rounded-lg shadow-lg p-3 min-w-[200px]">
-              <p className="text-sm text-foreground">Need help? Chat with us.</p>
-              <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-background border-r border-b border-border"></div>
-            </div>
-          )}
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-background rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-background border-b border-border p-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+              Support Center
+            </h1>
+            <p className="text-muted-foreground mt-1">
+              Your AI assistant is here to help. Check our guides or contact our team directly.
+            </p>
+          </div>
           <Button
-            className="w-14 h-14 rounded-full shadow-lg hover:scale-105 transition-all"
-            onMouseEnter={() => setShowChatTooltip(true)}
-            onMouseLeave={() => setShowChatTooltip(false)}
-            onClick={() => toast({ title: "Chat widget", description: "Live chat feature coming soon!" })}
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="shrink-0"
           >
-            <MessageCircle className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </Button>
         </div>
-      </div>
 
-      {/* Feedback Button */}
-      <div className="fixed bottom-4 left-4 z-50">
-        <Button
-          variant="outline"
-          className="shadow-lg hover:scale-105 transition-all"
-          onClick={() => toast({ title: "Feedback", description: "Feedback feature coming soon!" })}
-        >
-          <Lightbulb className="w-4 h-4 mr-2" />
-          💡 Send Feedback
-        </Button>
+        <div className="p-6 space-y-8">
+          {/* Support Ticket Form - Now at the top */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <FileText className="w-5 h-5" />
+                Create a Support Ticket
+              </CardTitle>
+              <CardDescription>
+                Describe your issue and our team will get back to you as soon as possible.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleTicketSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      placeholder="Brief description of your issue"
+                      value={ticketForm.subject}
+                      onChange={(e) => setTicketForm({...ticketForm, subject: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="your.email@example.com"
+                      value={ticketForm.email}
+                      onChange={(e) => setTicketForm({...ticketForm, email: e.target.value})}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Please provide a detailed description of your issue..."
+                    rows={4}
+                    value={ticketForm.description}
+                    onChange={(e) => setTicketForm({...ticketForm, description: e.target.value})}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="file-upload">File Upload (Optional)</Label>
+                  <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-4 text-center hover:border-muted-foreground/50 transition-colors">
+                    <input
+                      id="file-upload"
+                      type="file"
+                      accept=".txt,.pdf,.docx"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="text-xs text-muted-foreground mb-3">
+                      Only .txt, .pdf, or .docx files (Max 10MB)
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => document.getElementById('file-upload')?.click()}
+                    >
+                      Choose File
+                    </Button>
+                    {selectedFile && (
+                      <div className="mt-3 flex items-center justify-center gap-2 text-sm text-foreground">
+                        <FileText className="w-4 h-4" />
+                        <span>{selectedFile.name}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedFile(null)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Send className="w-4 h-4" />
+                      Submit Ticket
+                    </div>
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          {/* Quick Actions - Simplified */}
+          <div className="flex gap-4 justify-center">
+            {quickActions.map((action, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                onClick={action.onClick}
+                className="flex flex-col items-center gap-2 h-auto py-4 px-6 hover:bg-primary hover:text-primary-foreground"
+              >
+                <action.icon className="w-6 h-6" />
+                <span className="text-sm">{action.title}</span>
+              </Button>
+            ))}
+          </div>
+
+          {/* FAQ Section - Now at the bottom */}
+          <div className="border-t border-border pt-8">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                Sık Sorulan Sorular
+              </h2>
+              <p className="text-muted-foreground">
+                Yapay zeka çalışanı oluşturmaya başlamak için bilmeniz gereken her şey
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqs.map((faq, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`}
+                  className="border border-border/50 rounded-lg px-4 py-1 bg-card/50 hover:bg-card/80 transition-colors"
+                >
+                  <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pt-1 pb-3">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+
+        {/* Live Chat Widget */}
+        <div className="fixed bottom-4 right-4 z-50">
+          <div className="relative">
+            {showChatTooltip && (
+              <div className="absolute bottom-full right-0 mb-2 bg-background border border-border rounded-lg shadow-lg p-3 min-w-[200px]">
+                <p className="text-sm text-foreground">Need help? Chat with us.</p>
+                <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-background border-r border-b border-border"></div>
+              </div>
+            )}
+            <Button
+              className="w-12 h-12 rounded-full shadow-lg hover:scale-105 transition-all"
+              onMouseEnter={() => setShowChatTooltip(true)}
+              onMouseLeave={() => setShowChatTooltip(false)}
+              onClick={() => toast({ title: "Chat widget", description: "Live chat feature coming soon!" })}
+            >
+              <MessageCircle className="w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Feedback Button */}
+        <div className="fixed bottom-4 left-4 z-50">
+          <Button
+            variant="outline"
+            size="sm"
+            className="shadow-lg hover:scale-105 transition-all"
+            onClick={() => toast({ title: "Feedback", description: "Feedback feature coming soon!" })}
+          >
+            <Lightbulb className="w-4 h-4 mr-2" />
+            💡 Send Feedback
+          </Button>
+        </div>
       </div>
     </div>
   );

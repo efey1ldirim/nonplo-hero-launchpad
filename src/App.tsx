@@ -13,7 +13,6 @@ import DashboardAgents from "./pages/dashboard/DashboardAgents";
 import DashboardMessages from "./pages/dashboard/DashboardMessages";
 import DashboardIntegrations from "./pages/dashboard/DashboardIntegrations";
 import DashboardSettings from "./pages/dashboard/DashboardSettings";
-import DashboardSupport from "./pages/dashboard/DashboardSupport";
 import Documentation from "./pages/resources/Documentation";
 import DocumentationArticle from "./pages/resources/DocumentationArticle";
 import Blog from "./pages/resources/Blog";
@@ -42,7 +41,6 @@ const App = () => (
           <Route path="/dashboard/messages" element={<ProtectedRoute><DashboardMessages /></ProtectedRoute>} />
           <Route path="/dashboard/integrations" element={<ProtectedRoute><DashboardIntegrations /></ProtectedRoute>} />
           <Route path="/dashboard/settings" element={<ProtectedRoute><DashboardSettings /></ProtectedRoute>} />
-          <Route path="/dashboard/support" element={<ProtectedRoute><DashboardSupport /></ProtectedRoute>} />
           <Route path="/resources/documentation" element={<Documentation />} />
           <Route path="/resources/documentation/:sectionId/:articleIndex" element={<DocumentationArticle />} />
           <Route path="/resources/blog" element={<Blog />} />

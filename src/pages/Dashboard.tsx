@@ -14,6 +14,7 @@ import {
   X
 } from "lucide-react";
 import AgentCreationWizard from "@/components/AgentCreationWizard";
+import DashboardSupport from "@/pages/dashboard/DashboardSupport";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -27,6 +28,7 @@ const Dashboard = () => {
   const [showAccountPopup, setShowAccountPopup] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [supportOpen, setSupportOpen] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -51,7 +53,11 @@ const Dashboard = () => {
   };
 
   const handleNavigation = (path: string) => {
-    navigate(path);
+    if (path === "/dashboard/support") {
+      setSupportOpen(true);
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -329,6 +335,11 @@ const Dashboard = () => {
         open={wizardOpen} 
         onClose={() => setWizardOpen(false)} 
       />
+
+      {/* Support Modal */}
+      {supportOpen && (
+        <DashboardSupport onClose={() => setSupportOpen(false)} />
+      )}
     </div>
   );
 };
