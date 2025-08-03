@@ -38,6 +38,7 @@ const App = () => (
           <Route path="/builder" element={<Builder />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/dashboard/agents" element={<ProtectedRoute><DashboardAgents /></ProtectedRoute>} />
+          <Route path="/dashboard/agents/:agentId" element={<ProtectedRoute><DashboardAgents /></ProtectedRoute>} />
           <Route path="/dashboard/messages" element={<ProtectedRoute><DashboardMessages /></ProtectedRoute>} />
           <Route path="/dashboard/integrations" element={<ProtectedRoute><DashboardIntegrations /></ProtectedRoute>} />
           <Route path="/dashboard/settings" element={<ProtectedRoute><DashboardSettings /></ProtectedRoute>} />
