@@ -1,8 +1,13 @@
 const DashboardSettings = () => {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-semibold text-foreground mb-4">Settings</h1>
+    <div className="p-4 md:p-6 lg:p-8 max-w-full">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Ayarlar</h1>
+        <p className="text-muted-foreground text-base md:text-lg">
+          Hesap ayarlarınızı ve tercihlerinizi yönetin
+        </p>
+      </div>
+      <div className="text-center py-12">
         <p className="text-muted-foreground text-lg">
           Bu sayfa şu anda geliştirme sürecindedir. Yakında aktif olacaktır.
         </p>

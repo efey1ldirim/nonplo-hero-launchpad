@@ -93,12 +93,12 @@ const DashboardAgents = () => {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">AI Agents</h1>
-            <p className="text-muted-foreground">View and manage all of your AI workers.</p>
-          </div>
+      <div className="p-4 md:p-6 lg:p-8 max-w-full">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">AI Çalışanlarım</h1>
+          <p className="text-muted-foreground text-base md:text-lg">
+            Tüm AI çalışanlarınızı görüntüleyin, yönetin ve yeni çalışanlar oluşturun
+          </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((i) => (
@@ -121,17 +121,13 @@ const DashboardAgents = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="p-4 md:p-6 lg:p-8 max-w-full">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">AI Agents</h1>
-          <p className="text-muted-foreground">View and manage all of your AI workers.</p>
-        </div>
-        <Button onClick={() => setShowWizard(true)} className="gap-2">
-          <Plus className="w-4 h-4" />
-          Yeni Agent Oluştur
-        </Button>
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">AI Çalışanlarım</h1>
+        <p className="text-muted-foreground text-base md:text-lg">
+          Tüm AI çalışanlarınızı görüntüleyin, yönetin ve yeni çalışanlar oluşturun
+        </p>
       </div>
 
       {/* Agents Grid or Empty State */}
