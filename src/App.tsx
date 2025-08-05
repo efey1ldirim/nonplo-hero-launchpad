@@ -14,6 +14,7 @@ import DashboardAgents from "./pages/dashboard/DashboardAgents";
 import DashboardMessages from "./pages/dashboard/DashboardMessages";
 import DashboardSettings from "./pages/dashboard/DashboardSettings";
 import DashboardIntegrations from "./pages/dashboard/DashboardIntegrations";
+import DashboardAgentDetail from "./pages/dashboard/DashboardAgentDetail";
 import Documentation from "./pages/resources/Documentation";
 import DocumentationArticle from "./pages/resources/DocumentationArticle";
 import Blog from "./pages/resources/Blog";
@@ -40,7 +41,7 @@ const App = () => (
           <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
             <Route index element={<DashboardHome />} />
             <Route path="agents" element={<DashboardAgents />} />
-            <Route path="agents/:agentId" element={<DashboardAgents />} />
+            <Route path="agents/:agentId" element={<DashboardAgentDetail />} />
             <Route path="messages" element={<DashboardMessages />} />
             <Route path="integrations" element={<DashboardIntegrations />} />
             <Route path="settings" element={<DashboardSettings />} />

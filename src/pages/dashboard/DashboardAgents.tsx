@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Bot, Calendar, MoreVertical } from "lucide-react";
+import { Plus, Bot, Calendar, MoreVertical, Edit, Trash2, Power } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import AgentCreationWizard from "@/components/AgentCreationWizard";
 
 interface Agent {
@@ -20,6 +22,7 @@ const DashboardAgents = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [showWizard, setShowWizard] = useState(false);
+  const [deleteAgentId, setDeleteAgentId] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -65,6 +68,61 @@ const DashboardAgents = () => {
 
   const handleAgentClick = (agentId: string) => {
     navigate(`/dashboard/agents/${agentId}`);
+  };
+
+  const handleToggleAgent = async (agentId: string, currentStatus: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('agents')
+        .update({ is_active: !currentStatus })
+        .eq('id', agentId);
+
+      if (error) throw error;
+
+      setAgents(agents.map(agent => 
+        agent.id === agentId 
+          ? { ...agent, is_active: !currentStatus }
+          : agent
+      ));
+
+      toast({
+        title: "Agent Updated",
+        description: `Agent ${!currentStatus ? 'activated' : 'deactivated'} successfully.`,
+      });
+    } catch (error) {
+      console.error('Error updating agent:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update agent status.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteAgent = async (agentId: string) => {
+    try {
+      const { error } = await supabase
+        .from('agents')
+        .delete()
+        .eq('id', agentId);
+
+      if (error) throw error;
+
+      setAgents(agents.filter(agent => agent.id !== agentId));
+      setDeleteAgentId(null);
+
+      toast({
+        title: "Agent Deleted",
+        description: "Agent has been successfully deleted.",
+      });
+    } catch (error) {
+      console.error('Error deleting agent:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete agent.",
+        variant: "destructive",
+      });
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -146,17 +204,48 @@ const DashboardAgents = () => {
                   <CardTitle className="text-lg group-hover:text-primary transition-colors">
                     {agent.name}
                   </CardTitle>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Handle more options
-                    }}
-                  >
-                    <MoreVertical className="w-4 h-4" />
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAgentClick(agent.id);
+                        }}
+                      >
+                        <Edit className="w-4 h-4 mr-2" />
+                        Edit Agent
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleAgent(agent.id, agent.is_active);
+                        }}
+                      >
+                        <Power className="w-4 h-4 mr-2" />
+                        {agent.is_active ? 'Deactivate' : 'Activate'} Agent
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteAgentId(agent.id);
+                        }}
+                        className="text-destructive focus:text-destructive"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete Agent
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
                 <CardDescription className="flex items-center gap-2">
                   <Bot className="w-4 h-4" />
@@ -190,6 +279,27 @@ const DashboardAgents = () => {
           fetchAgents(); // Refresh agents list after wizard closes
         }} 
       />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!deleteAgentId} onOpenChange={() => setDeleteAgentId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Agent'ı Sil</AlertDialogTitle>
+            <AlertDialogDescription>
+              Bu işlem geri alınamaz. Seçili AI çalışanınız kalıcı olarak silinecek.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>İptal</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={() => deleteAgentId && handleDeleteAgent(deleteAgentId)}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Sil
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
