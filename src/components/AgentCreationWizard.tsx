@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { X, ArrowRight, ArrowLeft, Monitor, Zap, MessageSquare, Calendar, Phone, Globe, Instagram, Search, ChevronDown, Upload, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AgentCreationWizardProps {
   open: boolean;
@@ -299,14 +300,47 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
     });
   };
 
-  const handleFinish = () => {
-    toast({
-      title: "Agent Oluşturuldu!",
-      description: "AI çalışanınız başarıyla oluşturuldu ve aktif edildi.",
-    });
-    onClose();
-    setCurrentStep(1);
-    setCurrentSubStep(1);
+  const handleFinish = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Hata",
+          description: "Oturum açmanız gerekiyor.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const { error } = await supabase
+        .from('agents')
+        .insert({
+          user_id: user.id,
+          name: wizardData.businessName || "Yeni Agent",
+          role: wizardData.serviceType || "AI Asistan",
+          is_active: true
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Agent Oluşturuldu!",
+        description: "AI çalışanınız başarıyla oluşturuldu ve aktif edildi.",
+      });
+      onClose();
+      setCurrentStep(1);
+      setCurrentSubStep(1);
+    } catch (error) {
+      console.error('Error creating agent:', error);
+      toast({
+        title: "Hata",
+        description: "Agent oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      });
+    }
   };
 
   const validateFileType = (file: File): boolean => {
