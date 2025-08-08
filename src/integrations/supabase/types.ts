@@ -44,6 +44,36 @@ export type Database = {
         }
         Relationships: []
       }
+      integrations_connections: {
+        Row: {
+          created_at: string
+          id: string
+          meta: Json
+          provider: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          meta?: Json
+          provider: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          meta?: Json
+          provider?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           email: string
@@ -62,6 +92,66 @@ export type Database = {
           id?: string
           is_active?: boolean
           subscribed_at?: string
+        }
+        Relationships: []
+      }
+      tools_settings: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          tool_key: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          tool_key: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          tool_key?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tools_special_requests: {
+        Row: {
+          created_at: string
+          details: string | null
+          email: string
+          file_path: string | null
+          id: string
+          name: string
+          requested: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          email: string
+          file_path?: string | null
+          id?: string
+          name: string
+          requested: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          email?: string
+          file_path?: string | null
+          id?: string
+          name?: string
+          requested?: string
+          user_id?: string
         }
         Relationships: []
       }
