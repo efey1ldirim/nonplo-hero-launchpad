@@ -44,6 +44,45 @@ export type Database = {
         }
         Relationships: []
       }
+      conversations: {
+        Row: {
+          agent_id: string
+          channel: string
+          created_at: string
+          id: string
+          last_message_at: string
+          meta: Json
+          status: string
+          unread: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          channel: string
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          meta?: Json
+          status?: string
+          unread?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          channel?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          meta?: Json
+          status?: string
+          unread?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       integrations_connections: {
         Row: {
           created_at: string
@@ -73,6 +112,41 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      messages: {
+        Row: {
+          attachments: Json
+          content: string | null
+          conversation_id: string
+          created_at: string
+          id: string
+          sender: string
+        }
+        Insert: {
+          attachments?: Json
+          content?: string | null
+          conversation_id: string
+          created_at?: string
+          id?: string
+          sender: string
+        }
+        Update: {
+          attachments?: Json
+          content?: string | null
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          sender?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       newsletter_subscribers: {
         Row: {
