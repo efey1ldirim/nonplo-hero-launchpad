@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { format, formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
@@ -591,7 +591,7 @@ const DashboardMessages: React.FC = () => {
   }, [selectedConversationId]);
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 max-w-full">
+    <div className="max-w-[1280px] mx-auto px-4 lg:px-6 py-4 md:py-6">
       <header className="mb-4 md:mb-6">
         <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Mesajlar</h1>
         <p className="text-muted-foreground text-base md:text-lg">Tüm ajanlardan gelen konuşmaları tek gelen kutusunda yönetin</p>
@@ -776,7 +776,12 @@ const DashboardMessages: React.FC = () => {
       <Sheet open={threadOpen} onOpenChange={setThreadOpen}>
         <SheetContent side="right" className="w-full sm:w-[520px]">
           <SheetHeader>
-            <SheetTitle>Konuşma</SheetTitle>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" aria-label="Back" onClick={() => { setThreadOpen(false); setSelectedConversationId(null); }}>
+                ← Back
+              </Button>
+              <SheetTitle>Konuşma</SheetTitle>
+            </div>
           </SheetHeader>
           <div className="mt-3 h-[75vh] flex flex-col">
             {!selectedConversationId ? (
