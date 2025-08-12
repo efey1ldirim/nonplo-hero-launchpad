@@ -16,7 +16,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Calendar as CalendarIcon, Filter, Search, Loader2, MoreVertical, Send, Download, ExternalLink, CircleDot } from "lucide-react";
+import { Calendar as CalendarIcon, Search, Loader2, MoreVertical, Send, Download, ExternalLink, CircleDot } from "lucide-react";
 
 import { useSearchParams } from "react-router-dom";
 import { useMessageFilters } from "@/hooks/use-message-filters";
@@ -183,6 +183,23 @@ const DashboardMessages: React.FC = () => {
 
   // Filters via hook
   const { filters, setFilters, resetFilters: resetFiltersHook } = useMessageFilters();
+  const uiDateRange = useMemo<DateRange>(() => ({
+    from: filters.dateRange?.from ? new Date(filters.dateRange.from) : undefined,
+    to: filters.dateRange?.to ? new Date(filters.dateRange.to) : undefined,
+  }), [filters.dateRange]);
+  const handleDateRangeChange = (r: DateRange) => {
+    if (r?.from || r?.to) {
+      setFilters((cur) => ({
+        ...cur,
+        dateRange: {
+          from: r.from ? r.from.toISOString() : "",
+          to: r.to ? r.to.toISOString() : "",
+        },
+      }));
+    } else {
+      setFilters((cur) => ({ ...cur, dateRange: null }));
+    }
+  };
 
   // Pagination (sync with URL)
   const [searchParams, setSearchParams] = useSearchParams();
@@ -568,7 +585,6 @@ const DashboardMessages: React.FC = () => {
   };
 
   // Mobile helpers
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const [threadOpen, setThreadOpen] = useState(false);
   useEffect(() => {
     if (selectedConversationId) setThreadOpen(true);
@@ -612,7 +628,7 @@ const DashboardMessages: React.FC = () => {
                 <Button variant="outline" className="capitalize">Status: {filters.status}</Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                {(["all","open","pending","resolved","unanswered"] as const).map((s) => (
+                {(["all","open","pending","closed"] as const).map((s) => (
                   <DropdownMenuItem key={s} onClick={() => setFilters((cur) => ({ ...cur, status: s }))}>
                     {s}
                   </DropdownMenuItem>
