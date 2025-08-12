@@ -64,6 +64,17 @@ const STATUSES = [
 
 const PAGE_SIZE = 20;
 
+// Normalize Supabase rows to UI types
+const normalizeConversation = (d: any): Conversation => ({
+  ...d,
+  meta: typeof d.meta === 'object' && d.meta !== null ? (d.meta as Record<string, any>) : {},
+});
+
+const normalizeMessage = (m: any): Message => ({
+  ...m,
+  attachments: Array.isArray(m.attachments) ? (m.attachments as any[]) : [],
+});
+
 const MultiSelect = ({
   label,
   options,
@@ -276,7 +287,8 @@ const DashboardMessages: React.FC = () => {
       return;
     }
 
-    setConversations(data || []);
+    const normalized = (data || []).map((d: any) => normalizeConversation(d));
+    setConversations(normalized);
     setTotal(count || 0);
     setLoading(false);
 
@@ -290,7 +302,7 @@ const DashboardMessages: React.FC = () => {
           .eq("conversation_id", c.id)
           .order("created_at", { ascending: false })
           .limit(1);
-        snippetMap[c.id] = (lm && lm[0]) || undefined;
+        snippetMap[c.id] = lm && lm[0] ? normalizeMessage(lm[0] as any) : undefined;
       })
     );
     setLastMessageByConv(snippetMap);
@@ -318,7 +330,10 @@ const DashboardMessages: React.FC = () => {
       .select("id,conversation_id,sender,content,attachments,created_at")
       .eq("conversation_id", conversationId)
       .order("created_at", { ascending: true });
-    if (!error) setThread(data || []);
+    if (!error) {
+      const normalized = (data || []).map((m: any) => normalizeMessage(m));
+      setThread(normalized);
+    }
   };
 
   useEffect(() => {
