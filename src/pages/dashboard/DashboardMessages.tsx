@@ -12,13 +12,15 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Calendar as CalendarIcon, Filter, Search, Loader2, MoreVertical, Send, CheckCircle2, Download, ExternalLink, CircleDot } from "lucide-react";
+import { Calendar as CalendarIcon, Filter, Search, Loader2, MoreVertical, Send, Download, ExternalLink, CircleDot } from "lucide-react";
 
-// Types
+import { useSearchParams } from "react-router-dom";
+import { useMessageFilters } from "@/hooks/use-message-filters";
+
 type Conversation = {
   id: string;
   user_id: string;
@@ -179,16 +181,12 @@ const DashboardMessages: React.FC = () => {
   const [thread, setThread] = useState<Message[]>([]);
   const [reply, setReply] = useState("");
 
-  // Filters
-  const [selectedAgents, setSelectedAgents] = useState<string[]>([]);
-  const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  const [dateRange, setDateRange] = useState<DateRange>({});
-  const [search, setSearch] = useState("");
-  const [unreadOnly, setUnreadOnly] = useState(false);
+  // Filters via hook
+  const { filters, setFilters, resetFilters: resetFiltersHook } = useMessageFilters();
 
-  // Pagination
-  const [page, setPage] = useState(1);
+  // Pagination (sync with URL)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState<number>(Number(searchParams.get("page") || "1") || 1);
   const [total, setTotal] = useState(0);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / PAGE_SIZE)), [total]);
@@ -197,26 +195,19 @@ const DashboardMessages: React.FC = () => {
     document.title = "Mesajlar Gelen Kutusu | Dashboard";
   }, []);
 
-  // Persist & restore filters
+  // Sync page param with URL
   useEffect(() => {
-    const raw = localStorage.getItem("inbox_filters");
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw);
-        setSelectedAgents(parsed.selectedAgents ?? []);
-        setSelectedChannels(parsed.selectedChannels ?? []);
-        setSelectedStatuses(parsed.selectedStatuses ?? []);
-        setDateRange(parsed.dateRange ?? {});
-        setUnreadOnly(!!parsed.unreadOnly);
-      } catch {}
-    }
+    const p = Number(searchParams.get("page") || "1");
+    setPage(Number.isNaN(p) ? 1 : p);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
-    localStorage.setItem(
-      "inbox_filters",
-      JSON.stringify({ selectedAgents, selectedChannels, selectedStatuses, dateRange, unreadOnly })
-    );
-  }, [selectedAgents, selectedChannels, selectedStatuses, dateRange, unreadOnly]);
+    const next = new URLSearchParams(searchParams.toString());
+    if (page > 1) next.set("page", String(page)); else next.delete("page");
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   // Load agents
   useEffect(() => {
@@ -240,12 +231,19 @@ const DashboardMessages: React.FC = () => {
       .order("last_message_at", { ascending: false })
       .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
-    if (selectedAgents.length) query = query.in("agent_id", selectedAgents);
-    if (selectedChannels.length) query = query.in("channel", selectedChannels);
-    if (selectedStatuses.length) query = query.in("status", selectedStatuses);
-    if (unreadOnly) query = query.eq("unread", true);
-    if (dateRange.from) query = query.gte("last_message_at", dateRange.from.toISOString());
-    if (dateRange.to) query = query.lte("last_message_at", new Date(dateRange.to.getTime() + 24 * 60 * 60 * 1000 - 1).toISOString());
+    if (filters.agents.length) query = query.in("agent_id", filters.agents);
+    if (filters.channels.length) query = query.in("channel", filters.channels);
+    if (filters.status && filters.status !== "all") {
+      const statusValue = filters.status === "closed" ? "resolved" : filters.status;
+      query = query.eq("status", statusValue);
+    }
+    if (filters.unreadOnly) query = query.eq("unread", true);
+    if (filters.dateRange?.from) query = query.gte("last_message_at", filters.dateRange.from);
+    if (filters.dateRange?.to) {
+      const end = new Date(filters.dateRange.to);
+      const endIso = new Date(end.getTime() + 24 * 60 * 60 * 1000 - 1).toISOString();
+      query = query.lte("last_message_at", endIso);
+    }
 
     return query;
   };
@@ -267,8 +265,8 @@ const DashboardMessages: React.FC = () => {
   const loadConversations = async () => {
     setLoading(true);
     let idsFilter: string[] | null = null;
-    if (search.trim().length >= 2) {
-      idsFilter = await findConversationIdsBySearch(search);
+    if (filters.query.trim().length >= 2) {
+      idsFilter = await findConversationIdsBySearch(filters.query);
       if (idsFilter && idsFilter.length === 0) {
         setConversations([]);
         setLastMessageByConv({});
@@ -311,7 +309,7 @@ const DashboardMessages: React.FC = () => {
   useEffect(() => {
     loadConversations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, selectedAgents, selectedChannels, selectedStatuses, dateRange, unreadOnly]);
+  }, [page, filters]);
 
   // Reload when searching with debounce
   useEffect(() => {
@@ -321,7 +319,7 @@ const DashboardMessages: React.FC = () => {
     }, 400);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [filters.query]);
 
   // Load thread
   const loadThread = async (conversationId: string) => {
@@ -390,10 +388,10 @@ const DashboardMessages: React.FC = () => {
         (payload: any) => {
           const c = payload.new as Conversation;
           // Apply current filters quickly (best-effort)
-          const passAgents = !selectedAgents.length || selectedAgents.includes(c.agent_id);
-          const passChannels = !selectedChannels.length || selectedChannels.includes(c.channel);
-          const passStatuses = !selectedStatuses.length || selectedStatuses.includes(c.status);
-          const passUnread = !unreadOnly || c.unread;
+          const passAgents = !filters.agents.length || filters.agents.includes(c.agent_id);
+          const passChannels = !filters.channels.length || filters.channels.includes(c.channel);
+          const passStatuses = filters.status === "all" || c.status === (filters.status === "closed" ? "resolved" : filters.status);
+          const passUnread = !filters.unreadOnly || c.unread;
           if (passAgents && passChannels && passStatuses && passUnread) {
             setConversations((prev) => [c, ...prev]);
           }
@@ -413,15 +411,10 @@ const DashboardMessages: React.FC = () => {
       supabase.removeChannel(channel);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedAgents, selectedChannels, selectedStatuses, unreadOnly]);
+  }, [filters]);
 
   const resetFilters = () => {
-    setSelectedAgents([]);
-    setSelectedChannels([]);
-    setSelectedStatuses([]);
-    setDateRange({});
-    setUnreadOnly(false);
-    setSearch("");
+    resetFiltersHook();
     setPage(1);
   };
 
@@ -589,52 +582,59 @@ const DashboardMessages: React.FC = () => {
       </header>
 
       {/* Actions bar */}
-      <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
+      <div className="sticky top-0 z-20 bg-background/80 backdrop-blur flex items-center justify-between gap-2 flex-wrap mb-4 p-2 rounded-xl border">
         <div className="flex items-center gap-2 flex-1 min-w-[260px]">
           <div className="relative w-full md:w-80">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Mesaj veya yanıtlarda ara..."
+              placeholder="Search messages or replies..."
+              aria-label="Search messages or replies"
               className="pl-9"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={filters.query}
+              onChange={(e) => setFilters((cur) => ({ ...cur, query: e.target.value }))}
             />
           </div>
           <div className="hidden md:flex items-center gap-2">
             <MultiSelect
-              label={`Ajanlar${selectedAgents.length ? ` (${selectedAgents.length})` : ""}`}
+              label={`Agents${filters.agents.length ? ` (${filters.agents.length})` : ""}`}
               options={agents.map((a) => ({ key: a.id, label: a.name }))}
-              selected={selectedAgents}
-              onChange={setSelectedAgents}
+              selected={filters.agents}
+              onChange={(next) => setFilters((cur) => ({ ...cur, agents: next }))}
             />
             <MultiSelect
-              label={`Kanallar${selectedChannels.length ? ` (${selectedChannels.length})` : ""}`}
+              label={`Channels${filters.channels.length ? ` (${filters.channels.length})` : ""}`}
               options={CHANNELS}
-              selected={selectedChannels}
-              onChange={setSelectedChannels}
+              selected={filters.channels}
+              onChange={(next) => setFilters((cur) => ({ ...cur, channels: next }))}
             />
-            <MultiSelect
-              label={`Durum${selectedStatuses.length ? ` (${selectedStatuses.length})` : ""}`}
-              options={STATUSES}
-              selected={selectedStatuses}
-              onChange={setSelectedStatuses}
-            />
-            <DateRangePicker value={dateRange} onChange={setDateRange} />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="capitalize">Status: {filters.status}</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {(["all","open","pending","resolved","unanswered"] as const).map((s) => (
+                  <DropdownMenuItem key={s} onClick={() => setFilters((cur) => ({ ...cur, status: s }))}>
+                    {s}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DateRangePicker value={uiDateRange} onChange={handleDateRangeChange} />
             <div className="flex items-center gap-2 px-3 py-2 rounded-md border">
-              <Checkbox id="unreadOnly" checked={unreadOnly} onCheckedChange={(v) => setUnreadOnly(Boolean(v))} />
-              <label htmlFor="unreadOnly" className="text-sm">Sadece okunmamış</label>
+              <Checkbox id="unreadOnly" checked={filters.unreadOnly} onCheckedChange={(v) => setFilters((cur) => ({ ...cur, unreadOnly: Boolean(v) }))} />
+              <label htmlFor="unreadOnly" className="text-sm">Unread only</label>
             </div>
-            <Button variant="secondary" onClick={() => { setPage(1); loadConversations(); }}>Uygula</Button>
-            <Button variant="ghost" onClick={resetFilters}>Sıfırla</Button>
+            <Button variant="secondary" onClick={() => { setPage(1); loadConversations(); }}>Apply</Button>
+            <Button variant="ghost" onClick={resetFilters}>Reset</Button>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {!!selectedIds.length && (
             <>
-              <Button variant="outline" onClick={bulkMarkRead}>Okundu işaretle</Button>
+              <Button variant="outline" onClick={bulkMarkRead}>Mark as read</Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">Durum değiştir</Button>
+                  <Button variant="outline">Change status</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   {STATUSES.map((s) => (
@@ -644,77 +644,12 @@ const DashboardMessages: React.FC = () => {
               </DropdownMenu>
             </>
           )}
-          <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
-            <SheetTrigger asChild>
-              <Button className="md:hidden" variant="outline">
-                <Filter className="h-4 w-4 mr-2" /> Filtreler
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[85%] sm:w-[420px]">
-              <SheetHeader>
-                <SheetTitle>Filtreler</SheetTitle>
-              </SheetHeader>
-              <div className="mt-4 space-y-3">
-                <MultiSelect
-                  label={`Ajanlar${selectedAgents.length ? ` (${selectedAgents.length})` : ""}`}
-                  options={agents.map((a) => ({ key: a.id, label: a.name }))}
-                  selected={selectedAgents}
-                  onChange={setSelectedAgents}
-                />
-                <MultiSelect
-                  label={`Kanallar${selectedChannels.length ? ` (${selectedChannels.length})` : ""}`}
-                  options={CHANNELS}
-                  selected={selectedChannels}
-                  onChange={setSelectedChannels}
-                />
-                <MultiSelect
-                  label={`Durum${selectedStatuses.length ? ` (${selectedStatuses.length})` : ""}`}
-                  options={STATUSES}
-                  selected={selectedStatuses}
-                  onChange={setSelectedStatuses}
-                />
-                <DateRangePicker value={dateRange} onChange={setDateRange} />
-                <div className="flex items-center gap-2 px-3 py-2 rounded-md border">
-                  <Checkbox id="unreadOnly2" checked={unreadOnly} onCheckedChange={(v) => setUnreadOnly(Boolean(v))} />
-                  <label htmlFor="unreadOnly2" className="text-sm">Sadece okunmamış</label>
-                </div>
-                <div className="flex gap-2">
-                  <Button className="flex-1" onClick={() => { setPage(1); loadConversations(); setFiltersOpen(false); }}>Uygula</Button>
-                  <Button className="flex-1" variant="ghost" onClick={resetFilters}>Sıfırla</Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Left column (filters) – visible on desktop as quick glance */}
-        <aside className="hidden lg:block lg:col-span-3 space-y-3">
-          <Card className="p-3 space-y-2">
-            <div className="font-medium">Filtreler</div>
-            <MultiSelect
-              label={`Ajanlar${selectedAgents.length ? ` (${selectedAgents.length})` : ""}`}
-              options={agents.map((a) => ({ key: a.id, label: a.name }))}
-              selected={selectedAgents}
-              onChange={setSelectedAgents}
-            />
-            <MultiSelect label={`Kanallar${selectedChannels.length ? ` (${selectedChannels.length})` : ""}`} options={CHANNELS} selected={selectedChannels} onChange={setSelectedChannels} />
-            <MultiSelect label={`Durum${selectedStatuses.length ? ` (${selectedStatuses.length})` : ""}`} options={STATUSES} selected={selectedStatuses} onChange={setSelectedStatuses} />
-            <DateRangePicker value={dateRange} onChange={setDateRange} />
-            <div className="flex items-center gap-2">
-              <Checkbox id="unreadOnly3" checked={unreadOnly} onCheckedChange={(v) => setUnreadOnly(Boolean(v))} />
-              <label htmlFor="unreadOnly3" className="text-sm">Sadece okunmamış</label>
-            </div>
-            <div className="flex gap-2 pt-2">
-              <Button className="flex-1" variant="secondary" onClick={() => { setPage(1); loadConversations(); }}>Uygula</Button>
-              <Button className="flex-1" variant="ghost" onClick={resetFilters}>Sıfırla</Button>
-            </div>
-          </Card>
-        </aside>
-
-        {/* Center: list */}
-        <section className="lg:col-span-5">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-6">
+        {/* Left: list */}
+        <section className="min-w-0">
           <Card className="p-3">
             <div className="flex items-center justify-between mb-2">
               <div className="font-medium">Konuşmalar</div>
@@ -755,7 +690,7 @@ const DashboardMessages: React.FC = () => {
         </section>
 
         {/* Right: thread */}
-        <section className="hidden lg:block lg:col-span-4">
+        <section className="hidden lg:block min-w-0">
           <Card className="p-3 h-[72vh] flex flex-col">
             {!selectedConversationId ? (
               <div className="text-sm text-muted-foreground p-4">Bir konuşma seçin</div>
