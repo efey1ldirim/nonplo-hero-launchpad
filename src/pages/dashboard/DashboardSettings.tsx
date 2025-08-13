@@ -184,8 +184,8 @@ const DashboardSettings: React.FC = () => {
         </Alert>
       )}
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="sticky top-0 z-30 bg-background/80 backdrop-blur mb-4">
-        <TabsList className="flex flex-wrap gap-2">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
+        <TabsList className="sticky top-0 z-30 bg-background/80 backdrop-blur flex flex-wrap gap-2">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="workingHours">Working Hours</TabsTrigger>
           <TabsTrigger value="communication">Communication</TabsTrigger>
@@ -196,7 +196,7 @@ const DashboardSettings: React.FC = () => {
           <TabsTrigger value="integrationsDefaults">Integrations Defaults</TabsTrigger>
           <TabsTrigger value="advanced">Advanced</TabsTrigger>
         </TabsList>
-      </Tabs>
+      
 
       {/* Content */}
       <div className="space-y-6">
@@ -627,6 +627,7 @@ const DashboardSettings: React.FC = () => {
           </Card>
         </TabsContent>
       </div>
+      </Tabs>
 
       {/* Sticky save bar */}
       {form.formState.isDirty && (
