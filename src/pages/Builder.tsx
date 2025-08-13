@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ const Builder = () => {
   const [wizardOpen, setWizardOpen] = useState(false);
   const [templateModalOpen, setTemplateModalOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-
+  const location = useLocation();
   const [customRequest, setCustomRequest] = useState({
     fullName: "",
     email: "",
@@ -103,7 +103,14 @@ const Builder = () => {
     });
   };
 
-
+  useEffect(() => {
+    const search = new URLSearchParams(location.search);
+    if (search.get("openWizard") === "1") {
+      setWizardOpen(true);
+      // Clean the URL
+      navigate("/builder", { replace: true });
+    }
+  }, [location.search, navigate]);
 
   return (
     <div className="min-h-screen bg-background">

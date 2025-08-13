@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Zap, Clock, Users } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useStartAgentCreation } from "@/hooks/use-start-agent-creation";
 import aiAgentHero from "@/assets/ai-agent-hero.png";
 const HeroSection = () => {
-  const navigate = useNavigate();
+  const { start, busy } = useStartAgentCreation();
   return <section className="min-h-screen bg-gradient-subtle relative overflow-hidden">
       {/* Background glow effect */}
       <div className="absolute inset-0 bg-gradient-glow opacity-50" />
@@ -44,9 +44,23 @@ const HeroSection = () => {
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button variant="hero" size="lg" className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300" onClick={() => navigate('/builder')}>
-                Ajanınızı Oluşturmaya Başlayın
-                <ArrowRight className="w-5 h-5 ml-2" />
+              <Button
+                data-testid="cta-start-agent"
+                aria-label="Ajan Oluşturmayı Başlat"
+                variant="hero"
+                size="lg"
+                className="text-lg px-8 py-6 h-auto rounded-full hover:shadow-glow hover:scale-105 transition-all duration-300"
+                onClick={() => start({ afterSuccessRedirect: "/dashboard/agents" })}
+                disabled={busy}
+              >
+                {busy ? (
+                  <>Açılıyor...</>
+                ) : (
+                  <>
+                    Ajanınızı Oluşturmaya Başlayın
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </>
+                )}
               </Button>
               
               <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto rounded-full">

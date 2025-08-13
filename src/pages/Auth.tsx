@@ -18,6 +18,8 @@ const Auth = () => {
     confirmPassword: "",
     fullName: ""
   });
+  const params = new URLSearchParams(window.location.search);
+  const next = params.get("next") || "/account";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -41,9 +43,9 @@ const Auth = () => {
       if (data.user) {
         toast({
           title: "Başarıyla giriş yapıldı!",
-          description: "Hesap sayfanıza yönlendiriliyorsunuz.",
+          description: "Yönlendiriliyorsunuz...",
         });
-        window.location.href = '/account';
+        window.location.href = next;
       }
     } catch (error: any) {
       toast({
@@ -81,7 +83,7 @@ const Auth = () => {
     }
 
     try {
-      const redirectUrl = `${window.location.origin}/account`;
+      const redirectUrl = `${window.location.origin}${next ? `/auth?next=${encodeURIComponent(next)}` : '/account'}`;
       
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,

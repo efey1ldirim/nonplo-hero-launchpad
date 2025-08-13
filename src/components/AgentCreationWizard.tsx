@@ -330,6 +330,9 @@ const AgentCreationWizard = ({ open, onClose }: AgentCreationWizardProps) => {
         title: "Agent Oluşturuldu!",
         description: "AI çalışanınız başarıyla oluşturuldu ve aktif edildi.",
       });
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("agent-created-success"));
+      }
       onClose();
       setCurrentStep(1);
       setCurrentSubStep(1);
