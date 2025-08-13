@@ -83,6 +83,30 @@ export type Database = {
         }
         Relationships: []
       }
+      global_employee_settings: {
+        Row: {
+          created_at: string
+          id: string
+          settings: Json
+          singleton: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          settings?: Json
+          singleton?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          settings?: Json
+          singleton?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       integrations_connections: {
         Row: {
           created_at: string
